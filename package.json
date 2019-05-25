@@ -1,0 +1,44 @@
+{
+  "name": "TrypNote",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:server": "DATABASE_URL=postgres://localhost/trypnote nodemon ./server/",
+    "postinstall": "./node_modules/webpack/bin/webpack.js",
+    "webpack": "webpack",
+    "webpack:dev": "npm run webpack -- --mode=development --watch",
+    "start:dev": "npm run webpack:dev & DATABASE_URL=postgres://localhost/trypnote nodemon ./server/ --ignore client/ --ignore public/"
+  },
+  "babel": {
+    "presets": [
+      "react",
+      "stage-2"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "chai": "^4.2.0",
+    "express": "^4.17.0",
+    "mocha": "^6.1.4",
+    "nodemon": "^1.19.0",
+    "path": "^0.12.7",
+    "pg": "^7.11.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.0",
+    "sequelize": "^5.8.6",
+    "supertest": "^4.0.2",
+    "volleyball": "^1.5.1",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2"
+  }
+}
