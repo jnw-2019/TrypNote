@@ -1,8 +1,9 @@
 const router = require('express').Router();
 
-router.use('/api/entries', require('./Entry'));
-router.use('/api/locations', require('./Location'));
-router.use('/api/weathers', require('./Weather'));
-router.use('/api/categories', require('./Category'));
+router.use('/entries', require('./Entry'));
+router.use('/users', require('./User'))
+router.use('/locations', require('./Location'));
+router.use('/weathers', require('./Weather'));
+router.use('/categories', require('./Category'));
 
 module.exports = router;
