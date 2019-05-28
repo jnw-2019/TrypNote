@@ -1,5 +1,5 @@
 const conn = require('./db');
-const { Entry, User } = require('./models/');
+const { Entry, User, Weather, Location, Category } = require('./models/');
 
 const users = [{
   firstname: 'Jane',
@@ -34,10 +34,33 @@ const syncAndSeed = () => {
           text:
             'Today I wrote my second journal entry on the Trypy App and it was foggy outside',
           userId: uploadusers[0].dataValues.id
-        }),
+        })
+        .then(entries => {
+          return Promise.all([
+            Location.create({
+              latitude: '40.7648',
+              longitude: '-73.9808',
+              entryId: entries[0].dataValues.id
+            }),
+            Location.create({
+              latitude: '40.704965',
+              longitude: '-74.009291',
+              entryId: entries[1].dataValues.id
+            }),
+            Weather.create({
+              forecast: 'cloudy',
+              degrees: 88,
+              entryId: entries[0].dataValues.id
+            }),
+            Weather.create({
+              forecast: 'sunny',
+              degrees: 75,
+              entryId: entries[1].dataValues.id
+            })
+          ])
+        })
       ]);
-    })
-    .catch(err => console.log(err))
+    });
   });
 };
 
