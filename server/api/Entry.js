@@ -1,9 +1,11 @@
 const router = require('express').Router();
-const { Entry } = require('../db/models/');
+const { Entry, Location, Weather } = require('../db/models/');
 
 //GET All Entries /api/entries
 router.get('/', (req, res, next) => {
-  Entry.findAll()
+  Entry.findAll({
+    include: [{ model: Location }, { model: Weather }],
+  })
     .then(entries => res.send(entries))
     .catch(next);
 });

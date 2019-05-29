@@ -15,6 +15,9 @@ const Entry = conn.define('entry', {
     type: conn.Sequelize.TEXT,
     allowNull: false,
   },
+  headerImage: {
+    type: conn.Sequelize.STRING,
+  },
   //Tags & Attachments Will Be Placed In A Seperate Table With An Entry Foreign Key
 });
 
