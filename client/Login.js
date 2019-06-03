@@ -9,8 +9,40 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import { loginAttempt } from './store';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
+
+    constructor(){
+        super();
+        this.state = {
+            email: '',
+            password: '',
+            remeberme: false
+        }
+    }
+
+    handleChange = event => {
+        this.setState({ [event.target.name]: event.target.value });
+    }
+
+    handleCheck = event => {
+        this.setState({ [event.target.name]: event.target.checked })
+    }
+
+    handleClick = () => {
+        this.props.requestLogin(this.state)
+            .then(success => {
+                if (success === true) {
+                    this.props.history.push('/home');
+                } else {
+                    console.log('Wrong email and password')
+                }
+            })
+            .catch(error => console.log(error))
+    }
 
     render () {
 
@@ -37,6 +69,7 @@ class Login extends Component {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                onChange={this.handleChange}
                                 autoFocus
                             />
                             <TextField
@@ -49,10 +82,13 @@ class Login extends Component {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                onChange={this.handleChange}
                             />
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
                                 label="Remember me"
+                                name="rememberme"
+                                onChange={this.handleCheck}
                             />
                             <Box
                                 mb={1}
@@ -62,6 +98,7 @@ class Login extends Component {
                                     fullWidth
                                     variant="contained"
                                     color="primary"
+                                    onClick={this.handleClick}
                                 >
                                     Sign In
                                 </Button>
@@ -69,7 +106,7 @@ class Login extends Component {
                             <Grid container>
                                 <Grid item xs>
                                     <Link href="#" variant="body2">
-                                        Help...password?
+                                        Password help?
                                     </Link>
                                 </Grid>
                                 <Grid item>
@@ -86,4 +123,10 @@ class Login extends Component {
     }
 }
 
-export default Login;
+const mapDispatchToProps = dispatch => {
+    return {
+        requestLogin: user => dispatch(loginAttempt(user))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Login);
