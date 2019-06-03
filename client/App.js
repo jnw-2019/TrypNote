@@ -8,15 +8,24 @@ import { syncCookieAndSession } from './store';
 
 class App extends Component {
 
-  // componentDidMount() {
-  //   this.props.requestSyncCookie();
-  // }
+  componentDidMount() {
+    this.props.requestSyncCookie();
+  }
+
   render() {
     return (
       <HashRouter>
         <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/home" component={Home} />
+          <Route
+            exact path="/" render={() => {
+              return (this.props.user.uuid ? <Redirect to="/home" /> : <Login />)
+            }}
+          />
+          <Route
+            exact path="/home" render={() => {
+              return (this.props.user.uuid ? <Home /> : <Redirect to="/" />)
+            }}
+          />
           <Route exact path="/entries/:entryId" component={ViewEntry} />
         </Switch>
       </HashRouter>

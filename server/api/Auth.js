@@ -15,25 +15,23 @@ router.post('/', (req, res, next) => {
                 error.status = 401;
                 throw error;
             }
-            //req.session.user = user.uuid;
+            req.session.user = user;
             if (req.body.rememberme === true) {
-                //req.session.cookie.maxAge = 14 * 24 * 60 * 60 * 1000;
+                req.session.cookie.maxAge = 14 * 24 * 60 * 60 * 1000;
             }
-            res.send({uuid: user.uuid});
-            //req.session.cookie.maxAge = 365 * 24 * 60 * 60 * 1000;
+            res.send(user);
         })
         .catch(next);
 })
 
 //Get session UUID and return
-// router.get('/', (req, res, next) => {
-//     if (!req.session.user) {
-//         const error = new Error('No user session');
-//         error.status = 401;
-//         return next(error)
-//     }
-//     res.send(req.session.user)
-// })
+router.get('/', (req, res, next) => {
+    if (req.session.user) {
+        res.send(req.session.user)
+    } else {
+        return next;
+    }
+})
 
 
 module.exports = router;

@@ -36,7 +36,9 @@ const syncCookieAndSession = () => {
             .then(response => response.data)
             .then(data => {
                 dispatch(setUser(data));
+                console.log(data)
             })
+            .catch(error => console.log(error))
     }
 }
 

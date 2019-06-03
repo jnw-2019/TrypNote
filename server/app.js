@@ -12,15 +12,14 @@ app.use(volleyball);
 app.use(express.json());
 
 //Cookie parser
-//app.use(cookieParser());
+app.use(cookieParser());
 
 //Use session middleware
-// app.use(session({
-//   key: 'uuid',
-//   secret: 'needamoresecurekeynow',
-//   resave: false,
-//   saveUninitialized: false,
-// }));
+app.use(session({
+  secret: 'needamoresecurekeynow',
+  resave: false,
+  saveUninitialized: false,
+}));
 
 //Bundle file location and index.html
 app.use(express.static(path.join(__dirname, '..', 'public')));

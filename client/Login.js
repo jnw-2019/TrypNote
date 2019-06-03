@@ -11,7 +11,6 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import { loginAttempt } from './store';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
 
@@ -32,7 +31,8 @@ class Login extends Component {
         this.setState({ [event.target.name]: event.target.checked })
     }
 
-    handleClick = () => {
+    handleClick = (event) => {
+        event.preventDefault();
         this.props.requestLogin(this.state)
             .then(success => {
                 if (success === true) {
