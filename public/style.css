@@ -72,3 +72,11 @@
 .hole-bottom {
   bottom: 10%;
 }
+.marker {
+  background-image: url('https://findicons.com/files/icons/1300/somatic_xtras/128/journal.png');
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+}
