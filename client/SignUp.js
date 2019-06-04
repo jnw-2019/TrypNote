@@ -7,18 +7,17 @@ import {
     Grid,
     Typography,
     Container,
-    InputAdornment
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
-import SvgIcon from '@material-ui/core/SvgIcon';
-import Icon from '@material-ui/core/Icon';
+import { connect } from 'react-redux';
+import { createUser } from './store';
 
 let theme = createMuiTheme();
 
 const styles = {
     paper: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(14),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -36,6 +35,35 @@ const styles = {
 };
 
 class SignUp extends Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            firstname: '',
+            lastname: '',
+            phonenumber: '',
+            email: '',
+            password: '',
+        }
+    }
+
+    handleChange = event => {
+        this.setState({ [event.target.name]: event.target.value });
+    }
+
+    handleClick = (event) => {
+        event.preventDefault();
+        //console.log(this.state)
+        this.props.requestCreateUser(this.state)
+            .then(success => {
+                if (success === true) {
+                    this.props.history.push('/home');
+                } else {
+                    console.log('Could not complete signup')
+                }
+            })
+            .catch(error => console.log(error))
+    }
 
     render() {
         const { classes } = this.props;
@@ -61,6 +89,7 @@ class SignUp extends Component {
                         id="firstName"
                         label="First Name"
                         autoFocus
+                        onChange={this.handleChange}
                     />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -72,9 +101,10 @@ class SignUp extends Component {
                         label="Last Name"
                         name="lastname"
                         autoComplete="lname"
+                        onChange={this.handleChange}
                     />
                     </Grid>
-                    <Grid item centered xs={12}>
+                    <Grid item xs={12}>
                     <TextField
                         variant="outlined"
                         required
@@ -83,6 +113,7 @@ class SignUp extends Component {
                         label="Phone Number"
                         name="phonenumber"
                         autoComplete="phonenumber"
+                        onChange={this.handleChange}
                     />
                     </Grid>
                     <Grid item xs={12}>
@@ -94,6 +125,7 @@ class SignUp extends Component {
                         label="Email Address"
                         name="email"
                         autoComplete="email"
+                        onChange={this.handleChange}
                     />
                     </Grid>
                     <Grid item xs={12}>
@@ -106,6 +138,7 @@ class SignUp extends Component {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        onChange={this.handleChange}
                     />
                     </Grid>
                 </Grid>
@@ -115,7 +148,7 @@ class SignUp extends Component {
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-                    
+                    onClick={this.handleClick}
                 >
                     Sign Up
                 </Button>
@@ -133,4 +166,10 @@ class SignUp extends Component {
     }
 }
 
-export default withStyles(styles)(SignUp);
+const mapDispatchToProps = dispatch => {
+    return {
+        requestCreateUser: user => dispatch(createUser(user))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(SignUp));

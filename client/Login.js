@@ -49,7 +49,7 @@ class Login extends Component {
         return (
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
-                <Box mt={8}>
+                <Box mt={14}>
                     <Grid
                         container
                         direction="row"
@@ -106,7 +106,7 @@ class Login extends Component {
                             <Grid container justify="flex-end">
                                 <Grid item>
                                 <Link to="/signup">
-                                    <Typography variant="body2" color="primary"><Box fontWeight={900}>Join today!</Box></Typography>
+                                    <Typography component="span" variant="body2" color="primary"><Box fontWeight={900}>Join today!</Box></Typography>
                                 </Link>
                                 </Grid>
                             </Grid>
