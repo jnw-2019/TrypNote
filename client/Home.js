@@ -7,8 +7,12 @@ import {
   CardContent,
   Typography,
   CardHeader,
-  Avatar,
+  Container,
 } from '@material-ui/core/';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Box from '@material-ui/core/Box';
+import Map from './Map';
+import EntryAvatar from './EntryAvatar';
 
 class Home extends Component {
   constructor() {
@@ -29,31 +33,69 @@ class Home extends Component {
   render() {
     const { entries } = this.state;
     return (
-      <Grid container justify="center" direction="column" spacing={8}>
-        {entries.map(entry => (
-          <Grid item key={entry.id}>
-            <Card style={{ width: 400 }}>
-              <CardHeader
-                avatar={<Avatar>{entry.weather.degrees}</Avatar>}
-                title={`${entry.location.latitude} ${entry.location.longitude}`}
-                subheader={entry.createdAt}
-              />
-              <CardMedia
-                style={{ height: 0, paddingTop: '56.25%' }}
-                image={entry.headerImage}
-              />
-              <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  {entry.title}
-                </Typography>
-              </CardContent>
-              <CardContent>
-                <Typography paragraph>{entry.text}</Typography>
-              </CardContent>
-            </Card>
+      <Container component="main">
+        <CssBaseline />
+        <Box mt={12}>
+          <Grid container>
+            <Map entries={entries} />
           </Grid>
-        ))}
-      </Grid>
+        </Box>
+
+        <Box mt={8}>
+          <Grid
+            container
+            justify="center"
+            alignItems="center"
+            direction="row"
+            spacing={2}
+          >
+            {entries.map(entry => (
+              <Grid item key={entry.id}>
+                <Card style={{ width: 300 }}>
+                  <CardHeader
+                    avatar={
+                      <EntryAvatar
+                        forecast={entry.weather.forecast}
+                        icon={entry.weather.icon}
+                      />
+                    }
+                    // TODO: Parse Date Field & Add To Title
+                    title={`${
+                      entry.weather.forecast
+                        ? entry.weather.forecast.slice(0, 1).toUpperCase() +
+                          entry.weather.forecast.slice(1)
+                        : ''
+                    } ${entry.weather.degrees}°
+                    `}
+                    // TODO: Parse Corrdinates and Display A Locaiton Name
+                    subheader={entry.location.markerName}
+                  />
+                  {entry.headerImage ? (
+                    <CardMedia
+                      style={{ height: 0, paddingTop: '56.25%' }}
+                      image={entry.headerImage}
+                    />
+                  ) : (
+                    ''
+                  )}
+                  <CardContent>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      {entry.title}
+                    </Typography>
+                  </CardContent>
+                  <CardContent>
+                    <Typography paragraph>{entry.text}</Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      </Container>
     );
   }
 }
