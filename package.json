@@ -41,11 +41,8 @@
     "pg": "^7.11.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-<<<<<<< HEAD
     "react-map-gl": "^5.0.0",
-=======
     "react-redux": "^7.0.3",
->>>>>>> 0cae0a0ccf2c328958d99cb90786c6520ea38ee7
     "react-router-dom": "^5.0.0",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
