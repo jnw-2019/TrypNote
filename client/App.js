@@ -6,6 +6,7 @@ import Home from "./Home";
 import ViewEntry from "./ViewEntry";
 import { connect } from "react-redux";
 import { syncCookieAndSession } from "./store";
+import CreateEntry from './CreateEntry';
 
 class App extends Component {
   componentDidMount() {
@@ -32,6 +33,11 @@ class App extends Component {
             }}
           />
           <Route exact path="/entries/:entryId" component={ViewEntry} />
+          <Route
+            exact
+            path="/entries/createEntry/users/:userId"
+            component={CreateEntry}
+          />
         </Switch>
       </HashRouter>
     );
