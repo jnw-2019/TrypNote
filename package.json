@@ -30,7 +30,9 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "chai": "^4.2.0",
+    "cookie-parser": "^1.4.4",
     "express": "^4.17.0",
+    "express-session": "^1.16.1",
     "faker": "^4.1.0",
     "mapbox-gl": "^1.0.0",
     "mocha": "^6.1.4",
@@ -39,8 +41,15 @@
     "pg": "^7.11.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+<<<<<<< HEAD
     "react-map-gl": "^5.0.0",
+=======
+    "react-redux": "^7.0.3",
+>>>>>>> 0cae0a0ccf2c328958d99cb90786c6520ea38ee7
     "react-router-dom": "^5.0.0",
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
     "sequelize": "^5.8.6",
     "supertest": "^4.0.2",
     "ve": "^0.1.3",

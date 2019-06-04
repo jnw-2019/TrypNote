@@ -1,5 +1,6 @@
 const conn = require('./db');
 const faker = require('faker');
+const secondSeedFunc = require('./entrySeed')
 const { Entry, User, Weather, Location, Category } = require('./models/');
 
 const users = [
@@ -22,7 +23,7 @@ const users = [
 
 const syncAndSeed = () => {
   return conn.sync({ force: true }).then(() => {
-    Promise.all([User.create(users[0]), User.create(users[1])]).then(
+    return Promise.all([User.create(users[0]), User.create(users[1])]).then(
       uploadusers => {
         Promise.all([
           Entry.create({
@@ -117,7 +118,8 @@ const syncAndSeed = () => {
           ]);
         });
       }
-    );
+    )
+      .then(() => secondSeedFunc());
   });
 };
 
