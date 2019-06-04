@@ -6,10 +6,13 @@ import {
     Link,
     Grid,
     Typography,
-    Container
+    Container,
+    InputAdornment
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import Icon from '@material-ui/core/Icon';
 
 let theme = createMuiTheme();
 
@@ -51,7 +54,7 @@ class SignUp extends Component {
                     <Grid item xs={12} sm={6}>
                     <TextField
                         autoComplete="fname"
-                        name="firstName"
+                        name="firstname"
                         variant="outlined"
                         required
                         fullWidth
@@ -67,8 +70,19 @@ class SignUp extends Component {
                         fullWidth
                         id="lastName"
                         label="Last Name"
-                        name="lastName"
+                        name="lastname"
                         autoComplete="lname"
+                    />
+                    </Grid>
+                    <Grid item centered xs={12}>
+                    <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="phoneNumber"
+                        label="Phone Number"
+                        name="phonenumber"
+                        autoComplete="phonenumber"
                     />
                     </Grid>
                     <Grid item xs={12}>
@@ -113,7 +127,7 @@ class SignUp extends Component {
                     </Grid>
                 </Grid>
                 </form>
-            </div>
+                </div>
             </Container>
         );
     }

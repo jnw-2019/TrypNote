@@ -106,7 +106,7 @@ class Login extends Component {
                             <Grid container justify="flex-end">
                                 <Grid item>
                                 <Link to="/signup">
-                                    <Box fontWeight={900}><Typography variant="body2" color="primary">Join today!</Typography></Box>
+                                    <Typography variant="body2" color="primary"><Box fontWeight={900}>Join today!</Box></Typography>
                                 </Link>
                                 </Grid>
                             </Grid>
