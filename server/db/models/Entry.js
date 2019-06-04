@@ -9,11 +9,11 @@ const Entry = conn.define('entry', {
   },
   title: {
     type: conn.Sequelize.STRING,
-    allowNull: false,
+    //allowNull: false,
   },
   text: {
     type: conn.Sequelize.TEXT,
-    allowNull: false,
+    //allowNull: false,
   },
   headerImage: {
     type: conn.Sequelize.STRING,
