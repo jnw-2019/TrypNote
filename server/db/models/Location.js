@@ -6,17 +6,22 @@ const Location = conn.define('location', {
     type: Sequelize.UUID,
     allowNull: false,
     primaryKey: true,
-    defaultValue: Sequelize.UUIDV1
+    defaultValue: Sequelize.UUIDV1,
   },
   latitude: {
     // trying to ssee what is the response from mapbox api
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   longitude: {
     type: Sequelize.STRING,
-    allowNull: false
-  }
+    allowNull: false,
+  },
+  markerName: {
+    // We Collect the corrdinates and the exact name of the location
+    type: Sequelize.STRING,
+    //allowNull: false,
+  },
 });
 
 module.exports = Location;

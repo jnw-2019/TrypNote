@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { HashRouter, Route, Switch, Link, Redirect } from 'react-router-dom';
-import Login from './Login';
-import Home from './Home';
-import ViewEntry from './ViewEntry';
-import { connect } from 'react-redux';
-import { syncCookieAndSession } from './store';
+import React, { Component } from "react";
+import Nav from "./Nav";
+import { HashRouter, Route, Switch, Link, Redirect } from "react-router-dom";
+import Login from "./Login";
+import Home from "./Home";
+import ViewEntry from "./ViewEntry";
+import { connect } from "react-redux";
+import { syncCookieAndSession } from "./store";
 import SignUp from './SignUp';
 
 class App extends Component {
-
   componentDidMount() {
     this.props.requestSyncCookie();
   }
@@ -16,15 +16,20 @@ class App extends Component {
   render() {
     return (
       <HashRouter>
+        <Nav />
         <Switch>
           <Route
-            exact path="/" render={() => {
-              return (this.props.user.uuid ? <Redirect to="/home" /> : <Login />)
+            exact
+            path="/"
+            render={() => {
+              return this.props.user.uuid ? <Redirect to="/home" /> : <Login />;
             }}
           />
           <Route
-            exact path="/home" render={() => {
-              return (this.props.user.uuid ? <Home /> : <Redirect to="/" />)
+            exact
+            path="/home"
+            render={() => {
+              return this.props.user.uuid ? <Home /> : <Redirect to="/" />;
             }}
           />
           <Route exact path="/signup" component={SignUp} />
@@ -47,4 +52,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
