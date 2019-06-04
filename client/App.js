@@ -7,6 +7,7 @@ import ViewEntry from "./ViewEntry";
 import { connect } from "react-redux";
 import { syncCookieAndSession } from "./store";
 import CreateEntry from './CreateEntry';
+import SignUp from './SignUp';
 
 class App extends Component {
   componentDidMount() {
@@ -32,6 +33,7 @@ class App extends Component {
               return this.props.user.uuid ? <Home /> : <Redirect to="/" />;
             }}
           />
+          <Route exact path="/signup" component={SignUp} />
           <Route exact path="/entries/:entryId" component={ViewEntry} />
           <Route
             exact
