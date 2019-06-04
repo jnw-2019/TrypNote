@@ -4,6 +4,9 @@ import loggerMiddleware from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import axios from 'axios';
 
+
+// TODO: Add location and weather API
+
 //CONSTANTS
 
 const SET_USER = 'SET_USER';
@@ -42,6 +45,19 @@ const syncCookieAndSession = () => {
     }
 }
 
+const createUser = user => {
+    return dispatch => {
+        return axios
+            .post('/api/users', user)
+            .then(response => response.data)
+            .then(data => {
+                dispatch(loginAttempt(data))
+                return true
+            })
+            .catch(error => console.log(error))
+    }
+}
+
 //REDUCERS
 
 const user = (state = {}, action) => {
@@ -65,5 +81,6 @@ const store = createStore(
 export {
     store,
     loginAttempt,
-    syncCookieAndSession
+    syncCookieAndSession,
+    createUser
 };
