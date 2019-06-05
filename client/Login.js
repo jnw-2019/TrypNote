@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import { loginAttempt } from './store';
+import { loginAttempt, ipLocationCall } from './store';
 import { connect } from 'react-redux';
 
 class Login extends Component {
@@ -36,6 +36,7 @@ class Login extends Component {
         this.props.requestLogin(this.state)
             .then(success => {
                 if (success === true) {
+                    this.props.requestIpLocationCall();
                     this.props.history.push('/home');
                 } else {
                     console.log('Wrong email and password')
@@ -120,7 +121,8 @@ class Login extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        requestLogin: user => dispatch(loginAttempt(user))
+        requestLogin: user => dispatch(loginAttempt(user)),
+        requestIpLocationCall: () => dispatch(ipLocationCall())
     }
 }
 
