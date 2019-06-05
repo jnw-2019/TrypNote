@@ -10,12 +10,18 @@ import axios from 'axios';
 //CONSTANTS
 
 const SET_USER = 'SET_USER';
+const SET_LOCATION = 'SET_LOCATION';
 
 //ACTION CREATORS
 
 const setUser = user => ({
     type: SET_USER,
     user
+});
+
+const setLocation = location => ({
+    type: SET_LOCATION,
+    location
 });
 
 //THUNKS
@@ -32,6 +38,18 @@ const loginAttempt = user => {
     };
 };
 
+const ipLocationCall = () => {
+    return dispatch => {
+        return axios
+            .get('http://ip-api.com/json/')
+            .then(response => response.data)
+            .then(data => {
+                dispatch(setLocation(data))
+            })
+            .catch(error => console.log(error));
+    };
+};
+
 const syncCookieAndSession = () => {
     return dispatch => {
         return axios
@@ -39,11 +57,11 @@ const syncCookieAndSession = () => {
             .then(response => response.data)
             .then(data => {
                 dispatch(setUser(data));
-                console.log(data)
+                dispatch(ipLocationCall());
             })
-            .catch(error => console.log(error))
-    }
-}
+            .catch(error => console.log(error));
+    };
+};
 
 const createUser = user => {
     return dispatch => {
@@ -52,11 +70,12 @@ const createUser = user => {
             .then(response => response.data)
             .then(data => {
                 dispatch(loginAttempt(data))
+                dispatch(ipLocationCall())
                 return true
             })
-            .catch(error => console.log(error))
-    }
-}
+            .catch(error => console.log(error));
+    };
+};
 
 //REDUCERS
 
@@ -69,8 +88,18 @@ const user = (state = {}, action) => {
     }
 };
 
+const location = (state = {}, action) => {
+    switch (action.type) {
+        case SET_LOCATION:
+            return action.location;
+        default:
+            return state;
+    }
+};
+
 const reducer = combineReducers({
-    user
+    user,
+    location
 });
 
 const store = createStore(
@@ -82,5 +111,6 @@ export {
     store,
     loginAttempt,
     syncCookieAndSession,
-    createUser
+    createUser,
+    ipLocationCall
 };
