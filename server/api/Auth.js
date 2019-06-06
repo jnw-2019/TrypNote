@@ -22,7 +22,12 @@ router.post('/', (req, res, next) => {
             res.send(user);
         })
         .catch(next);
-})
+});
+
+//Logout
+router.delete('/', (req, res, next) => {
+    req.session.destroy(() => res.sendStatus(204));
+});
 
 //Get session UUID and return
 router.get('/', (req, res, next) => {
@@ -31,7 +36,7 @@ router.get('/', (req, res, next) => {
     } else {
         return next;
     }
-})
+});
 
 
 module.exports = router;
