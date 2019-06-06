@@ -1,6 +1,14 @@
 import React, { Component, Fragment } from 'react';
-import { Grid, Paper, Typography, TextField, Button } from '@material-ui/core';
+import {
+  Grid,
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  withStyles
+} from '@material-ui/core';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 const styles = {
   Paper: {
@@ -8,6 +16,10 @@ const styles = {
     textAlign: 'center'
   }
 };
+
+const navOverlapFix = theme => ({
+  toolbar: theme.mixins.toolbar
+});
 
 class CreateEntry extends Component {
   constructor() {
@@ -25,19 +37,24 @@ class CreateEntry extends Component {
 
   handleSubmit = ev => {
     ev.preventDefault();
-    const { match, history } = this.props;
-    console.log('MATCH', match);
+    const { history, user } = this.props;
+    console.log('user', user);
+
     return axios
-      .post(`/api/entries/createEntry/users/${match.params.userId}`, this.state)
+      .post(`/api/entries/createEntry/users/${user.id}`, this.state)
       .then(() => history.push('/home'));
   };
   render() {
     const { entryTitle, entryText } = this.state;
     const { handleChange, handleSubmit } = this;
+    const { classes, location, weather } = this.props;
+    const currentDate = new Date().toDateString();
+    console.log('location', location);
 
     return (
       <Fragment>
-        <form onSubmit={handleSubmit}>
+        <div className={classes.toolbar} />
+        <form onSubmit={handleSubmit} style={{ marginTop: 10 }}>
           <Grid container spacing={3}>
             <Grid item sm={12}>
               <Paper style={styles.Paper}>
@@ -57,23 +74,37 @@ class CreateEntry extends Component {
             </Grid>
 
             <Grid item sm={3}>
-              <Paper style={styles.Paper}>meta data location</Paper>
+              {location ? (
+                <Paper style={styles.Paper}>
+                  {location.lat}, {location.lon}
+                </Paper>
+              ) : (
+                <Paper style={styles.Paper}>Loading Location</Paper>
+              )}
             </Grid>
 
             <Grid item sm={3}>
-              <Paper style={styles.Paper}>meta Data timestamp</Paper>
+              <Paper style={styles.Paper}>{currentDate}</Paper>
             </Grid>
 
             <Grid item sm={3}>
-              <Paper style={styles.Paper}>metad ata weather forecast</Paper>
+              {weather.weather ? (
+                <Paper style={styles.Paper}>{weather.weather[0].main}</Paper>
+              ) : (
+                <Paper style={styles.Paper}>Loading Weather</Paper>
+              )}
             </Grid>
 
             <Grid item sm={3}>
-              <Paper style={styles.Paper}>meta data degrees</Paper>
+              {weather.weather ? (
+                <Paper style={styles.Paper}>{weather.main.temp}&#176;</Paper>
+              ) : (
+                <Paper style={styles.Paper}>Loading Weather</Paper>
+              )}
             </Grid>
 
             <Grid item sm={9}>
-              <Paper>
+              <Paper style={styles.Paper}>
                 <TextField
                   id="text"
                   label="Write your thoughts..."
@@ -111,4 +142,10 @@ class CreateEntry extends Component {
   }
 }
 
-export default CreateEntry;
+const mapStateToProps = ({ user, location, weather }) => ({
+  user,
+  location,
+  weather
+});
+
+export default connect(mapStateToProps)(withStyles(navOverlapFix)(CreateEntry));

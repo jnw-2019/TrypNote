@@ -19,13 +19,15 @@ router.get('/:entryId', (req, res, next) => {
 });
 
 router.post('/createEntry/users/:userId', (req, res, next) => {
-  console.log('req.body', req.body);
   Entry.create({
     title: req.body.title,
     text: req.body.text,
     userId: req.params.userId
   })
-    .then(() => res.sendStatus(200))
+    .then(entry => {
+      console.log(entry.userId);
+      res.sendStatus(200);
+    })
     .catch(next);
   // Promise.all([User.findByPk(req.params.userId), Entry.create(req.body)])
   //   .then(([user, entry]) => entry.setUser(user))
