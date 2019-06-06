@@ -11,6 +11,7 @@ import axios from 'axios';
 
 const SET_USER = 'SET_USER';
 const SET_LOCATION = 'SET_LOCATION';
+const SET_WEATHER = 'SET_WEATHER';
 
 //ACTION CREATORS
 
@@ -23,6 +24,11 @@ const setLocation = location => ({
     type: SET_LOCATION,
     location
 });
+
+const setWeather = weather => ({
+    type: SET_WEATHER,
+    weather
+})
 
 //THUNKS
 
@@ -38,13 +44,26 @@ const loginAttempt = user => {
     };
 };
 
+const weatherApiCall = location => {
+    return dispatch => {
+        return axios
+            .post('/api/weathers/weatheratlocation', location)
+            .then(response => response.data)
+            .then(data => {
+                dispatch(setWeather(data))
+            })
+            .catch(error => console.log(error));
+    }
+};
+
 const ipLocationCall = () => {
     return dispatch => {
         return axios
             .get('http://ip-api.com/json/')
             .then(response => response.data)
             .then(data => {
-                dispatch(setLocation(data))
+                dispatch(setLocation(data));
+                dispatch(weatherApiCall(data));
             })
             .catch(error => console.log(error));
     };
@@ -97,9 +116,19 @@ const location = (state = {}, action) => {
     }
 };
 
+const weather = (state = {}, action) => {
+    switch (action.type) {
+        case SET_WEATHER:
+            return action.weather;
+        default:
+            return state;
+    }
+};
+
 const reducer = combineReducers({
     user,
-    location
+    location,
+    weather
 });
 
 const store = createStore(
@@ -112,5 +141,6 @@ export {
     loginAttempt,
     syncCookieAndSession,
     createUser,
-    ipLocationCall
+    ipLocationCall,
+    weatherApiCall
 };
