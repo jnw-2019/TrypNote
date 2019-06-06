@@ -15,6 +15,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import { logoutAttempt } from './store';
+import { connect } from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -77,7 +79,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Nav = () => {
+const Nav = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [auth, setAuth] = React.useState(true);
@@ -103,6 +105,17 @@ const Nav = () => {
   function handleClose() {
     setAnchorEl(null);
   }
+
+  const handleLogout = (event) => {
+    event.preventDefault();
+    props.requestLogout()
+        .then(success => {
+            if (success === false) {
+                console.log('Trouble logging out!')
+            }
+        })
+        .catch(error => console.log(error))
+}
 
   return (
     <div className={classes.root}>
@@ -154,7 +167,7 @@ const Nav = () => {
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose}>My account</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </div>
         </Toolbar>
@@ -193,4 +206,11 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+const mapDispatchToProps = dispatch => {
+  return {
+      requestLogout: () => dispatch(logoutAttempt())
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Nav);
+
