@@ -1,28 +1,61 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import MapGL, { Marker, NavigationControl } from 'react-map-gl';
 
-const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
-mapboxgl.accessToken =
-  'pk.eyJ1IjoibmVsbHlnZWQiLCJhIjoiY2pzaGdvZDAxMWM4aDQ0cWdmc2c0c3VxcSJ9.66st5uwT4ahIOlp338rhBA';
+const mapStateToProps = ({ location }) => {
+  return { location };
+};
 
 class Map extends Component {
-  constructor() {
-    super();
-    this.state = {
-      viewport: {
-        latitude: 40.674827,
-        longitude: -73.97021,
-        zoom: 12,
-        bearing: 0,
-        pitch: 0,
-        width: 500,
-        height: 500,
-      },
-    };
+  constructor(props) {
+    super(props);
+    if (!props.location) {
+      this.state = {
+        viewport: {
+          latitude: 40.674827,
+          longitude: -73.97021,
+          zoom: 12,
+          bearing: 0,
+          pitch: 0,
+          width: 500,
+          height: 500,
+        },
+      };
+    } else {
+      this.state = {
+        viewport: {
+          latitude: props.location.lat ? props.location.lat * 1 : 40.674827,
+          longitude: props.location.lon ? props.location.lon * 1 : -73.97021,
+          zoom: 12,
+          bearing: 0,
+          pitch: 0,
+          width: 500,
+          height: 500,
+        },
+      };
+    }
   }
   componentDidMount() {}
 
-  componentWillUnmount() {}
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      this.setState({
+        viewport: {
+          latitude: this.props.location.lat
+            ? this.props.location.lat * 1
+            : 40.674827,
+          longitude: this.props.location.lon
+            ? this.props.location.lon * 1
+            : -73.97021,
+          zoom: 12,
+          bearing: 0,
+          pitch: 0,
+          width: 500,
+          height: 500,
+        },
+      });
+    }
+  }
 
   render() {
     const navStyle = {
@@ -37,23 +70,7 @@ class Map extends Component {
       overflow: 'hidden',
     };
     const { viewport } = this.state;
-    const { entries } = this.props;
-    entries.forEach(marker => {
-      // create a HTML element for each feature
-      var el = document.createElement('div');
-      el.className = 'marker';
-
-      // make a marker for each feature and add to the map
-      new mapboxgl.Marker(el).setLngLat([
-        marker.location.longitude,
-        marker.location.latitude,
-      ]);
-      //.addTo(this.map);
-    });
-    //<div style={style} ref={el => (this.mapContainer = el)} />;
-    // <div className="nav" style={style}>
-    //       <NavigationControl />
-    //     </div>
+    const { entries, location } = this.props;
     return (
       <MapGL
         {...viewport}
@@ -68,18 +85,20 @@ class Map extends Component {
         <div className="nav" style={navStyle}>
           <NavigationControl captureScroll={true} />
         </div>
-        {entries.map(marker => (
-          <Marker
-            key={marker.id}
-            longitude={marker.location.longitude * 1}
-            latitude={marker.location.latitude * 1}
-          >
-            <div className="marker" />
-          </Marker>
-        ))}
+        {entries.length
+          ? entries.map(marker => (
+              <Marker
+                key={marker.id}
+                longitude={marker.location.longitude * 1}
+                latitude={marker.location.latitude * 1}
+              >
+                <div className="marker" />
+              </Marker>
+            ))
+          : ''}
       </MapGL>
     );
   }
 }
 
-export default Map;
+export default connect(mapStateToProps)(Map);
