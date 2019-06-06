@@ -1,13 +1,14 @@
-import React, { Component } from "react";
-import Nav from "./Nav";
-import { HashRouter, Route, Switch, Link, Redirect } from "react-router-dom";
-import Login from "./Login";
-import Home from "./Home";
-import ViewEntry from "./ViewEntry";
-import { connect } from "react-redux";
-import { syncCookieAndSession } from "./store";
+import React, { Component } from 'react';
+import Nav from './Nav';
+import { HashRouter, Route, Switch, Link, Redirect } from 'react-router-dom';
+import Login from './Login';
+import Home from './Home';
+import ViewEntry from './ViewEntry';
+import { connect } from 'react-redux';
+import { syncCookieAndSession } from './store';
 import CreateEntry from './CreateEntry';
 import SignUp from './SignUp';
+import Dashboard from './Dashboard';
 
 class App extends Component {
   componentDidMount() {
@@ -35,11 +36,8 @@ class App extends Component {
           />
           <Route exact path="/signup" component={SignUp} />
           <Route exact path="/entries/:entryId" component={ViewEntry} />
-          <Route
-            exact
-            path="/entries/createEntry/users/:userId"
-            component={CreateEntry}
-          />
+          <Route exact path="/createEntry" component={CreateEntry} />
+          <Route exact path="/dashboard/:" component={Dashboard} />
         </Switch>
       </HashRouter>
     );
@@ -47,6 +45,7 @@ class App extends Component {
 }
 
 const mapStateToProps = ({ user }) => {
+  console.log('app user', user);
   return {
     user
   };
