@@ -4,9 +4,14 @@ import loggerMiddleware from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import axios from 'axios';
 
+
+// TODO: Add location and weather API
+
 //CONSTANTS
 
 const SET_USER = 'SET_USER';
+const SET_LOCATION = 'SET_LOCATION';
+const SET_WEATHER = 'SET_WEATHER';
 
 //ACTION CREATORS
 
@@ -14,6 +19,16 @@ const setUser = user => ({
     type: SET_USER,
     user
 });
+
+const setLocation = location => ({
+    type: SET_LOCATION,
+    location
+});
+
+const setWeather = weather => ({
+    type: SET_WEATHER,
+    weather
+})
 
 //THUNKS
 
@@ -29,6 +44,31 @@ const loginAttempt = user => {
     };
 };
 
+const weatherApiCall = location => {
+    return dispatch => {
+        return axios
+            .post('/api/weathers/weatheratlocation', location)
+            .then(response => response.data)
+            .then(data => {
+                dispatch(setWeather(data))
+            })
+            .catch(error => console.log(error));
+    }
+};
+
+const ipLocationCall = () => {
+    return dispatch => {
+        return axios
+            .get('http://ip-api.com/json/')
+            .then(response => response.data)
+            .then(data => {
+                dispatch(setLocation(data));
+                dispatch(weatherApiCall(data));
+            })
+            .catch(error => console.log(error));
+    };
+};
+
 const syncCookieAndSession = () => {
     return dispatch => {
         return axios
@@ -36,11 +76,25 @@ const syncCookieAndSession = () => {
             .then(response => response.data)
             .then(data => {
                 dispatch(setUser(data));
-                console.log(data)
+                dispatch(ipLocationCall());
             })
-            .catch(error => console.log(error))
-    }
-}
+            .catch(error => console.log(error));
+    };
+};
+
+const createUser = user => {
+    return dispatch => {
+        return axios
+            .post('/api/users', user)
+            .then(response => response.data)
+            .then(data => {
+                dispatch(loginAttempt(data))
+                dispatch(ipLocationCall())
+                return true
+            })
+            .catch(error => console.log(error));
+    };
+};
 
 //REDUCERS
 
@@ -53,8 +107,28 @@ const user = (state = {}, action) => {
     }
 };
 
+const location = (state = {}, action) => {
+    switch (action.type) {
+        case SET_LOCATION:
+            return action.location;
+        default:
+            return state;
+    }
+};
+
+const weather = (state = {}, action) => {
+    switch (action.type) {
+        case SET_WEATHER:
+            return action.weather;
+        default:
+            return state;
+    }
+};
+
 const reducer = combineReducers({
-    user
+    user,
+    location,
+    weather
 });
 
 const store = createStore(
@@ -65,5 +139,8 @@ const store = createStore(
 export {
     store,
     loginAttempt,
-    syncCookieAndSession
+    syncCookieAndSession,
+    createUser,
+    ipLocationCall,
+    weatherApiCall
 };

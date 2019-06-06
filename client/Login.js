@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import { loginAttempt } from './store';
+import { loginAttempt, ipLocationCall } from './store';
 import { connect } from 'react-redux';
 
 class Login extends Component {
@@ -36,6 +36,7 @@ class Login extends Component {
         this.props.requestLogin(this.state)
             .then(success => {
                 if (success === true) {
+                    this.props.requestIpLocationCall();
                     this.props.history.push('/home');
                 } else {
                     console.log('Wrong email and password')
@@ -49,7 +50,7 @@ class Login extends Component {
         return (
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
-                <Box mt={8}>
+                <Box mt={14}>
                     <Grid
                         container
                         direction="row"
@@ -103,16 +104,11 @@ class Login extends Component {
                                     Sign In
                                 </Button>
                             </Box>
-                            <Grid container>
-                                <Grid item xs>
-                                    <Link href="#" variant="body2">
-                                        Password help?
-                                    </Link>
-                                </Grid>
+                            <Grid container justify="flex-end">
                                 <Grid item>
-                                    <Link href="#" variant="body2">
-                                        <Box fontWeight={900}>Join today!</Box>
-                                    </Link>
+                                <Link to="/signup">
+                                    <Typography component="span" variant="body2" color="primary"><Box fontWeight={900}>Join today!</Box></Typography>
+                                </Link>
                                 </Grid>
                             </Grid>
                         </form>
@@ -125,7 +121,8 @@ class Login extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        requestLogin: user => dispatch(loginAttempt(user))
+        requestLogin: user => dispatch(loginAttempt(user)),
+        requestIpLocationCall: () => dispatch(ipLocationCall())
     }
 }
 
