@@ -12,7 +12,8 @@ router.get('/', (req, res, next) => {
 
 router.post('/weatheratlocation', (req, res, next) => {
   const location = req.body;
-  axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&units=imperial&APPID=${openweather.APPID}`)
+  const APPID = process.env.APPID || openweather.APPID;
+  axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&units=imperial&APPID=${APPID}`)
     .then(response => response.data)
     .then(data => {
       res.send(data)
