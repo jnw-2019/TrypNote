@@ -10,7 +10,7 @@
     "postinstall": "./node_modules/webpack/bin/webpack.js",
     "webpack": "webpack",
     "webpack:dev": "npm run webpack -- --mode=development --watch",
-    "start:dev": "npm run webpack:dev & DATABASE_URL=postgres://localhost/trypnote nodemon ./server/ --ignore client/ --ignore public/"
+    "start:dev": "npm run webpack:dev & ENV=TEST DATABASE_URL=postgres://localhost/trypnote nodemon ./server/ --ignore client/ --ignore public/"
   },
   "babel": {
     "presets": [
