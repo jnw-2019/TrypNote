@@ -27,9 +27,12 @@ const useStyles = makeStyles({
 const EntryAvatar = ({ forecast, icon }) => {
   const classes = useStyles();
   return (
-    <Avatar className={classes[forecast]}>
-      <i className={`fas fa-${icon}`} />
-    </Avatar>
+    <div>
+      <img src="http://openweathermap.org/img/w/10d.png" />
+      {/* <Avatar className={classes[forecast]}>
+        <i className={`fas fa-${icon}`} />
+      </Avatar> */}
+    </div>
   );
 };
 
