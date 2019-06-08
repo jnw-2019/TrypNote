@@ -13,7 +13,7 @@ import {
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import Map from './Map';
-import EntryAvatar from './EntryAvatar';
+import dateFormat from 'dateformat';
 
 const mapStateToProps = ({ user }) => {
   return { user };
@@ -68,21 +68,26 @@ class Home extends Component {
                     <Card style={{ width: 300 }}>
                       <CardHeader
                         avatar={
-                          <EntryAvatar
-                            forecast={entry.weather.forecast}
-                            icon={entry.weather.icon}
-                          />
+                          <div>
+                            <img src={entry.weather.icon} />
+                            <br />
+                            <em>
+                              {entry.weather.forecast
+                                ? `${entry.weather.forecast
+                                    .slice(0, 1)
+                                    .toUpperCase()}${entry.weather.forecast.slice(
+                                    1
+                                  )}`
+                                : ''}{' '}
+                              {`${entry.weather.degrees}°`}
+                            </em>
+                          </div>
                         }
-                        // TODO: Parse Date Field & Add To Title
-                        title={`${
-                          entry.weather.forecast
-                            ? entry.weather.forecast.slice(0, 1).toUpperCase() +
-                              entry.weather.forecast.slice(1)
-                            : ''
-                        } ${entry.weather.degrees}°
-                    `}
-                        // TODO: Parse Corrdinates and Display A Locaiton Name
-                        subheader={entry.location.markerName}
+                        title={entry.location.markerName}
+                        subheader={dateFormat(
+                          entry.createdAt,
+                          'dddd, mmmm dS, yyyy'
+                        )}
                       />
                       {entry.headerImage ? (
                         <CardMedia

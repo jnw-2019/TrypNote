@@ -1,6 +1,6 @@
 const conn = require('./db');
 const faker = require('faker');
-const secondSeedFunc = require('./entrySeed')
+const secondSeedFunc = require('./entrySeed');
 const { Entry, User, Weather, Location, Category } = require('./models/');
 
 const users = [
@@ -23,8 +23,8 @@ const users = [
 
 const syncAndSeed = () => {
   return conn.sync({ force: true }).then(() => {
-    return Promise.all([User.create(users[0]), User.create(users[1])]).then(
-      uploadusers => {
+    return Promise.all([User.create(users[0]), User.create(users[1])])
+      .then(uploadusers => {
         Promise.all([
           Entry.create({
             title: faker.fake('{{lorem.sentence}}'),
@@ -88,37 +88,36 @@ const syncAndSeed = () => {
             Weather.create({
               forecast: 'cloudy',
               degrees: 88,
-              icon: 'cloud',
+              icon: 'http://openweathermap.org/img/w/03d.png',
               entryId: entries[0].dataValues.id,
             }),
             Weather.create({
               forecast: 'sunny',
               degrees: 75,
-              icon: 'sun',
+              icon: 'http://openweathermap.org/img/w/01d.png',
               entryId: entries[1].dataValues.id,
             }),
             Weather.create({
               forecast: 'sunny',
               degrees: 90,
-              icon: 'sun',
+              icon: 'http://openweathermap.org/img/w/01d.png',
               entryId: entries[2].dataValues.id,
             }),
             Weather.create({
               forecast: 'clear',
               degrees: 81,
-              icon: 'sun',
+              icon: 'http://openweathermap.org/img/w/03d.png',
               entryId: entries[3].dataValues.id,
             }),
             Weather.create({
               forecast: 'sunny',
               degrees: 77,
-              icon: 'sun',
+              icon: 'http://openweathermap.org/img/w/03d.png',
               entryId: entries[4].dataValues.id,
             }),
           ]);
         });
-      }
-    )
+      })
       .then(() => secondSeedFunc());
   });
 };
