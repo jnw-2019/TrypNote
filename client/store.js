@@ -4,9 +4,6 @@ import loggerMiddleware from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import axios from 'axios';
 
-
-// TODO: Add location and weather API
-
 //CONSTANTS
 
 const SET_USER = 'SET_USER';
@@ -44,13 +41,33 @@ const loginAttempt = user => {
     };
 };
 
+const logoutAttempt = () => {
+    return dispatch => {
+        return axios
+            .delete('/api/auth')
+            .then(response => {
+                if (response.status === 204) {
+                    dispatch(setUser({}));
+                    dispatch(setLocation({}));
+                    dispatch(setWeather({}));
+                    return true;
+                } else {
+                    const error = new Error('Could not log out');
+                    error.status = 401;
+                    throw error;
+                }
+            })
+            .catch(error => console.log(error));
+    }
+}
+
 const weatherApiCall = location => {
     return dispatch => {
         return axios
             .post('/api/weathers/weatheratlocation', location)
             .then(response => response.data)
             .then(data => {
-                dispatch(setWeather(data))
+                dispatch(setWeather(data));
             })
             .catch(error => console.log(error));
     }
@@ -142,5 +159,6 @@ export {
     syncCookieAndSession,
     createUser,
     ipLocationCall,
-    weatherApiCall
+    weatherApiCall,
+    logoutAttempt
 };

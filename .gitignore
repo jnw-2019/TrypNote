@@ -2,4 +2,4 @@ node_modules
 dist/
 public/bundle.js
 public/bundle.js.map
-config.js
+.env.js
