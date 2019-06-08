@@ -11,8 +11,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import FolderIcon from '@material-ui/icons/Folder';
+import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MapGL, { Marker, NavigationControl, Popup } from 'react-map-gl';
+import config from '../config';
+
+const FSCLIENTKEY = config.get('FSCLIENTKEY');
+const FSCLIENTSECRET = config.get('FSCLIENTSECRET');
 
 const mapStateToProps = ({ location }) => {
   return { location };
@@ -80,7 +85,7 @@ class Map extends Component {
     console.log(ev.lngLat);
     axios
       .get(
-        `https://api.foursquare.com/v2/venues/search?client_id=ZRLTP4TLRFJN4YUBP3SMSOP4O00KGP1KME1IUXN2PZ2VNN5A&client_secret=HCXJK40ZZMYLLZ2WN2432YEBNYVFPX5N0WWBTI5BBA2Z1LLS&v=20190425&ll=${
+        `https://api.foursquare.com/v2/venues/search?client_id=${FSCLIENTKEY}&client_secret=${FSCLIENTSECRET}&v=20190425&ll=${
           ev.lngLat[1]
         },${ev.lngLat[0]}&intent=browse&radius=1&limit=3`
       )
@@ -161,7 +166,7 @@ class Map extends Component {
                           <ListItem key={venue.id}>
                             <ListItemAvatar>
                               <Avatar>
-                                <i class="fas fa-map-pin" />
+                                <i className="fas fa-map-pin" />
                               </Avatar>
                             </ListItemAvatar>
                             <ListItemText
@@ -175,8 +180,8 @@ class Map extends Component {
                               }
                             />
                             <ListItemSecondaryAction>
-                              <IconButton edge="end" aria-label="Delete">
-                                <DeleteIcon />
+                              <IconButton>
+                                <AddIcon />
                               </IconButton>
                             </ListItemSecondaryAction>
                           </ListItem>
