@@ -101,6 +101,122 @@ const entrySeed = [
     {
         title: 'The Invitation',
         text: 'It doesn’t interest me what you do for a living. I want to know what you ache for, and if you dare to dream of meeting your heart’s longing. It doesn’t interest me how old you are. I want to know if you will risk looking like a fool for love, for your dream, for the adventure of being alive. It doesn’t interest me what planets are squaring your moon. I want to know if you have touched the center of your own sorrow, if you have been opened by life’s betrayals or have become shriveled and closed from fear of further pain!I want to know if you can sit with pain, mine or your own, without moving to hide it or fade it, or fix it. I want to know if you can be with joy, mine or your own, if you can dance with wildness and let the ecstasy fill you to the tips of your fingers and toes without cautioning us to be careful, to be realistic, to remember the limitations of being human. It doesn’t interest me if the story you are telling me is true. I want to know if you can disappoint another to be true to yourself; if you can bear the accusation of betrayal and not betray your own soul; if you can be faithless and therefore trustworthy. I want to know if you can see beauty even when it’s not pretty, every day,and if you can source your own life from its presence. I want to know if you can live with failure, yours and mine, and still stand on the edge of the lake and shout to the silver of the full moon, “Yes!” It doesn’t interest me to know where you live or how much money you have. I want to know if you can get up, after the night of grief and despair, weary and bruised to the bone, and do what needs to be done to feed the children. It doesn’t interest me who you know or how you came to be here. I want to know if you will stand in the center of the fire with me and not shrink back. It doesn’t interest me where or what or with whom you have studied. I want to know what sustains you, from the inside, when all else falls away. I want to know if you can be alone with yourself and if you truly like the company you keep in the empty moments.'
+    },
+    {
+        title: 'Infinite Jest',
+        text: 'We are all dying to give our lives away to something, maybe. God or Satan, politics or grammar, topology or philately – the object seemed incidental to this will to give ourselves away, utterly. To games or needles, to some other person. Something pathetic about it. A flight-from in the form of a plunging-into. Flight from exactly what? These rooms, blandly filled with excrement and heat? To what purpose?'
+    },
+    {
+        title: 'One Hundred Years of Solitude',
+        text: 'Then they went into José Arcadio Buendía’s room, shook him as hard as they could, shouted in his ear, put a mirror in front of his nostrils, but they could not awaken him. A short time later, when the carpenter was taking measurements for the coffin, through the window they saw a light rain of tiny yellow flowers falling. They fell on the town all through the night in a silent storm, and they covered the roofs and blocked the doors and smothered the animals who slept outdoors. So many flowers fell from the sky that in the morning the streets were carpeted with a compact cushion and they had to clear them away with shovels and rakes so that the funeral procession could pass by.'
+    },
+    {
+        title: 'A Storm of Swords',
+        text: 'We look up at the same stars, and see such different things.'
+    },
+    {
+        title: 'Everything Is Illuminated',
+        text: 'When I was a girl, my life was music that was always getting louder. Everything moved me. A dog following a stranger. That made me feel so much. A calendar that showed the wrong month. I could have cried over it. I did. Where the smoke from a chimney ended. How an overturned bottle rested at the edge of a table. I spent my life learning to feel less. Every day I felt less. Is that growing old? Or is it something worse? You cannot protect yourself from sadness without protecting yourself from happiness.'
+    },
+    {
+        title: 'Animal Farm',
+        text: 'All animals are equal, but some animals are more equal than others.'
+    },
+    {
+        title: 'Moby Dick',
+        text: 'Towards thee I roll, thou all-destroying but unconquering whale; to the last I grapple with thee; from hell’s heart I stab at thee; for hate’s sake I spit my last breath at thee.'
+    },
+    {
+        title: 'The Sandman',
+        text: 'Sometimes you wake up. Sometimes the fall kills you. And sometimes, when you fall, you fly.'
+    },
+    {
+        title: 'The Catcher in the Rye',
+        text: 'Don’t ever tell anybody anything. If you do, you start missing everybody.'
+    },
+    {
+        title: 'A Farewell to Arms',
+        text: 'If people bring so much courage to this world the world has to kill them to break them, so of course it kills them. The world breaks every one and afterward many are strong at the broken places. But those that will not break it kills. It kills the very good and the very gentle and the very brave impartially. If you are none of these you can be sure it will kill you too but there will be no special hurry.'
+    },
+    {
+        title: 'Anna Karenina',
+        text: 'Happy families are all alike; every unhappy family is unhappy in its own way.'
+    },
+    {
+        title: '1984',
+        text: 'We shall meet in the place where there is no darkness.'
+    },
+    {
+        title: 'Julius Caesar',
+        text: 'There is a tide in the affairs of men. Which, taken at the flood, leads on to fortune; Omitted, all the voyage of their life Is bound in shallows and in miseries. On such a full sea are we now afloat, And we must take the current when it serves, Or lose our ventures.'
+    },
+    {
+        title: 'Dubliners',
+        text: 'His soul swooned slowly as he heard the snow falling faintly through the universe and faintly falling, like the descent of their last end, upon all the living and the dead.'
+    },
+    {
+        title: 'Blood Meridian',
+        text: 'Only now is the child finally divested of all that he has been. His origins are become remote as is his destiny and not again in all the world’s turning will there be terrains so wild and barbarous to try whether the stuff of creation may be shaped to man’s will or whether his own heart is another kind of clay.'
+    },
+    {
+        title: 'The Time Keeper',
+        text: 'Try to imagine a life without timekeeping. You probably can’t. You know the month, the year, the day of the week. There is a clock on your wall or the dashboard of your car. You have a schedule, a calendar, a time for dinner or a movie. Yet all around you, timekeeping is ignored. Birds are not late. A dog does not check its watch. Deer do not fret over passing birthdays. Man alone measures time. Man alone chimes the hour. And, because of this, man alone suffers a paralyzing fear that no other creature endures. A fear of time running out.'
+    },
+    {
+        title: 'The Count of Monte Cristo',
+        text: 'So much the worse for those who fear wine, for it is because they have bad thoughts which they are afraid the liquor will extract from their hearts…The wicked are great drinkers of water; As the flood proved once for all.'
+    },
+    {
+        title: 'Brave New World',
+        text: 'But I don’t want comfort. I want God, I want poetry, I want real danger, I want freedom, I want goodness. I want sin.'
+    },
+    {
+        title: 'The Return of the King',
+        text: 'There, peeping among the cloud-wrack above a dark tor high up in the mountains, Sam saw a white star twinkle for a while. The beauty of it smote his heart, as he looked up out of the forsaken land, and hope returned to him. For like a shaft, clear and cold, the thought pierced him that in the end the Shadow was only a small and passing thing: there was a light and high beauty for ever beyond its reach.'
+    },
+    {
+        title: 'The Guns of Avalon',
+        text: 'In the mirrors of the many judgments, my hands are the color of blood. I sometimes fancy myself an evil which exists to oppose other evils; and on that great Day of which the prophets speak but in which they do not truly believe, on the day the world is utterly cleansed of evil, then I too will go down into darkness, swallowing curses. Until then, I will not wash my hands nor let them hang useless.' 
+    },
+    {
+        title: 'Slaughterhouse-Five',
+        text: 'And Lot’s wife, of course, was told not to look back where all those people and their homes had been. But she did look back, and I love her for that, because it was so human. So she was turned to a pillar of salt. So it goes. People aren’t supposed to look back. I’m certainly not going to do it anymore.'
+    },
+    {
+        title: 'The Sirens of Titan',
+        text: 'All was forgiven. All living things were brothers, all dead things even more so.'
+    },
+    {
+        title: 'The Sun Also Rises',
+        text: 'Isn’t it pretty to think so?'
+    },
+    {
+        title: 'The Little Prince',
+        text: 'All grown-ups were once children…but only few of them remember it.'
+    },
+    {
+        title: 'Catch-22',
+        text: 'Anything worth dying for is certainly worth living for.'
+    },
+    {
+        title: 'In Search of Lost Time',
+        text: 'We believe that we can change the things around us in accordance with our desires—we believe it because otherwise we can see no favourable outcome. We do not think of the outcome which generally comes to pass and is also favourable: we do not succeed in changing things in accordance with our desires, but gradually our desires change. The situation that we hoped to change because it was intolerable becomes unimportant to us. We have failed to surmount the obstacle, as we were absolutely determined to do, but life has taken us round it, led us beyond it, and then if we turn round to gaze into the distance of the past, we can barely see it, so imperceptible has it become.'
+    },
+    {
+        title: 'To Kill a Mockingbrid',
+        text: 'I wanted you to see what real courage is, instead of getting the idea that courage is a man with a gun in his hand. It’s when you know you’re licked before you begin but you begin anyway and you see it through no matter what.'
+    },
+    {
+        title: 'The Call of Cthulhu',
+        text: 'The most merciful thing in the world, I think, is the inability of the human mind to correlate all its contents. We live on a placid island of ignorance in the midst of black seas of infinity, and it was not meant that we should voyage far. The sciences, each straining in its own direction, have hitherto harmed us little; but some day the piecing together of dissociated knowledge will open up such terrifying vistas of reality, and of our frightful position therein, that we shall either go mad from the revelation or flee from the light into the peace and safety of a new dark age.'
+    },
+    {
+        title: 'East of Eden',
+        text: 'When a child first catches adults out—when it first walks into his grave little head that adults do not always have divine intelligence, that their judgments are not always wise, their thinking true, their sentences just—his world falls into panic desolation. The gods are fallen and all safety gone. And there is one sure thing about the fall of gods: they do not fall a little; they crash and shatter or sink deeply into green muck. It is a tedious job to build them up again; they never quite shine. And the child’s world is never quite whole again. It is an aching kind of growing.'
+    },
+    {
+        title: 'Charlotte\'s Web',
+        text: '’Why did you do all this for me?’ he asked. ‘I don’t deserve it. I’ve never done anything for you.’ ‘You have been my friend,’ replied Charlotte. ‘That in itself is a tremendous thing.’'
     }
 ];
 
@@ -204,7 +320,135 @@ const entrySeedLocations = [
     {
         latitude: '40.680087',
         longitude: '-73.967745'
-    }
+    },
+    {
+        latitude: '40.710863',
+        longitude: '-74.005629'
+    },
+    {
+        latitude: '40.710863',
+        longitude: '-74.005629'
+    },
+    {
+        latitude: '40.710863',
+        longitude: '-74.005629'
+    },
+    {
+        latitude: '40.710863',
+        longitude: '-74.005629'
+    },
+    {
+        latitude: '40.710863',
+        longitude: '-74.005629'
+    },
+    {
+        latitude: '40.710863',
+        longitude: '-74.005629'
+    },
+    {
+        latitude: '40.710863',
+        longitude: '-74.005629'
+    },
+    {
+        latitude: '40.710863',
+        longitude: '-74.005629'
+    },
+    {
+        latitude: '40.710863',
+        longitude: '-74.005629'
+    },
+    {
+        latitude: '40.710863',
+        longitude: '-74.005629'
+    },
+    {
+        latitude: '40.710863',
+        longitude: '-74.005629'
+    },
+    {
+        latitude: '40.728903',
+        longitude: '-73.996410'
+    },
+    {
+        latitude: '40.728903',
+        longitude: '-73.996410'
+    },
+    {
+        latitude: '40.728903',
+        longitude: '-73.996410'
+    },
+    {
+        latitude: '40.728903',
+        longitude: '-73.996410'
+    },
+    {
+        latitude: '40.728903',
+        longitude: '-73.996410'
+    },
+    {
+        latitude: '40.728903',
+        longitude: '-73.996410'
+    },
+    {
+        latitude: '40.728903',
+        longitude: '-73.996410'
+    },
+    {
+        latitude: '40.728903',
+        longitude: '-73.996410'
+    },
+    {
+        latitude: '40.728903',
+        longitude: '-73.996410'
+    },
+    {
+        latitude: '40.728903',
+        longitude: '-73.996410'
+    },
+    {
+        latitude: '40.781392',
+        longitude: '-73.966425'
+    },
+    {
+        latitude: '40.781392',
+        longitude: '-73.966425'
+    },
+    {
+        latitude: '40.781392',
+        longitude: '-73.966425'
+    },
+    {
+        latitude: '40.781392',
+        longitude: '-73.966425'
+    },
+    {
+        latitude: '40.781392',
+        longitude: '-73.966425'
+    },
+    {
+        latitude: '40.781392',
+        longitude: '-73.966425'
+    },
+    {
+        latitude: '40.781392',
+        longitude: '-73.966425'
+    },
+    {
+        latitude: '40.781392',
+        longitude: '-73.966425'
+    },
+    {
+        latitude: '40.781392',
+        longitude: '-73.966425'
+    },
+    {
+        latitude: '40.781392',
+        longitude: '-73.966425'
+    },
+    {
+        latitude: '40.781392',
+        longitude: '-73.966425'
+    },
 ]
 
 const entryUsers = [
@@ -233,16 +477,24 @@ const entryUsers = [
 
 const entryWeather = [
     {
-        forecast: 'cloudy',
+        forecast: 'Clouds',
         degrees: 88,
+        icon: 'http://openweathermap.org/img/w/03d.png'
     },
     {
-        forecast: 'sunny',
+        forecast: 'Clear',
         degrees: 75,
+        icon: 'http://openweathermap.org/img/w/10d.png'
     },
     {
-        forecast: 'rainy',
+        forecast: 'Rain',
         degrees: 50,
+        icon: 'http://openweathermap.org/img/w/10d.png'
+    },
+    {
+        forecast: 'Snow',
+        degrees: 28,
+        icon: 'http://openweathermap.org/img/w/13d.png'
     }
 ]
 
@@ -277,6 +529,35 @@ const secondSeedFunc = () => {
                 Entry.create({...entrySeed[22], userId: newUsers[0].dataValues.id}),
                 Entry.create({...entrySeed[23], userId: newUsers[0].dataValues.id}),
                 Entry.create({...entrySeed[24], userId: newUsers[1].dataValues.id}),
+                Entry.create({...entrySeed[25], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[26], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[27], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[28], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[29], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[30], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[31], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[32], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[33], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[34], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[35], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[36], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[37], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[38], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[39], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[40], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[41], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[42], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[43], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[44], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[45], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[46], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[47], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[48], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[49], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[50], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[51], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[52], userId: newUsers[0].dataValues.id}),
+                Entry.create({...entrySeed[53], userId: newUsers[0].dataValues.id}),
             ])
         })
         .then(newEntries => {
@@ -287,8 +568,10 @@ const secondSeedFunc = () => {
                         Weather.create({...entryWeather[0], entryId: singleNewEntry.dataValues.id})
                     } else if (idx < 20) {
                         Weather.create({...entryWeather[1], entryId: singleNewEntry.dataValues.id})
-                    } else {
+                    } else if (idx < 26) {
                         Weather.create({...entryWeather[2], entryId: singleNewEntry.dataValues.id})
+                    } else {
+                        Weather.create({...entryWeather[3], entryId: singleNewEntry.dataValues.id})
                     }
                 })
             )
