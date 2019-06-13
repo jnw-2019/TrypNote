@@ -26,6 +26,18 @@ router.get('/user/:userId', (req, res, next) => {
   }).then(userWithEntries => res.send(userWithEntries));
 });
 
+router.get('/limit/:limitnum/user/:userId', (req, res, next) => {
+  User.findByPk(req.params.userId, {
+    include: [
+      { model: Entry, limit: req.params.limitnum },
+    ],
+    order: [
+      // Will escape title and validate DESC against a list of valid direction parameters
+      ['createdAt', 'DESC'],
+    ],
+  }).then(userWithEntries => res.send(userWithEntries));
+});
+
 router.post('/createEntry/users/:userId', (req, res, next) => {
   Entry.create({
     title: req.body.title,
