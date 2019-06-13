@@ -15,11 +15,13 @@ app.use(express.json());
 app.use(cookieParser());
 
 //Use session middleware
-app.use(session({
-  secret: 'needamoresecurekeynow',
-  resave: false,
-  saveUninitialized: false,
-}));
+app.use(
+  session({
+    secret: 'needamoresecurekeynow',
+    resave: false,
+    saveUninitialized: false
+  })
+);
 
 //Bundle file location and index.html
 app.use(express.static(path.join(__dirname, '..', 'public')));
@@ -41,10 +43,12 @@ app.use((req, res, next) => {
 app.use((error, req, res, next) => {
   let errors = [error];
   if (error.errors) {
-    errors = error.errors.map(error => error.message);
+    errors = error.errors.map(err => err.message);
   } else if (error.original) {
     errors = [error.original.message];
   }
+
+  console.error(errors);
   res.status(error.status || 500).send({ errors });
 });
 
