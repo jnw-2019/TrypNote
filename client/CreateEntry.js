@@ -11,15 +11,19 @@ import {
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-const styles = {
+const styles = theme => ({
   Paper: {
     padding: 10,
     textAlign: 'center'
+  },
+  toolbar: theme.mixins.toolbar,
+  lines: {
+    marginTop: 40
+    // height: 100 % -40
+    // alignSelf: 'stretch'
+    // backgroundImage:
   }
-};
-
-const navOverlapFix = theme => ({
-  toolbar: theme.mixins.toolbar
+  // backgroundImage: repeating-linear-gradient(white 0, white 24, steelblue 25)
 });
 
 class CreateEntry extends Component {
@@ -72,7 +76,7 @@ class CreateEntry extends Component {
       <Fragment>
         <div className={classes.toolbar} />
         <form onSubmit={handleSubmit} style={{ marginTop: 10 }}>
-          <Paper>
+          <Paper className>
             <Grid container>
               <Grid item sm={12}>
                 <TextField
@@ -127,8 +131,9 @@ class CreateEntry extends Component {
                 </Grid>
               </Grid>
 
-              <Grid item sm={9}>
+              <Grid item sm={9} className="notebook-paper">
                 <TextField
+                  className="entry-content"
                   id="text"
                   label="Write your thoughts..."
                   name="text"
@@ -171,4 +176,4 @@ const mapStateToProps = ({ user, location, weather }) => ({
   weather
 });
 
-export default connect(mapStateToProps)(withStyles(navOverlapFix)(CreateEntry));
+export default connect(mapStateToProps)(withStyles(styles)(CreateEntry));
