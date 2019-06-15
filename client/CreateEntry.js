@@ -14,18 +14,17 @@ import { connect } from 'react-redux';
 const styles = theme => ({
   Paper: {
     padding: 10,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   toolbar: theme.mixins.toolbar,
   lines: {
-    marginTop: 40
+    marginTop: 40,
     // height: 100 % -40
     // alignSelf: 'stretch'
     // backgroundImage:
-  }
+  },
   // backgroundImage: repeating-linear-gradient(white 0, white 24, steelblue 25)
-};
-
+});
 
 class CreateEntry extends Component {
   constructor(props) {
