@@ -5,7 +5,8 @@ import {
   Typography,
   TextField,
   Button,
-  withStyles
+  withStyles,
+  Avatar,
 } from '@material-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -13,22 +14,39 @@ import { connect } from 'react-redux';
 const styles = {
   Paper: {
     padding: 10,
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 };
 
 const navOverlapFix = theme => ({
-  toolbar: theme.mixins.toolbar
+  toolbar: theme.mixins.toolbar,
 });
 
 class CreateEntry extends Component {
-  constructor() {
-    super();
-    this.state = {
-      title: '',
-      text: ''
-      // entryImages: {} to add feature
-    };
+  constructor(props) {
+    super(props);
+    if (props.match.params.markerName) {
+      //User Came In With An Exact Locatoin From FourSquare Data Off Map
+      this.state = {
+        title: '',
+        text: '',
+        locationName: props.match.params.markerName
+          ? props.match.params.markerName
+          : '',
+        lat: props.match.params.lat ? props.match.params.lat * 1 : '',
+        lon: props.match.params.long ? props.match.params.long * 1 : '',
+        // entryImages: {} to add feature
+      };
+    } else {
+      this.state = {
+        title: '',
+        text: '',
+        locationName: '',
+        lat: '',
+        long: '',
+        // entryImages: {} to add feature
+      };
+    }
   }
 
   handleChange = ({ target }) => {
@@ -37,27 +55,39 @@ class CreateEntry extends Component {
 
   handleSubmit = ev => {
     ev.preventDefault();
-    const { history, user } = this.props;
-    console.log('user', user);
+    const { locationName, lat, lon } = this.state;
+    const { history, user, weather } = this.props;
+    const forecast = weather.weather[0].main;
+    const degrees = weather.main.temp;
+    const icon = `http://openweathermap.org/img/w/${
+      weather.weather[0].icon
+    }.png`;
 
     return axios
       .post(`/api/entries/createEntry/users/${user.id}`, this.state)
+      .then(({ data }) => {
+        console.log('axios data', data);
+        return Promise.all([
+          axios.post(`/api/weathers/${data.id}`, { forecast, degrees, icon }),
+          axios.post(`/api/locations/${data.id}`, { lat, lon, locationName }),
+        ]);
+      })
       .then(() => history.push('/home'));
   };
   render() {
-    const { entryTitle, entryText } = this.state;
+    const { title, text, locationName } = this.state;
     const { handleChange, handleSubmit } = this;
     const { classes, location, weather } = this.props;
     const currentDate = new Date().toDateString();
-    console.log('location', location);
+    // const weatherFound = weather.weather ? weather.weather : null
 
     return (
       <Fragment>
         <div className={classes.toolbar} />
         <form onSubmit={handleSubmit} style={{ marginTop: 10 }}>
-          <Grid container spacing={3}>
-            <Grid item sm={12}>
-              <Paper style={styles.Paper}>
+          <Paper>
+            <Grid container>
+              <Grid item sm={12}>
                 <TextField
                   id="title"
                   label="Title"
@@ -67,44 +97,50 @@ class CreateEntry extends Component {
                   required
                   type="text"
                   fullWidth
-                  value={entryTitle}
+                  value={title}
                   onChange={handleChange}
                 />
-              </Paper>
-            </Grid>
+              </Grid>
+              <Grid item sm={12} container>
+                <Grid item sm container spacing={2}>
+                  <Grid item>
+                    <TextField
+                      id="location"
+                      label="Location"
+                      name="location"
+                      placeholder="Where are you?"
+                      required
+                      type="text"
+                      value={locationName}
+                      onChange={handleChange}
+                    />
+                    <Typography>{currentDate}</Typography>
 
-            <Grid item sm={3}>
-              {location ? (
-                <Paper style={styles.Paper}>
-                  {location.lat}, {location.lon}
-                </Paper>
-              ) : (
-                <Paper style={styles.Paper}>Loading Location</Paper>
-              )}
-            </Grid>
+                    <Typography>
+                      {weather.weather ? (
+                        <Fragment>
+                          <Avatar
+                            src={`http://openweathermap.org/img/w/${
+                              weather.weather[0].icon
+                            }.png`}
+                          />
+                          <Typography>{weather.weather[0].main}</Typography>
+                        </Fragment>
+                      ) : (
+                        'Loading Weather'
+                      )}
+                    </Typography>
 
-            <Grid item sm={3}>
-              <Paper style={styles.Paper}>{currentDate}</Paper>
-            </Grid>
+                    <Typography>
+                      {weather.weather
+                        ? `${weather.main.temp} \xB0F`
+                        : 'Loading Weather'}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
 
-            <Grid item sm={3}>
-              {weather.weather ? (
-                <Paper style={styles.Paper}>{weather.weather[0].main}</Paper>
-              ) : (
-                <Paper style={styles.Paper}>Loading Weather</Paper>
-              )}
-            </Grid>
-
-            <Grid item sm={3}>
-              {weather.weather ? (
-                <Paper style={styles.Paper}>{weather.main.temp}&#176;</Paper>
-              ) : (
-                <Paper style={styles.Paper}>Loading Weather</Paper>
-              )}
-            </Grid>
-
-            <Grid item sm={9}>
-              <Paper style={styles.Paper}>
+              <Grid item sm={9}>
                 <TextField
                   id="text"
                   label="Write your thoughts..."
@@ -114,28 +150,28 @@ class CreateEntry extends Component {
                   required
                   multiline
                   fullWidth
-                  value={entryText}
+                  value={text}
                   onChange={handleChange}
                 />
-              </Paper>
-            </Grid>
+              </Grid>
 
-            <Grid item sm={3}>
-              <Paper>
-                <Typography>images</Typography>
-              </Paper>
+              <Grid item sm={3}>
+                <Paper>
+                  <Typography>images</Typography>
+                </Paper>
+              </Grid>
+              <Grid item>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                >
+                  Log your Entry
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-              >
-                Log your Entry
-              </Button>
-            </Grid>
-          </Grid>
+          </Paper>
         </form>
       </Fragment>
     );
@@ -145,7 +181,7 @@ class CreateEntry extends Component {
 const mapStateToProps = ({ user, location, weather }) => ({
   user,
   location,
-  weather
+  weather,
 });
 
 export default connect(mapStateToProps)(withStyles(navOverlapFix)(CreateEntry));

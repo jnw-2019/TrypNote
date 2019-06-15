@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import {
+  Box
+} from '@material-ui/core';
+import TextAnylzer from './TextAnalyzer';
 
 class Dashboard extends Component {
   constructor() {
     super();
     this.state = {
-      entries: []
+      entries: [],
     };
   }
 
@@ -22,7 +26,13 @@ class Dashboard extends Component {
   };
   render() {
     const { entries } = this.state;
-    return <div>test</div>;
+    return (
+      <div>
+        <Box mt={14}>
+          <TextAnylzer />
+        </Box>
+      </div>)
+      ;
   }
 }
 
