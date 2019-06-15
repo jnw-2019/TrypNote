@@ -1,4 +1,7 @@
+
 const router = require('express').Router();
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op
 const { Topic, TopicKeyword, Entry, User } = require('../db/models');
 
 router.get('/', (req, res, next) => {
@@ -22,7 +25,12 @@ router.get('/:userId', (req, res, next) => {
             userId: req.params.userId
         },
         include: [
-            { model: TopicKeyword },
+            {
+                model: TopicKeyword,
+                where: {
+                    keyword: {[Op.ne]: '-PRON-'}
+                },
+            },
             { model: Entry }
         ],
         order: [

@@ -119,7 +119,27 @@ class TextAnalyzer extends Component {
                             <Paper className={classes.textDisplay}>
                                 {
                                     this.state.analyzerResponse[0] ?
-                                    this.state.analyzerResponse[0].id :
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell>Topic Number</TableCell>
+                                                <TableCell>Keywords</TableCell>
+                                                <TableCell>Entry Coverage</TableCell>
+                                                <TableCell>Postivity</TableCell>
+                                                <TableCell>Sentiment</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {this.state.analyzerResponse.map(item => {
+                                                return (
+                                                    <TableRow key={item.id}>
+                                                        <TableCell>{item.dominantTopicNum}</TableCell>
+                                                        <TableCell></TableCell>
+                                                    </TableRow>
+                                                )
+                                            })}
+                                        </TableBody>
+                                    </Table> :
                                     ''
                                 }
                             </Paper>
