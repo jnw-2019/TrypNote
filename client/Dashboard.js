@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+
 import { Box } from '@material-ui/core';
 import TextAnylzer from './TextAnalyzer';
 import DashboardEntries from './DashboardEntries';
@@ -9,7 +10,7 @@ class Dashboard extends Component {
   constructor() {
     super();
     this.state = {
-      entries: []
+      entries: [],
     };
   }
 
