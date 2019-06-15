@@ -34,13 +34,13 @@
   background: rgba(255, 0, 0, 0.4);
 }
 .entry-lines {
-  margin-top: 40px;
-  height: calc(100% - 40px);
+  margin-top: 50px;
+  height: calc(100% - 30px);
   width: 100%;
   background-image: repeating-linear-gradient(
     white 0px,
-    white 24px,
-    steelblue 25px
+    white 31px,
+    steelblue 32px
   );
 }
 .entry-text {
@@ -74,9 +74,24 @@
 }
 .marker {
   background-image: url('https://findicons.com/files/icons/1300/somatic_xtras/128/journal.png');
+  background-color: inherit;
   background-size: cover;
   width: 30px;
   height: 30px;
-  border-radius: 50%;
+  border: none;
   cursor: pointer;
+}
+
+.notebook-paper {
+  width: 960px;
+  height: 1109px;
+  background: linear-gradient(to bottom, white 29px, #00b0d7 1px);
+  margin: 50px auto;
+  background-size: 100% 30px;
+  position: relative;
+  padding-top: 150px;
+  padding-left: 160px;
+  padding-right: 20px;
+  overflow: hidden;
+  /* border-radius:5px; */
 }

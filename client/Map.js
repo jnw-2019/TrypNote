@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import MapGL, { Marker, NavigationControl, Popup } from 'react-map-gl';
 import config from '../config';
+import MapMarkerButton from './MapMarkerButton';
 
 const FSCLIENTKEY = config.get('FSCLIENTKEY');
 const FSCLIENTSECRET = config.get('FSCLIENTSECRET');
@@ -134,8 +135,9 @@ class Map extends Component {
                 key={marker.id}
                 longitude={marker.location.longitude * 1}
                 latitude={marker.location.latitude * 1}
+                captureClick={true}
               >
-                <div className="marker" />
+                <MapMarkerButton marker={marker} />
               </Marker>
             ))
           : ''}
