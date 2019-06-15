@@ -37,7 +37,7 @@ class App extends Component {
           <Route exact path="/signup" component={SignUp} />
           <Route exact path="/entries/:entryId" component={ViewEntry} />
           <Route exact path="/createEntry" component={CreateEntry} />
-          <Route exact path="/dashboard/:" component={Dashboard} />
+          <Route exact path="/dashboard" component={Dashboard} />
         </Switch>
       </HashRouter>
     );
