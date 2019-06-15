@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import MapGL, { Marker, NavigationControl, Popup } from 'react-map-gl';
 import config from '../config';
+import MapMarkerButton from './MapMarkerButton';
 
 const FSCLIENTKEY = config.get('FSCLIENTKEY');
 const FSCLIENTSECRET = config.get('FSCLIENTSECRET');
@@ -36,7 +37,6 @@ class Map extends Component {
         },
         popupLocation: [],
         venues: [],
-        markerLocation: [],
       };
     } else {
       this.state = {
@@ -51,7 +51,6 @@ class Map extends Component {
         },
         popupLocation: [],
         venues: [],
-        markerLocation: [],
       };
     }
   }
@@ -75,13 +74,9 @@ class Map extends Component {
         },
         popupLocation: [],
         venues: [],
-        markerLocation: [],
       });
     }
   }
-  displayMarkerDetails = (long, lat) => {
-    this.setState({ markerLocation: [long, lat] });
-  };
   displayLocationOptions = ev => {
     axios
       .get(
@@ -114,10 +109,9 @@ class Map extends Component {
       overflow: 'hidden',
     };
 
-    const { viewport, popupLocation, venues, markerLocation } = this.state;
+    const { viewport, popupLocation, venues } = this.state;
     const { entries } = this.props;
-    const { displayLocationOptions, displayMarkerDetails } = this;
-    console.log(markerLocation);
+    const { displayLocationOptions } = this;
     return (
       <MapGL
         {...viewport}
@@ -143,31 +137,8 @@ class Map extends Component {
                 latitude={marker.location.latitude * 1}
                 captureClick={true}
               >
-                <div
-                  className="marker"
-                  onClick={() =>
-                    displayMarkerDetails(
-                      marker.location.longitude * 1,
-                      marker.location.latitude * 1
-                    )
-                  }
-                />
+                <MapMarkerButton marker={marker} />
               </Marker>
-            ))
-          : ''}
-        {markerLocation.length
-          ? markerLocation.map((markerInfo, idx) => (
-              <Popup
-                key={idx}
-                latitude={markerLocation[1]}
-                longitude={markerLocation[0]}
-                closeButton={true}
-                closeOnClick={false}
-                onClose={() => this.setState({ markerLocation: [] })}
-                anchor="top"
-              >
-                <div> Hey </div>
-              </Popup>
             ))
           : ''}
         {popupLocation.length

@@ -28,29 +28,35 @@ const syncAndSeed = () => {
         Promise.all([
           Entry.create({
             title: faker.fake('{{lorem.sentence}}'),
-            text: faker.fake('{{lorem.paragraph}}'),
+            text: `${faker.fake('{{lorem.paragraphs}}')} \n ${faker.fake(
+              '{{lorem.paragraphs}}'
+            )}`,
             userId: uploadusers[0].dataValues.id,
           }),
           Entry.create({
             title: faker.fake('{{lorem.sentence}}'),
-            text: faker.fake('{{lorem.paragraph}}'),
-            headerImage: faker.fake('{{image.business}}'),
+            text: `${faker.fake('{{lorem.paragraphs}}')} \n ${faker.fake(
+              '{{lorem.paragraphs}}'
+            )}`,
+            headerImage:
+              'https://d39l2hkdp2esp1.cloudfront.net/img/photo/139307/139307_00_2x.jpg',
             userId: uploadusers[0].dataValues.id,
           }),
           Entry.create({
             title: faker.fake('{{lorem.sentence}}'),
-            text: faker.fake('{{lorem.paragraph}}'),
+            text: faker.fake('{{lorem.paragraphs}}'),
             userId: uploadusers[0].dataValues.id,
           }),
           Entry.create({
             title: faker.fake('{{lorem.sentence}}'),
-            text: faker.fake('{{lorem.paragraph}}'),
-            headerImage: faker.fake('{{image.technics}}'),
+            text: faker.fake('{{lorem.paragraphs}}'),
+            headerImage:
+              'https://www.brownstoner.com/wp-content/uploads/2019/03/prospect-park-alliance-tours-brooklyn-1-1.jpg',
             userId: uploadusers[0].dataValues.id,
           }),
           Entry.create({
             title: faker.fake('{{lorem.sentence}}'),
-            text: faker.fake('{{lorem.paragraph}}'),
+            text: faker.fake('{{lorem.paragraphs}}'),
             userId: uploadusers[0].dataValues.id,
           }),
         ]).then(entries => {
