@@ -37,7 +37,14 @@ class App extends Component {
           <Route exact path="/signup" component={SignUp} />
           <Route exact path="/entries/:entryId" component={ViewEntry} />
           <Route exact path="/createEntry" component={CreateEntry} />
-          <Route exact path="/dashboard" component={Dashboard} />
+
+          <Route
+            exact
+            path="/createEntry/:markerName/:address/:lat/:long"
+            component={CreateEntry}
+          />
+          <Route exact path="/dashboard/:entryFilter?" component={Dashboard} />
+
         </Switch>
       </HashRouter>
     );
@@ -47,13 +54,13 @@ class App extends Component {
 const mapStateToProps = ({ user }) => {
   console.log('app user', user);
   return {
-    user
+    user,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    requestSyncCookie: () => dispatch(syncCookieAndSession())
+    requestSyncCookie: () => dispatch(syncCookieAndSession()),
   };
 };
 

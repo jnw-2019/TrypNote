@@ -6,31 +6,51 @@ import {
   TextField,
   Button,
   withStyles,
-  Avatar
+  Avatar,
 } from '@material-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-const styles = {
+const styles = theme => ({
   Paper: {
     padding: 10,
-    textAlign: 'center'
-  }
-};
-
-const navOverlapFix = theme => ({
-  toolbar: theme.mixins.toolbar
+    textAlign: 'center',
+  },
+  toolbar: theme.mixins.toolbar,
+  lines: {
+    marginTop: 40,
+    // height: 100 % -40
+    // alignSelf: 'stretch'
+    // backgroundImage:
+  },
+  // backgroundImage: repeating-linear-gradient(white 0, white 24, steelblue 25)
 });
 
 class CreateEntry extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      title: '',
-      text: '',
-      locationName: props.weather ? props.weather.name : 'Loading Location'
-      // entryImages: {} to add feature
-    };
+    if (props.match.params.markerName) {
+      //User Came In With An Exact Locatoin From FourSquare Data Off Map
+      this.state = {
+        title: '',
+        text: '',
+        locationName: props.match.params.markerName
+          ? props.match.params.markerName
+          : '',
+        lat: props.match.params.lat ? props.match.params.lat * 1 : '',
+        lon: props.match.params.long ? props.match.params.long * 1 : '',
+        // entryImages: {} to add feature
+      };
+    } else {
+      this.state = {
+        title: '',
+        text: '',
+        locationName: '',
+        lat: '',
+        long: '',
+        // entryImages: {} to add feature
+      };
+    }
   }
 
   handleChange = ({ target }) => {
@@ -39,16 +59,13 @@ class CreateEntry extends Component {
 
   handleSubmit = ev => {
     ev.preventDefault();
-    const { locationName } = this.state;
-    const { history, user, weather, location } = this.props;
+    const { locationName, lat, lon } = this.state;
+    const { history, user, weather } = this.props;
     const forecast = weather.weather[0].main;
     const degrees = weather.main.temp;
     const icon = `http://openweathermap.org/img/w/${
       weather.weather[0].icon
     }.png`;
-
-    const lat = location.lat;
-    const lon = location.lon;
 
     return axios
       .post(`/api/entries/createEntry/users/${user.id}`, this.state)
@@ -56,7 +73,7 @@ class CreateEntry extends Component {
         console.log('axios data', data);
         return Promise.all([
           axios.post(`/api/weathers/${data.id}`, { forecast, degrees, icon }),
-          axios.post(`/api/locations/${data.id}`, { lat, lon, locationName })
+          axios.post(`/api/locations/${data.id}`, { lat, lon, locationName }),
         ]);
       })
       .then(() => history.push('/home'));
@@ -72,7 +89,7 @@ class CreateEntry extends Component {
       <Fragment>
         <div className={classes.toolbar} />
         <form onSubmit={handleSubmit} style={{ marginTop: 10 }}>
-          <Paper>
+          <Paper className>
             <Grid container>
               <Grid item sm={12}>
                 <TextField
@@ -127,8 +144,9 @@ class CreateEntry extends Component {
                 </Grid>
               </Grid>
 
-              <Grid item sm={9}>
+              <Grid item sm={9} className="notebook-paper">
                 <TextField
+                  className="entry-content"
                   id="text"
                   label="Write your thoughts..."
                   name="text"
@@ -168,7 +186,7 @@ class CreateEntry extends Component {
 const mapStateToProps = ({ user, location, weather }) => ({
   user,
   location,
-  weather
+  weather,
 });
 
-export default connect(mapStateToProps)(withStyles(navOverlapFix)(CreateEntry));
+export default connect(mapStateToProps)(withStyles(styles)(CreateEntry));

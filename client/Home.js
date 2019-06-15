@@ -14,6 +14,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import Map from './Map';
 import dateFormat from 'dateformat';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+import IconButton from '@material-ui/core/IconButton';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const mapStateToProps = ({ user }) => {
   return { user };
@@ -82,6 +86,16 @@ class Home extends Component {
                               {`${entry.weather.degrees}°`}
                             </em>
                           </div>
+                        }
+                        action={
+                          <Link
+                            component={RouterLink}
+                            to={`/entries/${entry.id}`}
+                          >
+                            <IconButton aria-label="Settings">
+                              <MoreVertIcon />
+                            </IconButton>
+                          </Link>
                         }
                         title={entry.location.markerName}
                         subheader={dateFormat(
