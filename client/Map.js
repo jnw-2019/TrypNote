@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -84,6 +85,7 @@ class Map extends Component {
       )
       .then(response => response.data)
       .then(venues => {
+        console.log(venues);
         this.setState({
           popupLocation: ev.lngLat,
           venues: venues.response.venues,
@@ -169,9 +171,17 @@ class Map extends Component {
                               }
                             />
                             <ListItemSecondaryAction>
-                              <IconButton>
-                                <AddIcon />
-                              </IconButton>
+                              <Link
+                                to={`/createEntry/${venue.name}/${`${
+                                  venue.location.formattedAddress[0]
+                                },${venue.location.formattedAddress[1]}`}/${
+                                  venue.location.lat
+                                }/${venue.location.lng}`}
+                              >
+                                <IconButton>
+                                  <AddIcon />
+                                </IconButton>
+                              </Link>
                             </ListItemSecondaryAction>
                           </ListItem>
                         ))

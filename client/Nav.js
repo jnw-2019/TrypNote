@@ -195,7 +195,7 @@ const Nav = props => {
             { title: 'Dashboard', path: '/dashboard' },
             { title: 'Scrapbook', path: '/scrapbook' },
           ].map(item => (
-            <ListItem button key={item.title}>
+            <ListItem button key={item.title} onClick={handleDrawerClose}>
               <Link to={item.path}>
                 <ListItemText primary={item.title} />
               </Link>{' '}
