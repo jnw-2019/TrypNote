@@ -3,6 +3,8 @@ const User = require('./User');
 const Location = require('./Location');
 const Weather = require('./Weather');
 const Category = require('./Category');
+const Topic = require('./Topic');
+const TopicKeyword = require('./TopicKeyword');
 
 Entry.hasOne(Location);
 Entry.hasOne(Weather);
@@ -14,11 +16,19 @@ Weather.belongsTo(Category);
 Location.belongsTo(Category);
 Entry.belongsTo(User);
 User.hasMany(Entry);
+Entry.belongsToMany(Topic, {through: 'topicentry'});
+Topic.belongsToMany(Entry, {through: 'topicentry'});
+Topic.hasMany(TopicKeyword);
+TopicKeyword.belongsTo(Topic);
+User.hasMany(Topic);
+Topic.belongsTo(User);
 
 module.exports = {
   Entry,
   Location,
   Weather,
   Category,
-  User
+  User,
+  Topic,
+  TopicKeyword
 };
