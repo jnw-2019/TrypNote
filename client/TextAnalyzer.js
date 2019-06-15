@@ -30,6 +30,9 @@ const styles = {
     rightIcon: {
         marginLeft: theme.spacing(1),
     },
+    tableHeader: {
+        fontWeight: 600
+    }
 };
 
 class TextAnalyzer extends Component {
@@ -121,8 +124,8 @@ class TextAnalyzer extends Component {
                                     this.state.analyzerResponse[0] ?
                                     <Table>
                                         <TableHead>
-                                            <TableRow>
-                                                <TableCell>Topic Number</TableCell>
+                                            <TableRow className={classes.tableHeader}>
+                                                <TableCell>Theme Number</TableCell>
                                                 <TableCell>Keywords</TableCell>
                                                 <TableCell>Entry Coverage</TableCell>
                                                 <TableCell>Postivity</TableCell>
@@ -134,7 +137,14 @@ class TextAnalyzer extends Component {
                                                 return (
                                                     <TableRow key={item.id}>
                                                         <TableCell>{item.dominantTopicNum}</TableCell>
-                                                        <TableCell></TableCell>
+                                                        <TableCell>
+                                                            {
+                                                                item.topickeywords.map(topic => topic.keyword).join(', ')
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>{item.percentDocuments}</TableCell>
+                                                        <TableCell>Temp</TableCell>
+                                                        <TableCell>Temp</TableCell>
                                                     </TableRow>
                                                 )
                                             })}
