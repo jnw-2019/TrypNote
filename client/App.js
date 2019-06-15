@@ -47,13 +47,13 @@ class App extends Component {
 const mapStateToProps = ({ user }) => {
   console.log('app user', user);
   return {
-    user
+    user,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    requestSyncCookie: () => dispatch(syncCookieAndSession())
+    requestSyncCookie: () => dispatch(syncCookieAndSession()),
   };
 };
 

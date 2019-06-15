@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
-import FolderIcon from '@material-ui/icons/Folder';
 import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
 import MapGL, { Marker, NavigationControl, Popup } from 'react-map-gl';
 import config from '../config';
 
@@ -80,9 +76,6 @@ class Map extends Component {
     }
   }
   displayLocationOptions = ev => {
-    console.log('User Clicked The Map');
-    console.log(ev);
-    console.log(ev.lngLat);
     axios
       .get(
         `https://api.foursquare.com/v2/venues/search?client_id=${FSCLIENTKEY}&client_secret=${FSCLIENTSECRET}&v=20190425&ll=${
@@ -91,7 +84,6 @@ class Map extends Component {
       )
       .then(response => response.data)
       .then(venues => {
-        console.log(venues);
         this.setState({
           popupLocation: ev.lngLat,
           venues: venues.response.venues,
@@ -115,10 +107,8 @@ class Map extends Component {
     };
 
     const { viewport, popupLocation, venues } = this.state;
-    const { entries, location } = this.props;
+    const { entries } = this.props;
     const { displayLocationOptions } = this;
-
-    console.log(popupLocation);
     return (
       <MapGL
         {...viewport}
@@ -129,7 +119,6 @@ class Map extends Component {
         style={style}
         //This actually updates the viewpoint value in state which then renders the map again
         onViewportChange={viewport => {
-          console.log(viewport);
           this.setState({ viewport });
         }}
         onClick={displayLocationOptions}
