@@ -88,8 +88,8 @@
   margin: 50px auto;
   background-size: 100% 30px;
   position: relative;
-  padding-top: 150px;
-  padding-left: 160px;
+  /* padding-top: 75px; */
+  padding-left: 80px;
   padding-right: 20px;
   overflow: hidden;
   /* border-radius:5px; */

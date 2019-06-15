@@ -6,26 +6,45 @@ import {
   TextField,
   Button,
   withStyles,
-  Avatar,
+  Avatar
 } from '@material-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { borderLeft } from '@material-ui/system';
 
 const styles = theme => ({
+  notebookPaper: {
+    background: 'linear-gradient(to bottom, white 29px, #00b0d7 24px)',
+    margin: '50px auto',
+    backgroundSize: '100% 30px',
+    paddingLeft: '80px',
+    fontSize: '20px',
+    lineHeight: '30px',
+    fontFamily: 'Merienda',
+    '&:before': {
+      // zIndex: '1',
+      left: '40px',
+      // height: '100%',
+      width: '1px',
+      background: '#db4034'
+    }
+  },
+  entryTitle: {
+    fontFamily: 'Forum',
+    fontSize: '50px'
+  },
+  // redBorder: {
+  //   background: 'linear-gradient(to bottom, white 29px, #00b0d7 24px)',
+  //   margin: '50px auto',
+  //   backgroundSize: '100% 30px',
+  //   borderRight: '1px solid red'
+  // },
   Paper: {
     padding: 10,
     textAlign: 'center'
   },
-  toolbar: theme.mixins.toolbar,
-  lines: {
-    marginTop: 40
-    // height: 100 % -40
-    // alignSelf: 'stretch'
-    // backgroundImage:
-  }
-  // backgroundImage: repeating-linear-gradient(white 0, white 24, steelblue 25)
-};
-
+  toolbar: theme.mixins.toolbar
+});
 
 class CreateEntry extends Component {
   constructor(props) {
@@ -39,7 +58,7 @@ class CreateEntry extends Component {
           ? props.match.params.markerName
           : '',
         lat: props.match.params.lat ? props.match.params.lat * 1 : '',
-        lon: props.match.params.long ? props.match.params.long * 1 : '',
+        lon: props.match.params.long ? props.match.params.long * 1 : ''
         // entryImages: {} to add feature
       };
     } else {
@@ -48,7 +67,7 @@ class CreateEntry extends Component {
         text: '',
         locationName: '',
         lat: '',
-        long: '',
+        lon: ''
         // entryImages: {} to add feature
       };
     }
@@ -74,7 +93,7 @@ class CreateEntry extends Component {
         console.log('axios data', data);
         return Promise.all([
           axios.post(`/api/weathers/${data.id}`, { forecast, degrees, icon }),
-          axios.post(`/api/locations/${data.id}`, { lat, lon, locationName }),
+          axios.post(`/api/locations/${data.id}`, { lat, lon, locationName })
         ]);
       })
       .then(() => history.push('/home'));
@@ -84,16 +103,20 @@ class CreateEntry extends Component {
     const { handleChange, handleSubmit } = this;
     const { classes, location, weather } = this.props;
     const currentDate = new Date().toDateString();
-    // const weatherFound = weather.weather ? weather.weather : null
 
     return (
       <Fragment>
         <div className={classes.toolbar} />
         <form onSubmit={handleSubmit} style={{ marginTop: 10 }}>
-          <Paper className>
+          <Paper>
             <Grid container>
               <Grid item sm={12}>
                 <TextField
+                  InputProps={{
+                    classes: {
+                      input: classes.entryTitle
+                    }
+                  }}
                   id="title"
                   label="Title"
                   name="title"
@@ -110,9 +133,9 @@ class CreateEntry extends Component {
                 <Grid item sm container spacing={2}>
                   <Grid item>
                     <TextField
-                      id="location"
+                      id="locationName"
                       label="Location"
-                      name="location"
+                      name="locationName"
                       placeholder="Where are you?"
                       required
                       type="text"
@@ -121,7 +144,7 @@ class CreateEntry extends Component {
                     />
                     <Typography>{currentDate}</Typography>
 
-                    <Typography>
+                    <Fragment>
                       {weather.weather ? (
                         <Fragment>
                           <Avatar
@@ -134,7 +157,7 @@ class CreateEntry extends Component {
                       ) : (
                         'Loading Weather'
                       )}
-                    </Typography>
+                    </Fragment>
 
                     <Typography>
                       {weather.weather
@@ -145,26 +168,33 @@ class CreateEntry extends Component {
                 </Grid>
               </Grid>
 
-              <Grid item sm={9} className="notebook-paper">
-                <TextField
-                  className="entry-content"
-                  id="text"
-                  label="Write your thoughts..."
-                  name="text"
-                  placeholder="What's on your mind?"
-                  margin="normal"
-                  required
-                  multiline
-                  fullWidth
-                  value={text}
-                  onChange={handleChange}
-                />
-              </Grid>
+              <Grid container>
+                <Grid item sm={9}>
+                  <TextField
+                    rows={6}
+                    InputProps={{
+                      classes: {
+                        input: classes.notebookPaper
+                      }
+                    }}
+                    id="text"
+                    label="Write your thoughts..."
+                    name="text"
+                    placeholder="What's on your mind?"
+                    margin="normal"
+                    required
+                    multiline
+                    fullWidth
+                    value={text}
+                    onChange={handleChange}
+                  />
+                </Grid>
 
-              <Grid item sm={3}>
-                <Paper>
-                  <Typography>images</Typography>
-                </Paper>
+                <Grid item sm={3}>
+                  <Paper>
+                    <Typography>images</Typography>
+                  </Paper>
+                </Grid>
               </Grid>
               <Grid item>
                 <Button
@@ -187,7 +217,7 @@ class CreateEntry extends Component {
 const mapStateToProps = ({ user, location, weather }) => ({
   user,
   location,
-  weather,
+  weather
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(CreateEntry));
