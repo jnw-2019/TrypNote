@@ -41,7 +41,7 @@ const styles = theme => ({
   // },
   Paper: {
     padding: 10,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   toolbar: theme.mixins.toolbar
 });
