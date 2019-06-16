@@ -41,6 +41,7 @@ class TextAnalyzer extends Component {
         super(props);
         this.state = {
             analyzerResponse: [],
+            sentimentResponse: {},
             engineRunning: false
         }
     }
@@ -56,12 +57,12 @@ class TextAnalyzer extends Component {
                 const postObj = tempObj.join(' ')
                 axios.post('http://127.0.0.1:5000/analyze', { postObj })
                     .then(response => response.data)
-                    .then(nplData => {
+                    .then(nlpData => {
                         const topicUpload = {
-                            topics: JSON.parse(nplData.results),
+                            topics: JSON.parse(nlpData.results),
                             entries: data.entries
                         }
-                        console.log(JSON.parse(nplData.results))
+                        console.log(JSON.parse(nlpData.results))
                         axios.post(`/api/topics/${userId}`, topicUpload)
                             .then(responseTopics => console.log(responseTopics))
                             .then(() => {
@@ -69,7 +70,30 @@ class TextAnalyzer extends Component {
                                     .then(resTopics => console.log(resTopics))
                             })
                             .catch(error => console.log(error))
-                        this.setState({ analyzerResponse: nplData.results, engineRunning: false })
+                        this.setState({ analyzerResponse: nlpData.results, engineRunning: false })
+                    })
+            })
+    }
+
+    runSentiment = () => {
+        //this.setState({ engineRunning: true })
+        // Need to make dynamic
+        const userId = 3
+        axios.get(`/api/entries/limit/8/user/${userId}`)
+            .then(response => response.data)
+            .then(data => {
+                const tempObj = data.entries.map(item => item.text);
+                const postObj = tempObj.join(' ')
+                axios.post('http://127.0.0.1:5000/sentiment', { postObj })
+                    .then(response => response.data)
+                    .then(nlpData => {
+                        nlpData.entries = data.entries;
+                        axios.post(`/api/sentiments/`, nlpData)
+                            .then(response => response.data)
+                            .then(data => {
+                                this.setState({ sentimentResponse: data })
+                            })
+                            .catch(error => console.log(error));
                     })
             })
     }
@@ -109,7 +133,7 @@ class TextAnalyzer extends Component {
                 </Box>
                 <Grid container spacing={2} direction="row" justify="flex-start" alignItems="center">
                     <Grid item>
-                        <Button variant="contained" color="primary" onClick={this.testApiRoute}>
+                        <Button variant="contained" color="primary" onClick={this.runSentiment}>
                             Analyze
                             <Box className={classes.rightIcon}>
                                 <Input />
@@ -128,8 +152,6 @@ class TextAnalyzer extends Component {
                                                 <TableCell>Theme Number</TableCell>
                                                 <TableCell>Keywords</TableCell>
                                                 <TableCell>Entry Coverage</TableCell>
-                                                <TableCell>Postivity</TableCell>
-                                                <TableCell>Sentiment</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
@@ -143,8 +165,6 @@ class TextAnalyzer extends Component {
                                                             }
                                                         </TableCell>
                                                         <TableCell>{item.percentDocuments}</TableCell>
-                                                        <TableCell>Temp</TableCell>
-                                                        <TableCell>Temp</TableCell>
                                                     </TableRow>
                                                 )
                                             })}

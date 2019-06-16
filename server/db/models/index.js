@@ -5,6 +5,7 @@ const Weather = require('./Weather');
 const Category = require('./Category');
 const Topic = require('./Topic');
 const TopicKeyword = require('./TopicKeyword');
+const Sentiment = require('./Sentiment');
 
 Entry.hasOne(Location);
 Entry.hasOne(Weather);
@@ -22,6 +23,8 @@ Topic.hasMany(TopicKeyword);
 TopicKeyword.belongsTo(Topic);
 User.hasMany(Topic);
 Topic.belongsTo(User);
+Sentiment.hasMany(Entry);
+Entry.belongsTo(Sentiment);
 
 module.exports = {
   Entry,
@@ -30,5 +33,6 @@ module.exports = {
   Category,
   User,
   Topic,
-  TopicKeyword
+  TopicKeyword,
+  Sentiment
 };
