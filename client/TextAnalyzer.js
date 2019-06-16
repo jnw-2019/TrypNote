@@ -10,9 +10,17 @@ import {
     TableBody,
     TableCell,
     TableHead,
-    TableRow
+    TableRow,
+    Card,
+    CardActionArea,
+    CardContent
 } from '@material-ui/core';
 import { Input } from '@material-ui/icons';
+import {
+    red,
+    deepPurple,
+    blueGrey
+} from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import axios from 'axios';
@@ -32,6 +40,18 @@ const styles = {
     },
     tableHeader: {
         fontWeight: 600
+    },
+    negative: {
+        backgroundColor: red[900],
+        color: 'white'
+    },
+    positive: {
+        backgroundColor: deepPurple[900],
+        color: 'white'
+    },
+    fear: {
+        backgroundColor: blueGrey[500],
+        color: 'white'
     }
 };
 
@@ -41,6 +61,9 @@ class TextAnalyzer extends Component {
         super(props);
         this.state = {
             analyzerResponse: [],
+            sentimentResponse: {},
+            skew: '',
+            emotion: '',
             engineRunning: false
         }
     }
@@ -48,34 +71,80 @@ class TextAnalyzer extends Component {
     runTextAnalyzer = () => {
         this.setState({ engineRunning: true })
         // Need to make dynamic
-        const userId = 3
-        axios.get(`/api/entries/limit/6/user/${userId}`)
+        const userId = 3;
+        let textId = 0;
+        axios.get(`/api/entries/limit/8/user/${userId}`)
             .then(response => response.data)
             .then(data => {
                 const tempObj = data.entries.map(item => item.text);
                 const postObj = tempObj.join(' ')
                 axios.post('http://127.0.0.1:5000/analyze', { postObj })
                     .then(response => response.data)
-                    .then(nplData => {
+                    .then(nlpData => {
                         const topicUpload = {
-                            topics: JSON.parse(nplData.results),
+                            topics: JSON.parse(nlpData.results),
                             entries: data.entries
                         }
-                        console.log(JSON.parse(nplData.results))
+                        console.log(JSON.parse(nlpData.results))
                         axios.post(`/api/topics/${userId}`, topicUpload)
-                            .then(responseTopics => console.log(responseTopics))
-                            .then(() => {
-                                axios.get(`/api/topics/${userId}`)
-                                    .then(resTopics => console.log(resTopics))
+                            .then(response => response.data)
+                            .then((textAnalyze) => {
+                                axios.get(`/api/topics/${userId}/textanalyze/${textAnalyze.id}`)
+                                    .then(resTopics => {
+                                        textId = textAnalyze.id
+                                        this.setState({ analyzerResponse: resTopics.data, engineRunning: false })
+                                    })
+                                    .catch(error => console.log(error))
                             })
-                            .catch(error => console.log(error))
-                        this.setState({ analyzerResponse: nplData.results, engineRunning: false })
+                            .catch(error => console.log(error));
+                    })
+            })
+        return textId
+    }
+
+    runSentiment = () => {
+        //this.setState({ engineRunning: true })
+        // Need to make dynamic
+        const userId = 3
+        axios.get(`/api/entries/limit/8/user/${userId}`)
+            .then(response => response.data)
+            .then(data => {
+                const tempObj = data.entries.map(item => item.text);
+                const postObj = tempObj.join(' ')
+                axios.post('http://127.0.0.1:5000/sentiment', { postObj })
+                    .then(response => response.data)
+                    .then(nlpData => {
+                        nlpData.entries = data.entries;
+                        axios.post(`/api/sentiments/`, nlpData)
+                            .then(response => response.data)
+                            .then(data => {
+                                const newStateObj = {sentimentResponse: data}
+                                // Negative-Positive sentitment
+                                if (data.compound < 0) {
+                                    newStateObj.skew = 'negative';
+                                } else {
+                                    newStateObj.skew = 'positive';
+                                }
+                                const emotions = ['anger', 'anticipation', 'disgust', 'fear', 'joy', 'sadness', 'surprise', 'trust'];
+                                const maxEmotion = {value: 0, emotion: ''};
+                                emotions.forEach(item => {
+                                    if (data[item] > maxEmotion.value) {
+                                        maxEmotion.value = data[item];
+                                        maxEmotion.emotion = item;
+                                    }
+                                })
+                                newStateObj.emotion = maxEmotion.emotion
+                                // Prominent emotion
+                                console.log(data)
+                                this.setState(newStateObj)
+                            })
+                            .catch(error => console.log(error));
                     })
             })
     }
 
     testApiRoute = () => {
-        axios.get(`/api/entries/limit/6/user/3`)
+        axios.get(`/api/entries/limit/8/user/3`)
             .then(response => {
                 const responseExample = {topics: {
                     Dominant_Topic: {0: 0, 1: 1, 2: 2, 3: 3},
@@ -92,10 +161,15 @@ class TextAnalyzer extends Component {
                     .then(data => console.log(data))
                     .then(() => {
                         axios.get(`/api/topics/3`)
-                            .then( resTopics => this.setState({ analyzerResponse: resTopics.data, engineRunning: false }) )
+                            .then( resTopics => this.setState({ analyzerResponse: resTopics.data }) )
                     })
                     .catch(error => console.log(error))
             })
+    }
+
+    runNLP = () => {
+        this.runTextAnalyzer()
+        this.runSentiment()
     }
 
     render() {
@@ -109,7 +183,7 @@ class TextAnalyzer extends Component {
                 </Box>
                 <Grid container spacing={2} direction="row" justify="flex-start" alignItems="center">
                     <Grid item>
-                        <Button variant="contained" color="primary" onClick={this.testApiRoute}>
+                        <Button variant="contained" color="primary" onClick={this.runNLP}>
                             Analyze
                             <Box className={classes.rightIcon}>
                                 <Input />
@@ -122,34 +196,62 @@ class TextAnalyzer extends Component {
                             <Paper className={classes.textDisplay}>
                                 {
                                     this.state.analyzerResponse[0] ?
-                                    <Table>
-                                        <TableHead>
-                                            <TableRow className={classes.tableHeader}>
-                                                <TableCell>Theme Number</TableCell>
-                                                <TableCell>Keywords</TableCell>
-                                                <TableCell>Entry Coverage</TableCell>
-                                                <TableCell>Postivity</TableCell>
-                                                <TableCell>Sentiment</TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {this.state.analyzerResponse.map(item => {
-                                                return (
-                                                    <TableRow key={item.id}>
-                                                        <TableCell>{item.dominantTopicNum}</TableCell>
-                                                        <TableCell>
-                                                            {
-                                                                item.topickeywords.map(topic => topic.keyword).join(', ')
-                                                            }
-                                                        </TableCell>
-                                                        <TableCell>{item.percentDocuments}</TableCell>
-                                                        <TableCell>Temp</TableCell>
-                                                        <TableCell>Temp</TableCell>
-                                                    </TableRow>
-                                                )
-                                            })}
-                                        </TableBody>
-                                    </Table> :
+                                    <div>
+                                        <Grid
+                                            container
+                                            justify="center"
+                                            alignItems="center"
+                                            direction="row"
+                                            spacing={2}
+                                        >
+                                            <Grid item xs>
+                                                <Card className={classes[this.state.skew]}>
+                                                    <CardActionArea>
+                                                        <CardContent justify="center">
+                                                            <Typography gutterBottom component="h3">
+                                                                Sentiment - {this.state.skew}
+                                                            </Typography>
+                                                        </CardContent>
+                                                    </CardActionArea>
+                                                </Card>
+                                            </Grid>
+                                            <Grid item xs>
+                                                <Card className={classes[this.state.emotion]}>
+                                                    <CardActionArea>
+                                                        <CardContent justify="center">
+                                                            <Typography gutterBottom component="h3">
+                                                                Emotion - {this.state.emotion}
+                                                            </Typography>
+                                                        </CardContent>
+                                                    </CardActionArea>
+                                                </Card>
+                                            </Grid>
+                                        </Grid>
+                                        <Table>
+                                            <TableHead>
+                                                <TableRow className={classes.tableHeader}>
+                                                    <TableCell>Theme Number</TableCell>
+                                                    <TableCell>Keywords</TableCell>
+                                                    <TableCell>Entry Coverage</TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                {this.state.analyzerResponse.map(item => {
+                                                    return (
+                                                        <TableRow key={item.id}>
+                                                            <TableCell>{item.dominantTopicNum}</TableCell>
+                                                            <TableCell>
+                                                                {
+                                                                    item.topickeywords.map(topic => topic.keyword).join(', ')
+                                                                }
+                                                            </TableCell>
+                                                            <TableCell>{item.percentDocuments}</TableCell>
+                                                        </TableRow>
+                                                    )
+                                                })}
+                                            </TableBody>
+                                        </Table>
+                                    </div> :
                                     ''
                                 }
                             </Paper>
