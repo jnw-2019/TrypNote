@@ -10,9 +10,17 @@ import {
     TableBody,
     TableCell,
     TableHead,
-    TableRow
+    TableRow,
+    Card,
+    CardActionArea,
+    CardContent
 } from '@material-ui/core';
 import { Input } from '@material-ui/icons';
+import {
+    red,
+    deepPurple,
+    blueGrey
+} from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import axios from 'axios';
@@ -32,6 +40,18 @@ const styles = {
     },
     tableHeader: {
         fontWeight: 600
+    },
+    negative: {
+        backgroundColor: red[900],
+        color: 'white'
+    },
+    positive: {
+        backgroundColor: deepPurple[900],
+        color: 'white'
+    },
+    fear: {
+        backgroundColor: blueGrey[500],
+        color: 'white'
     }
 };
 
@@ -42,6 +62,8 @@ class TextAnalyzer extends Component {
         this.state = {
             analyzerResponse: [],
             sentimentResponse: {},
+            skew: '',
+            emotion: '',
             engineRunning: false
         }
     }
@@ -49,7 +71,8 @@ class TextAnalyzer extends Component {
     runTextAnalyzer = () => {
         this.setState({ engineRunning: true })
         // Need to make dynamic
-        const userId = 3
+        const userId = 3;
+        let textId = 0;
         axios.get(`/api/entries/limit/8/user/${userId}`)
             .then(response => response.data)
             .then(data => {
@@ -68,6 +91,7 @@ class TextAnalyzer extends Component {
                             .then((textAnalyze) => {
                                 axios.get(`/api/topics/${userId}/textanalyze/${textAnalyze.id}`)
                                     .then(resTopics => {
+                                        textId = textAnalyze.id
                                         this.setState({ analyzerResponse: resTopics.data, engineRunning: false })
                                     })
                                     .catch(error => console.log(error))
@@ -75,6 +99,7 @@ class TextAnalyzer extends Component {
                             .catch(error => console.log(error));
                     })
             })
+        return textId
     }
 
     runSentiment = () => {
@@ -93,7 +118,25 @@ class TextAnalyzer extends Component {
                         axios.post(`/api/sentiments/`, nlpData)
                             .then(response => response.data)
                             .then(data => {
-                                this.setState({ sentimentResponse: data })
+                                const newStateObj = {sentimentResponse: data}
+                                // Negative-Positive sentitment
+                                if (data.compound < 0) {
+                                    newStateObj.skew = 'negative';
+                                } else {
+                                    newStateObj.skew = 'positive';
+                                }
+                                const emotions = ['anger', 'anticipation', 'disgust', 'fear', 'joy', 'sadness', 'surprise', 'trust'];
+                                const maxEmotion = {value: 0, emotion: ''};
+                                emotions.forEach(item => {
+                                    if (data[item] > maxEmotion.value) {
+                                        maxEmotion.value = data[item];
+                                        maxEmotion.emotion = item;
+                                    }
+                                })
+                                newStateObj.emotion = maxEmotion.emotion
+                                // Prominent emotion
+                                console.log(data)
+                                this.setState(newStateObj)
                             })
                             .catch(error => console.log(error));
                     })
@@ -153,30 +196,62 @@ class TextAnalyzer extends Component {
                             <Paper className={classes.textDisplay}>
                                 {
                                     this.state.analyzerResponse[0] ?
-                                    <Table>
-                                        <TableHead>
-                                            <TableRow className={classes.tableHeader}>
-                                                <TableCell>Theme Number</TableCell>
-                                                <TableCell>Keywords</TableCell>
-                                                <TableCell>Entry Coverage</TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {this.state.analyzerResponse.map(item => {
-                                                return (
-                                                    <TableRow key={item.id}>
-                                                        <TableCell>{item.dominantTopicNum}</TableCell>
-                                                        <TableCell>
-                                                            {
-                                                                item.topickeywords.map(topic => topic.keyword).join(', ')
-                                                            }
-                                                        </TableCell>
-                                                        <TableCell>{item.percentDocuments}</TableCell>
-                                                    </TableRow>
-                                                )
-                                            })}
-                                        </TableBody>
-                                    </Table> :
+                                    <div>
+                                        <Grid
+                                            container
+                                            justify="center"
+                                            alignItems="center"
+                                            direction="row"
+                                            spacing={2}
+                                        >
+                                            <Grid item xs>
+                                                <Card className={classes[this.state.skew]}>
+                                                    <CardActionArea>
+                                                        <CardContent justify="center">
+                                                            <Typography gutterBottom component="h3">
+                                                                Sentiment - {this.state.skew}
+                                                            </Typography>
+                                                        </CardContent>
+                                                    </CardActionArea>
+                                                </Card>
+                                            </Grid>
+                                            <Grid item xs>
+                                                <Card className={classes[this.state.emotion]}>
+                                                    <CardActionArea>
+                                                        <CardContent justify="center">
+                                                            <Typography gutterBottom component="h3">
+                                                                Emotion - {this.state.emotion}
+                                                            </Typography>
+                                                        </CardContent>
+                                                    </CardActionArea>
+                                                </Card>
+                                            </Grid>
+                                        </Grid>
+                                        <Table>
+                                            <TableHead>
+                                                <TableRow className={classes.tableHeader}>
+                                                    <TableCell>Theme Number</TableCell>
+                                                    <TableCell>Keywords</TableCell>
+                                                    <TableCell>Entry Coverage</TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                {this.state.analyzerResponse.map(item => {
+                                                    return (
+                                                        <TableRow key={item.id}>
+                                                            <TableCell>{item.dominantTopicNum}</TableCell>
+                                                            <TableCell>
+                                                                {
+                                                                    item.topickeywords.map(topic => topic.keyword).join(', ')
+                                                                }
+                                                            </TableCell>
+                                                            <TableCell>{item.percentDocuments}</TableCell>
+                                                        </TableRow>
+                                                    )
+                                                })}
+                                            </TableBody>
+                                        </Table>
+                                    </div> :
                                     ''
                                 }
                             </Paper>

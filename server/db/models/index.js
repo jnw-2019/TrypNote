@@ -29,6 +29,7 @@ Entry.belongsTo(Sentiment);
 
 Entry.belongsTo(TextAnalyze);
 Topic.belongsTo(TextAnalyze);
+Sentiment.belongsTo(TextAnalyze);
 
 module.exports = {
   Entry,
