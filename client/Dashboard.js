@@ -10,7 +10,7 @@ class Dashboard extends Component {
   constructor() {
     super();
     this.state = {
-      entries: [],
+      entries: []
     };
   }
 
@@ -26,7 +26,7 @@ class Dashboard extends Component {
   };
   render() {
     const { entries } = this.state;
-    const { match } = this.props;
+    const { match, history } = this.props;
     const entryFilter = match.params.entryFilter || '';
     return (
       <div>
@@ -34,6 +34,7 @@ class Dashboard extends Component {
           <TextAnylzer />
           <DashboardEntries
             entries={entries}
+            history={history}
             // entryFilter={match.params.entryFilter}
           />
         </Box>
