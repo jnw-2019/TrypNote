@@ -12,7 +12,7 @@ const styles = {
   }
 };
 
-const DashboardEntries = ({ entries, entryFilter, classes }) => {
+const DashboardEntries = ({ entries, entryFilter, classes, history }) => {
   const entriesFiltered = filterEntries(entries, entryFilter);
   return (
     <Box style={{ marginTop: 15 }}>
@@ -24,6 +24,7 @@ const DashboardEntries = ({ entries, entryFilter, classes }) => {
                 variant="contained"
                 color="secondary"
                 className={classes.button}
+                onClick={() => history.push(`/entries/${entry.id}`)}
               >
                 {entry.title.slice(0, 10)}...
               </Button>

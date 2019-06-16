@@ -32,6 +32,7 @@ const syncAndSeed = () => {
               '{{lorem.paragraphs}}'
             )}`,
             userId: uploadusers[0].dataValues.id,
+            createdAt: faker.fake('{{date.past}}'),
           }),
           Entry.create({
             title: faker.fake('{{lorem.sentence}}'),
@@ -41,11 +42,13 @@ const syncAndSeed = () => {
             headerImage:
               'https://d39l2hkdp2esp1.cloudfront.net/img/photo/139307/139307_00_2x.jpg',
             userId: uploadusers[0].dataValues.id,
+            createdAt: faker.fake('{{date.past}}'),
           }),
           Entry.create({
             title: faker.fake('{{lorem.sentence}}'),
             text: faker.fake('{{lorem.paragraphs}}'),
             userId: uploadusers[0].dataValues.id,
+            createdAt: faker.fake('{{date.past}}'),
           }),
           Entry.create({
             title: faker.fake('{{lorem.sentence}}'),
@@ -53,11 +56,13 @@ const syncAndSeed = () => {
             headerImage:
               'https://www.brownstoner.com/wp-content/uploads/2019/03/prospect-park-alliance-tours-brooklyn-1-1.jpg',
             userId: uploadusers[0].dataValues.id,
+            createdAt: faker.fake('{{date.past}}'),
           }),
           Entry.create({
             title: faker.fake('{{lorem.sentence}}'),
             text: faker.fake('{{lorem.paragraphs}}'),
             userId: uploadusers[0].dataValues.id,
+            createdAt: faker.fake('{{date.past}}'),
           }),
         ]).then(entries => {
           return Promise.all([
