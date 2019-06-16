@@ -50,7 +50,7 @@ class TextAnalyzer extends Component {
         this.setState({ engineRunning: true })
         // Need to make dynamic
         const userId = 3
-        axios.get(`/api/entries/limit/6/user/${userId}`)
+        axios.get(`/api/entries/limit/8/user/${userId}`)
             .then(response => response.data)
             .then(data => {
                 const tempObj = data.entries.map(item => item.text);
@@ -64,13 +64,15 @@ class TextAnalyzer extends Component {
                         }
                         console.log(JSON.parse(nlpData.results))
                         axios.post(`/api/topics/${userId}`, topicUpload)
-                            .then(responseTopics => console.log(responseTopics))
-                            .then(() => {
-                                axios.get(`/api/topics/${userId}`)
-                                    .then(resTopics => console.log(resTopics))
+                            .then(response => response.data)
+                            .then((textAnalyze) => {
+                                axios.get(`/api/topics/${userId}/textanalyze/${textAnalyze.id}`)
+                                    .then(resTopics => {
+                                        this.setState({ analyzerResponse: resTopics.data, engineRunning: false })
+                                    })
+                                    .catch(error => console.log(error))
                             })
-                            .catch(error => console.log(error))
-                        this.setState({ analyzerResponse: nlpData.results, engineRunning: false })
+                            .catch(error => console.log(error));
                     })
             })
     }
@@ -99,7 +101,7 @@ class TextAnalyzer extends Component {
     }
 
     testApiRoute = () => {
-        axios.get(`/api/entries/limit/6/user/3`)
+        axios.get(`/api/entries/limit/8/user/3`)
             .then(response => {
                 const responseExample = {topics: {
                     Dominant_Topic: {0: 0, 1: 1, 2: 2, 3: 3},
@@ -116,10 +118,15 @@ class TextAnalyzer extends Component {
                     .then(data => console.log(data))
                     .then(() => {
                         axios.get(`/api/topics/3`)
-                            .then( resTopics => this.setState({ analyzerResponse: resTopics.data, engineRunning: false }) )
+                            .then( resTopics => this.setState({ analyzerResponse: resTopics.data }) )
                     })
                     .catch(error => console.log(error))
             })
+    }
+
+    runNLP = () => {
+        this.runTextAnalyzer()
+        this.runSentiment()
     }
 
     render() {
@@ -133,7 +140,7 @@ class TextAnalyzer extends Component {
                 </Box>
                 <Grid container spacing={2} direction="row" justify="flex-start" alignItems="center">
                     <Grid item>
-                        <Button variant="contained" color="primary" onClick={this.runSentiment}>
+                        <Button variant="contained" color="primary" onClick={this.runNLP}>
                             Analyze
                             <Box className={classes.rightIcon}>
                                 <Input />
