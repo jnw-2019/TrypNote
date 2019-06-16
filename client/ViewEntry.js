@@ -1,14 +1,18 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
-import { Grid, Paper, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Paper, Typography, withStyles } from '@material-ui/core';
 
-const styles = {
+const styles = theme => ({
+  entryTitle: {
+    fontFamily: 'Forum',
+    fontSize: '50px'
+  },
   Paper: {
     padding: 10,
     textAlign: 'center'
-  }
-};
+  },
+  toolbar: theme.mixins.toolbar
+});
 
 class ViewEntry extends Component {
   constructor() {
@@ -28,53 +32,56 @@ class ViewEntry extends Component {
       .then(({ data }) => this.setState({ entry: data }));
   };
   render() {
-    // const classes = useStyles();
+    const { classes } = this.props;
     const { entry } = this.state;
     const { location, weather } = entry;
+
     return (
       <Fragment>
+        <div className={classes.toolbar} />
         {Object.keys(entry).length ? (
-          <Grid container spacing={3}>
-            <Grid item sm={12}>
-              <Paper style={styles.Paper}>
-                <Typography variant="h4">{entry.title}</Typography>
-              </Paper>
-            </Grid>
+          <Paper>
+            <Grid container>
+              <Grid item sm={12}>
+                <Typography variant="h3" className={styles.entryTitle}>
+                  {entry.title}
+                </Typography>
+              </Grid>
 
-            <Grid item sm={3}>
-              <Paper style={styles.Paper}>
+              <Grid item sm={12} container>
+                <Grid item>
+                  <Typography variant="body1" />
+                </Grid>
+              </Grid>
+              <Grid item sm={3}>
                 {location.longitude}, {location.latitude}
-              </Paper>
-            </Grid>
+              </Grid>
 
-            <Grid item sm={3}>
-              <Paper style={styles.Paper}>{entry.createdAt}</Paper>
-            </Grid>
+              <Grid item sm={3}>
+                {entry.createdAt}
+              </Grid>
 
-            <Grid item sm={3}>
-              <Paper style={styles.Paper}>{weather.forecast}</Paper>
-            </Grid>
+              <Grid item sm={3}>
+                {weather.forecast}
+              </Grid>
 
-            <Grid item sm={3}>
-              <Paper style={styles.Paper}>{weather.degrees}&#176;</Paper>
-            </Grid>
+              <Grid item sm={3}>
+                {weather.degrees}&#176;
+              </Grid>
 
-            <Grid item sm={9}>
-              <Paper>
+              <Grid item sm={9}>
                 <Typography variant="body1">{entry.text}</Typography>
-              </Paper>
-            </Grid>
+              </Grid>
 
-            <Grid item sm={3}>
-              <Paper>
+              <Grid item sm={3}>
                 <Typography>images</Typography>
-              </Paper>
+              </Grid>
             </Grid>
-          </Grid>
+          </Paper>
         ) : null}
       </Fragment>
     );
   }
 }
 
-export default ViewEntry;
+export default withStyles(styles)(ViewEntry);

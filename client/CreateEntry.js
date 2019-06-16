@@ -10,7 +10,6 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { borderLeft } from '@material-ui/system';
 
 const styles = theme => ({
   notebookPaper: {
@@ -24,7 +23,7 @@ const styles = theme => ({
     '&:before': {
       // zIndex: '1',
       left: '40px',
-      // height: '100%',
+      height: '100%',
       width: '1px',
       background: '#db4034'
     }
@@ -33,15 +32,9 @@ const styles = theme => ({
     fontFamily: 'Forum',
     fontSize: '50px'
   },
-  // redBorder: {
-  //   background: 'linear-gradient(to bottom, white 29px, #00b0d7 24px)',
-  //   margin: '50px auto',
-  //   backgroundSize: '100% 30px',
-  //   borderRight: '1px solid red'
-  // },
   Paper: {
     padding: 10,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   toolbar: theme.mixins.toolbar
 });
