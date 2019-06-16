@@ -38,25 +38,43 @@ const MapMarkerButton = ({ marker }) => {
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle id="alert-dialog-slide-title">
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
-            <div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <div style={{ alignItems: 'center', justifyContent: 'center' }}>
               <img src={marker.weather.icon} />
               <br />
-              <em>
-                {`${marker.weather.forecast
-                  .slice(0, 1)
-                  .toUpperCase()}${marker.weather.forecast.slice(1)}`}{' '}
-                {`${marker.weather.degrees}°`}
-              </em>
+              <Typography variant="body2" color="textSecondary" component="p">
+                <em>
+                  {`${marker.weather.forecast
+                    .slice(0, 1)
+                    .toUpperCase()}${marker.weather.forecast.slice(1)}`}{' '}
+                  {`${marker.weather.degrees}°`}
+                </em>
+              </Typography>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <div>{marker.title}</div>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <div> {marker.title}</div>
               <div>
                 <Typography variant="body2" color="textSecondary" component="p">
+                  {' '}
                   {marker.location.markerName}
                 </Typography>
               </div>
               <div>
+                {' '}
                 <Typography variant="body2" color="textSecondary" component="p">
                   {dateFormat(marker.createdAt, 'dddd, mmmm dS, yyyy')}
                 </Typography>
