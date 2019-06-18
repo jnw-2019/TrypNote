@@ -1,14 +1,27 @@
 import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Grid, Paper, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import dateFormat from 'dateformat';
+import {
+  Grid,
+  Paper,
+  Button,
+  withStyles,
+  Avatar,
+  Typography
+} from '@material-ui/core';
 
-const styles = {
+const styles = theme => ({
+  metaData: {
+    fontSize: '18px',
+    fontFamily: 'Merienda'
+  },
   Paper: {
     padding: 10,
     textAlign: 'center'
-  }
-};
+  },
+  toolbar: theme.mixins.toolbar
+});
 
 class ViewEntry extends Component {
   constructor() {
@@ -28,53 +41,66 @@ class ViewEntry extends Component {
       .then(({ data }) => this.setState({ entry: data }));
   };
   render() {
-    // const classes = useStyles();
+    const { classes, history } = this.props;
     const { entry } = this.state;
+
     const { location, weather } = entry;
+
     return (
       <Fragment>
+        <div className={classes.toolbar} />
         {Object.keys(entry).length ? (
-          <Grid container spacing={3}>
-            <Grid item sm={12}>
-              <Paper style={styles.Paper}>
-                <Typography variant="h4">{entry.title}</Typography>
-              </Paper>
-            </Grid>
+          <Paper>
+            <Grid container>
+              <Grid item sm={12}>
+                <p className="entry-title">{entry.title}</p>
+              </Grid>
 
-            <Grid item sm={3}>
-              <Paper style={styles.Paper}>
-                {location.longitude}, {location.latitude}
-              </Paper>
-            </Grid>
+              <Grid container spacing={1} justify="center">
+                <Grid item className={classes.metaData}>
+                  {location.markerName}
+                </Grid>
 
-            <Grid item sm={3}>
-              <Paper style={styles.Paper}>{entry.createdAt}</Paper>
-            </Grid>
+                <Grid item className={classes.metaData}>
+                  {dateFormat(entry.createdAt, 'dddd, mmmm dS, yyyy')}
+                </Grid>
 
-            <Grid item sm={3}>
-              <Paper style={styles.Paper}>{weather.forecast}</Paper>
-            </Grid>
+                <Grid item className={classes.metaData}>
+                  <Avatar src={weather.icon} />
+                  {weather.forecast}
+                </Grid>
 
-            <Grid item sm={3}>
-              <Paper style={styles.Paper}>{weather.degrees}&#176;</Paper>
-            </Grid>
+                <Grid item className={classes.metaData}>
+                  {Math.round(weather.degrees)}&#176;
+                </Grid>
+              </Grid>
 
-            <Grid item sm={9}>
-              <Paper>
-                <Typography variant="body1">{entry.text}</Typography>
-              </Paper>
-            </Grid>
+              <Grid item sm={9}>
+                <div className="entry-text">
+                  <p>{entry.text}</p>
+                </div>
+              </Grid>
 
-            <Grid item sm={3}>
-              <Paper>
+              <Grid item sm={3}>
                 <Typography>images</Typography>
-              </Paper>
+              </Grid>
+              <Grid item>
+                <Button
+                  type="button"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={() => history.push(`/editEntry/${entry.id}`)}
+                >
+                  Edit your Entry
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
+          </Paper>
         ) : null}
       </Fragment>
     );
   }
 }
 
-export default ViewEntry;
+export default withStyles(styles)(ViewEntry);
