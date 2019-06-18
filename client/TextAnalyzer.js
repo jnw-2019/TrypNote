@@ -74,7 +74,7 @@ class TextAnalyzer extends Component {
         const userId = 3;
         let textId = 0;
         let callString = `/api/entries/limit/9/user/${userId}`;
-        callString = `api/entries/range/from/20180601/to/20181131/user/${userId}`;
+        callString = `api/entries/range/from/20180001/to/20180530/user/${userId}`;
         axios.get(callString)
             .then(response => response.data)
             .then(data => {
@@ -109,7 +109,7 @@ class TextAnalyzer extends Component {
         // Need to make dynamic
         const userId = 3
         let callString = `/api/entries/limit/9/user/${userId}`;
-        callString = `api/entries/range/from/20180601/to/20181131/user/${userId}`;
+        callString = `api/entries/range/from/20180001/to/20180530/user/${userId}`;
         axios.get(callString)
             .then(response => response.data)
             .then(data => {
