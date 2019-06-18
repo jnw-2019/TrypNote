@@ -1,11 +1,20 @@
 import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Grid, Paper, Typography, withStyles } from '@material-ui/core';
+import dateFormat from 'dateformat';
+import {
+  Grid,
+  Paper,
+  Button,
+  withStyles,
+  Avatar,
+  Typography
+} from '@material-ui/core';
 
 const styles = theme => ({
-  entryTitle: {
-    fontFamily: 'Forum',
-    fontSize: '50px'
+  metaData: {
+    fontSize: '18px',
+    fontFamily: 'Merienda'
   },
   Paper: {
     padding: 10,
@@ -32,8 +41,9 @@ class ViewEntry extends Component {
       .then(({ data }) => this.setState({ entry: data }));
   };
   render() {
-    const { classes } = this.props;
+    const { classes, history } = this.props;
     const { entry } = this.state;
+
     const { location, weather } = entry;
 
     return (
@@ -43,38 +53,47 @@ class ViewEntry extends Component {
           <Paper>
             <Grid container>
               <Grid item sm={12}>
-                <Typography variant="h3" className={styles.entryTitle}>
-                  {entry.title}
-                </Typography>
+                <p className="entry-title">{entry.title}</p>
               </Grid>
 
-              <Grid item sm={12} container>
-                <Grid item>
-                  <Typography variant="body1" />
+              <Grid container spacing={1} justify="center">
+                <Grid item className={classes.metaData}>
+                  {location.markerName}
                 </Grid>
-              </Grid>
-              <Grid item sm={3}>
-                {location.longitude}, {location.latitude}
-              </Grid>
 
-              <Grid item sm={3}>
-                {entry.createdAt}
-              </Grid>
+                <Grid item className={classes.metaData}>
+                  {dateFormat(entry.createdAt, 'dddd, mmmm dS, yyyy')}
+                </Grid>
 
-              <Grid item sm={3}>
-                {weather.forecast}
-              </Grid>
+                <Grid item className={classes.metaData}>
+                  <Avatar src={weather.icon} />
+                  {weather.forecast}
+                </Grid>
 
-              <Grid item sm={3}>
-                {weather.degrees}&#176;
+                <Grid item className={classes.metaData}>
+                  {Math.round(weather.degrees)}&#176;
+                </Grid>
               </Grid>
 
               <Grid item sm={9}>
-                <Typography variant="body1">{entry.text}</Typography>
+                <div className="entry-text">
+                  <p>{entry.text}</p>
+                </div>
               </Grid>
 
               <Grid item sm={3}>
                 <Typography>images</Typography>
+              </Grid>
+              <Grid item>
+                <Button
+                  type="button"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={() => history.push(`/editEntry/${entry.id}`)}
+                >
+                  Edit your Entry
+                </Button>
               </Grid>
             </Grid>
           </Paper>

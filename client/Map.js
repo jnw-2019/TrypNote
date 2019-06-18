@@ -54,8 +54,6 @@ class Map extends Component {
       };
     }
   }
-  componentDidMount() {}
-
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
       this.setState({
