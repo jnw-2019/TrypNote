@@ -9,6 +9,7 @@ import { syncCookieAndSession } from './store';
 import CreateEntry from './CreateEntry';
 import SignUp from './SignUp';
 import Dashboard from './Dashboard';
+import EditEntry from './EditEntry';
 
 class App extends Component {
   componentDidMount() {
@@ -37,6 +38,7 @@ class App extends Component {
           <Route exact path="/signup" component={SignUp} />
           <Route exact path="/entries/:entryId" component={ViewEntry} />
           <Route exact path="/createEntry" component={CreateEntry} />
+          <Route exact path="/editEntry/:entryId" component={EditEntry} />
 
           <Route
             exact
