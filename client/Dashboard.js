@@ -5,12 +5,13 @@ import axios from 'axios';
 import { Box } from '@material-ui/core';
 import TextAnylzer from './TextAnalyzer';
 import DashboardEntries from './DashboardEntries';
+import EntryChartData from './EntryChartData';
 
 class Dashboard extends Component {
   constructor() {
     super();
     this.state = {
-      entries: []
+      entries: [],
     };
   }
 
@@ -31,6 +32,7 @@ class Dashboard extends Component {
     return (
       <div>
         <Box mt={14}>
+          <EntryChartData />
           <TextAnylzer />
           <DashboardEntries
             entries={entries}

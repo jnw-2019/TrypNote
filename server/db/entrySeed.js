@@ -329,43 +329,43 @@ const entrySeedLocations = [
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
-    latitude: '40.704872',
-    longitude: '-74.008755',
+    latitude: '41.704871',
+    longitude: '-75.008754',
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
-    latitude: '40.704872',
-    longitude: '-74.008755',
+    latitude: '42.704870',
+    longitude: '-76.008753',
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
-    latitude: '40.704872',
-    longitude: '-74.008755',
+    latitude: '43.704869',
+    longitude: '-77.008754',
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
-    latitude: '40.704872',
-    longitude: '-74.008755',
+    latitude: '44.704868',
+    longitude: '-78.008753',
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
-    latitude: '40.704872',
-    longitude: '-74.008755',
+    latitude: '45.704867',
+    longitude: '-79.008752',
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
-    latitude: '40.704872',
-    longitude: '-74.008755',
-    markerName: faker.fake('{{address.streetName}}'),
-  },
-  {
-    latitude: '40.771939',
-    longitude: '-73.974734',
+    latitude: '46.704866',
+    longitude: '-80.008751',
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
     latitude: '40.771939',
     longitude: '-73.974734',
+    markerName: faker.fake('{{address.streetName}}'),
+  },
+  {
+    latitude: '41.771939',
+    longitude: '-74.974734',
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
@@ -379,18 +379,13 @@ const entrySeedLocations = [
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
-    latitude: '40.722138',
-    longitude: '-74.002588',
+    latitude: '41.722138',
+    longitude: '-73.002588',
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
-    latitude: '40.722138',
-    longitude: '-74.002588',
-    markerName: faker.fake('{{address.streetName}}'),
-  },
-  {
-    latitude: '40.730089',
-    longitude: '-74.005004',
+    latitude: '42.722138',
+    longitude: '-72.002588',
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
@@ -399,8 +394,8 @@ const entrySeedLocations = [
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
-    latitude: '40.747621',
-    longitude: '-74.004916',
+    latitude: '41.730089',
+    longitude: '-76.005004',
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
@@ -409,8 +404,13 @@ const entrySeedLocations = [
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
-    latitude: '40.747621',
-    longitude: '-74.004916',
+    latitude: '45.747621',
+    longitude: '-73.004916',
+    markerName: faker.fake('{{address.streetName}}'),
+  },
+  {
+    latitude: '48.747621',
+    longitude: '-71.004916',
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
@@ -419,18 +419,18 @@ const entrySeedLocations = [
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
-    latitude: '40.686702',
-    longitude: '-73.984787',
+    latitude: '44.686702',
+    longitude: '-71.984787',
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
-    latitude: '40.686702',
-    longitude: '-73.984787',
+    latitude: '48.686702',
+    longitude: '-78.984787',
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
-    latitude: '40.686702',
-    longitude: '-73.984787',
+    latitude: '43.686702',
+    longitude: '-78.984787',
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
@@ -439,13 +439,13 @@ const entrySeedLocations = [
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
-    latitude: '40.680087',
-    longitude: '-73.967745',
+    latitude: '49.680087',
+    longitude: '-71.967745',
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
-    latitude: '40.680087',
-    longitude: '-73.967745',
+    latitude: '45.680087',
+    longitude: '-77.967745',
     markerName: faker.fake('{{address.streetName}}'),
   },
   {
@@ -636,6 +636,11 @@ const entryUsers = [
 
 const entryWeather = [
   {
+    forecast: 'Sunny',
+    degrees: 93,
+    icon: 'http://openweathermap.org/img/w/01d.png',
+  },
+  {
     forecast: 'Clouds',
     degrees: 88,
     icon: 'http://openweathermap.org/img/w/03d.png',
@@ -726,7 +731,7 @@ const secondSeedFunc = () => {
           });
           if (idx < 10) {
             Weather.create({
-              ...entryWeather[0],
+              ...entryWeather[4],
               entryId: singleNewEntry.dataValues.id,
             });
           } else if (idx < 20) {
@@ -739,9 +744,14 @@ const secondSeedFunc = () => {
               ...entryWeather[2],
               entryId: singleNewEntry.dataValues.id,
             });
-          } else {
+          } else if (idx < 30) {
             Weather.create({
               ...entryWeather[3],
+              entryId: singleNewEntry.dataValues.id,
+            });
+          } else {
+            Weather.create({
+              ...entryWeather[0],
               entryId: singleNewEntry.dataValues.id,
             });
           }
