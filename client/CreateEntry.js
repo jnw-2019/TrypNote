@@ -10,9 +10,12 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { borderLeft } from '@material-ui/system';
 
 const styles = theme => ({
+  metaData: {
+    fontSize: '18px',
+    fontFamily: 'Merienda'
+  },
   notebookPaper: {
     background: 'linear-gradient(to bottom, white 29px, #00b0d7 24px)',
     margin: '50px auto',
@@ -22,9 +25,11 @@ const styles = theme => ({
     lineHeight: '30px',
     fontFamily: 'Merienda',
     '&:before': {
-      // zIndex: '1',
-      left: '40px',
-      // height: '100%',
+      content: '',
+      position: 'absolute',
+      top: '30%',
+      left: '20%',
+      height: '80vh',
       width: '1px',
       background: '#db4034'
     }
@@ -33,15 +38,9 @@ const styles = theme => ({
     fontFamily: 'Forum',
     fontSize: '50px'
   },
-  // redBorder: {
-  //   background: 'linear-gradient(to bottom, white 29px, #00b0d7 24px)',
-  //   margin: '50px auto',
-  //   backgroundSize: '100% 30px',
-  //   borderRight: '1px solid red'
-  // },
   Paper: {
     padding: 10,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   toolbar: theme.mixins.toolbar
 });
@@ -129,42 +128,48 @@ class CreateEntry extends Component {
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item sm={12} container>
-                <Grid item sm container spacing={2}>
-                  <Grid item>
-                    <TextField
-                      id="locationName"
-                      label="Location"
-                      name="locationName"
-                      placeholder="Where are you?"
-                      required
-                      type="text"
-                      value={locationName}
-                      onChange={handleChange}
-                    />
-                    <Typography>{currentDate}</Typography>
+              <Grid container spacing={1} justify="center">
+                <Grid item>
+                  <TextField
+                    InputProps={{
+                      classes: {
+                        input: classes.metaData
+                      }
+                    }}
+                    id="locationName"
+                    label="Location"
+                    name="locationName"
+                    placeholder="Where are you?"
+                    required
+                    type="text"
+                    value={locationName}
+                    onChange={handleChange}
+                  />
+                </Grid>
 
+                <Grid item className={classes.metaData}>
+                  {currentDate}
+                </Grid>
+
+                <Grid item className={classes.metaData}>
+                  {weather.weather ? (
                     <Fragment>
-                      {weather.weather ? (
-                        <Fragment>
-                          <Avatar
-                            src={`http://openweathermap.org/img/w/${
-                              weather.weather[0].icon
-                            }.png`}
-                          />
-                          <Typography>{weather.weather[0].main}</Typography>
-                        </Fragment>
-                      ) : (
-                        'Loading Weather'
-                      )}
+                      <Avatar
+                        src={`http://openweathermap.org/img/w/${
+                          weather.weather[0].icon
+                        }.png`}
+                      />
+                      {weather.weather[0].main}
                     </Fragment>
+                  ) : (
+                    'Loading Weather'
+                  )}
+                </Grid>
 
-                    <Typography>
-                      {weather.weather
-                        ? `${weather.main.temp} \xB0F`
-                        : 'Loading Weather'}
-                    </Typography>
-                  </Grid>
+                <Grid item className={classes.metaData}>
+                  {weather.weather
+                    ? `${weather.main.temp} \xB0F`
+                    : 'Loading Weather'}
                 </Grid>
               </Grid>
 
@@ -188,12 +193,6 @@ class CreateEntry extends Component {
                     value={text}
                     onChange={handleChange}
                   />
-                </Grid>
-
-                <Grid item sm={3}>
-                  <Paper>
-                    <Typography>images</Typography>
-                  </Paper>
                 </Grid>
               </Grid>
               <Grid item>
