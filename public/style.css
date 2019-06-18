@@ -8,20 +8,6 @@
   cursor: pointer;
 }
 
-.notebook-paper {
-  width: 960px;
-  height: 1109px;
-  background: linear-gradient(to bottom, white 29px, #00b0d7 1px);
-  margin: 50px auto;
-  background-size: 100% 30px;
-  position: relative;
-  /* padding-top: 75px; */
-  padding-left: 80px;
-  padding-right: 20px;
-  overflow: hidden;
-  /* border-radius:5px; */
-}
-
 .entries-post-its-list,
 .entry-post-it-item {
   list-style: none;
@@ -29,13 +15,12 @@
 .entries-post-its-list {
   overflow: scroll;
   padding: 3em;
-  /* position: absolute; */
   background-image: url(https://wallpaperplay.com/walls/full/2/7/6/37248.jpg);
   background-size: cover;
   background-position: center;
   height: 75vh;
   background-attachment: fixed;
-  margin-top: 15px;
+  margin-top: 2%;
 }
 
 .entries-post-its-list .entry-post-it-item {
@@ -102,16 +87,30 @@
   z-index: 5;
 }
 
-/* .bulletin-board {
-  background-image: url(https://wallpaperplay.com/walls/full/2/7/6/37248.jpg);
-  background-size: cover;
-  background-position: center;
-  height: 75vh;
-  background-attachment: fixed;
-  margin-top: 15px;
-} */
+.entry-title {
+  font-family: 'Forum';
+  font-size: 50px;
+  text-align: center;
+}
 
-/* .bulletin-space {
+.entry-text {
+  height: 75vh;
+  background: linear-gradient(to bottom, white 29px, #00b0d7 24px);
+  margin: 50px auto;
+  background-size: 100% 30px;
+  padding-left: 80px;
+  font-size: 20px;
+  line-height: 30px;
+  font-family: 'Merienda';
+  overflow: scroll;
+}
+
+.entry-text::before {
+  content: '';
   position: absolute;
-  top: 50%;
-} */
+  top: 30%;
+  left: 20%;
+  height: 80vh;
+  width: 1px;
+  background: #db4034;
+}

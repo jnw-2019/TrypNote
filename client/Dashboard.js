@@ -36,17 +36,12 @@ class Dashboard extends Component {
   render() {
     const { entries } = this.state;
     const { match, history } = this.props;
-    const entryFilter = match.params.entryFilter || '';
 
     return (
       <div>
         <Box mt={14}>
           <TextAnylzer />
-          <DashboardEntries
-            entries={entries}
-            history={history}
-            entryFilter={match.params.entryFilter}
-          />
+          <DashboardEntries entries={entries} history={history} />
         </Box>
       </div>
     );
