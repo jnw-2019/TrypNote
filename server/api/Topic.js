@@ -1,4 +1,3 @@
-
 const router = require('express').Router();
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
@@ -152,7 +151,6 @@ router.post('/:userId', async (req, res, next) => {
             })
             .catch(next)
     }
-    
 });
 
 module.exports = router;
