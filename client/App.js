@@ -38,7 +38,7 @@ class App extends Component {
           <Route exact path="/signup" component={SignUp} />
           <Route exact path="/entries/:entryId" component={ViewEntry} />
           <Route exact path="/createEntry" component={CreateEntry} />
-          <Route exact path="/editEntry" component={EditEntry} />
+          <Route exact path="/editEntry/:entryId" component={EditEntry} />
 
           <Route
             exact

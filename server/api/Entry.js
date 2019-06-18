@@ -1,5 +1,12 @@
 const router = require('express').Router();
-const { Entry, Location, Weather, User, Topic, TopicKeyword } = require('../db/models/');
+const {
+  Entry,
+  Location,
+  Weather,
+  User,
+  Topic,
+  TopicKeyword
+} = require('../db/models/');
 
 //GET All Entries /api/entries
 router.get('/', (req, res, next) => {
@@ -35,13 +42,11 @@ router.get('/user/:userId', (req, res, next) => {
 
 router.get('/limit/:limitnum/user/:userId', (req, res, next) => {
   User.findByPk(req.params.userId, {
-    include: [
-      { model: Entry, limit: req.params.limitnum },
-    ],
+    include: [{ model: Entry, limit: req.params.limitnum }],
     order: [
       // Will escape title and validate DESC against a list of valid direction parameters
-      ['createdAt', 'DESC'],
-    ],
+      ['createdAt', 'DESC']
+    ]
   }).then(userWithEntries => res.send(userWithEntries));
 });
 
@@ -54,6 +59,19 @@ router.post('/createEntry/users/:userId', (req, res, next) => {
     .then(entry => {
       res.send(entry);
     })
+    .catch(next);
+});
+
+router.put('/:entryId', (req, res, next) => {
+  Entry.update(
+    { text: req.body.text },
+    {
+      where: {
+        id: req.params.entryId
+      }
+    }
+  )
+    .then(() => res.sendStatus(200))
     .catch(next);
 });
 

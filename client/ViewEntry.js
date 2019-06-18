@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import dateFormat from 'dateformat';
 import {
@@ -40,9 +41,9 @@ class ViewEntry extends Component {
       .then(({ data }) => this.setState({ entry: data }));
   };
   render() {
-    const { classes } = this.props;
+    const { classes, history } = this.props;
     const { entry } = this.state;
-    console.log('state entry', entry);
+
     const { location, weather } = entry;
 
     return (
@@ -89,6 +90,7 @@ class ViewEntry extends Component {
                   fullWidth
                   variant="contained"
                   color="primary"
+                  onClick={() => history.push(`/editEntry/${entry.id}`)}
                 >
                   Edit your Entry
                 </Button>

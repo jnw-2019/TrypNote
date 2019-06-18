@@ -10,7 +10,6 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { isAbsolute } from 'path';
 
 const styles = theme => ({
   metaData: {
@@ -195,12 +194,6 @@ class CreateEntry extends Component {
                     onChange={handleChange}
                   />
                 </Grid>
-
-                {/* <Grid item sm={3}>
-                  <Paper>
-                    <Typography>images</Typography>
-                  </Paper>
-                </Grid> */}
               </Grid>
               <Grid item>
                 <Button
