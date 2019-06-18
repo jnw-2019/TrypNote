@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Box } from '@material-ui/core';
 import TextAnylzer from './TextAnalyzer';
 import DashboardEntries from './DashboardEntries';
+import DashboardFilters from './DashboardFilters';
 
 class Dashboard extends Component {
   constructor() {
@@ -41,7 +42,15 @@ class Dashboard extends Component {
       <div>
         <Box mt={14}>
           <TextAnylzer />
-          <DashboardEntries entries={entries} history={history} />
+          <Box
+            style={{ padding: '2', marginTop: '2%' }}
+            borderColor="primary.light"
+            border={1}
+            borderRadius={5}
+          >
+            <DashboardFilters />
+            <DashboardEntries entries={entries} history={history} />
+          </Box>
         </Box>
       </div>
     );

@@ -10,31 +10,33 @@ const styles = {
   }
 };
 
-const DashboardEntries = ({ entries, entryFilter, classes, history }) => {
+const DashboardEntries = ({ entries, classes, history }) => {
   // const entriesFiltered = filterEntries(entries, entryFilter);
   return (
-    <Box style={{ marginTop: 15 }}>
+    <Box>
       <Grid container spacing={6}>
-        <ul className="entries-post-its-list">
-          {entries.map(entry => {
-            return (
-              <li key={entry.id} className="entry-post-it-item">
-                <Link
-                  to={`/entries/${entry.id}`}
-                  className="entry-post-it-link"
-                >
-                  <Typography variant="subtitle1" color="textPrimary">
-                    {entry.title}
-                  </Typography>
+        <Grid item>
+          <ul className="entries-post-its-list">
+            {entries.map(entry => {
+              return (
+                <li key={entry.id} className="entry-post-it-item">
+                  <Link
+                    to={`/entries/${entry.id}`}
+                    className="entry-post-it-link"
+                  >
+                    <Typography variant="subtitle1" color="textPrimary">
+                      {entry.title}
+                    </Typography>
 
-                  <Typography variant="subtitle1" color="textSecondary">
-                    {entry.text.slice(0, 30)}...
-                  </Typography>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+                    <Typography variant="subtitle1" color="textSecondary">
+                      {entry.text.slice(0, 30)}...
+                    </Typography>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </Grid>
       </Grid>
     </Box>
   );
