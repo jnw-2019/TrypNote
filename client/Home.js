@@ -46,7 +46,6 @@ class Home extends Component {
       .then(response => response.data)
       .then(userData => this.setState({ entries: userData.entries }));
   };
-  componentDidUpdate() {}
   render() {
     const { entries } = this.state;
     return (

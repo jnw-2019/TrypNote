@@ -5,13 +5,14 @@ import axios from 'axios';
 import { Box } from '@material-ui/core';
 import TextAnylzer from './TextAnalyzer';
 import DashboardEntries from './DashboardEntries';
+import EntryChartData from './EntryChartData';
 import DashboardFilters from './DashboardFilters';
 
 class Dashboard extends Component {
   constructor() {
     super();
     this.state = {
-      entries: []
+      entries: [],
     };
   }
 
@@ -41,6 +42,7 @@ class Dashboard extends Component {
     return (
       <div>
         <Box mt={14}>
+          <EntryChartData />
           <TextAnylzer />
           <Box
             style={{ padding: '2', marginTop: '2%' }}
