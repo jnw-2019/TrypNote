@@ -73,7 +73,9 @@ class TextAnalyzer extends Component {
         // Need to make dynamic
         const userId = 3;
         let textId = 0;
-        axios.get(`/api/entries/limit/8/user/${userId}`)
+        let callString = `/api/entries/limit/9/user/${userId}`;
+        callString = `api/entries/range/from/20180001/to/20180530/user/${userId}`;
+        axios.get(callString)
             .then(response => response.data)
             .then(data => {
                 const tempObj = data.entries.map(item => item.text);
@@ -92,7 +94,7 @@ class TextAnalyzer extends Component {
                                 axios.get(`/api/topics/${userId}/textanalyze/${textAnalyze.id}`)
                                     .then(resTopics => {
                                         textId = textAnalyze.id
-                                        this.setState({ analyzerResponse: resTopics.data, engineRunning: false })
+                                        this.setState({ analyzerResponse: resTopics.data })
                                     })
                                     .catch(error => console.log(error))
                             })
@@ -106,7 +108,9 @@ class TextAnalyzer extends Component {
         //this.setState({ engineRunning: true })
         // Need to make dynamic
         const userId = 3
-        axios.get(`/api/entries/limit/8/user/${userId}`)
+        let callString = `/api/entries/limit/9/user/${userId}`;
+        callString = `api/entries/range/from/20180001/to/20180530/user/${userId}`;
+        axios.get(callString)
             .then(response => response.data)
             .then(data => {
                 const tempObj = data.entries.map(item => item.text);
@@ -132,11 +136,12 @@ class TextAnalyzer extends Component {
                                         maxEmotion.value = data[item];
                                         maxEmotion.emotion = item;
                                     }
-                                })
-                                newStateObj.emotion = maxEmotion.emotion
+                                });
+                                newStateObj.emotion = maxEmotion.emotion;
+                                newStateObj.engineRunning = false;
                                 // Prominent emotion
-                                console.log(data)
-                                this.setState(newStateObj)
+                                console.log(data);
+                                this.setState(newStateObj);
                             })
                             .catch(error => console.log(error));
                     })
