@@ -66,9 +66,6 @@ class EntryChartData extends Component {
         sadness: 0,
         surprise: 0,
         trust: 0,
-        negative: 0,
-        neutral: 0,
-        positive: 0,
       }
     );
     const distinctWeatherConditions = entries.reduce((acc, entry) => {
