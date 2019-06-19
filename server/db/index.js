@@ -3,7 +3,9 @@ const faker = require('faker');
 const secondSeedFunc = require('./entrySeed');
 const { 
   topicSeedFunc1,
-  topicSeedFunc2
+  topicSeedFunc2,
+  topicSeedFunc3,
+  topicSeedFunc4
 } = require('./topicSeed');
 const { Entry, User, Weather, Location, Category } = require('./models/');
 
@@ -133,9 +135,13 @@ const syncAndSeed = () => {
           ]);
         });
       })
-      .then(() => secondSeedFunc())
-      .then(() => topicSeedFunc1())
-      .then(() => topicSeedFunc2())
+      .then(() => {
+        secondSeedFunc()
+          .then(() => topicSeedFunc1())
+          .then(() => topicSeedFunc2())
+          .then(() => topicSeedFunc3())
+          .then(() => topicSeedFunc4())
+      })
   });
 };
 
