@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Bar, Line } from 'react-chartjs-2';
+import { Bar, Line, Pie } from 'react-chartjs-2';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import dateFormat from 'dateformat';
@@ -15,12 +15,18 @@ class EntryChartData extends Component {
     this.state = {
       entries: [],
       chartType: 'Weather',
+      sentiments: [],
     };
   }
   componentDidMount() {
     if (this.props.user.id) {
       this.load(this.props.user.id);
     }
+    //Grabbing all sentiments
+    axios
+      .get('/api/sentiments/')
+      .then(response => response.data)
+      .then(sentiments => this.setState({ sentiments }));
   }
   componentDidUpdate(prevProps) {
     if (prevProps.user !== this.props.user) {
@@ -34,7 +40,34 @@ class EntryChartData extends Component {
       .then(userData => this.setState({ entries: userData.entries }));
   };
   render() {
-    const { entries, chartType } = this.state;
+    const { entries, chartType, sentiments } = this.state;
+    const distinctMoods = entries.reduce(
+      (acc, entry) => {
+        if (entry.sentimentId) {
+          //Traverse the sentiments objects and add up the value to the accumulator
+          sentiments
+            .filter(sentiment => sentiment.id === entry.sentimentId)
+            .forEach(sentimentObj => {
+              Object.keys(sentimentObj).forEach(key => {
+                if (Object.keys(acc).includes(key)) {
+                  acc[key] += sentimentObj[key];
+                }
+              });
+            });
+        }
+        return acc;
+      },
+      {
+        anger: 0,
+        anticipation: 0,
+        disgust: 0,
+        fear: 0,
+        joy: 0,
+        sadness: 0,
+        surprise: 0,
+        trust: 0,
+      }
+    );
     const distinctWeatherConditions = entries.reduce((acc, entry) => {
       if (
         acc[
@@ -80,6 +113,18 @@ class EntryChartData extends Component {
             }, []),
         },
       ],
+      options: {
+        maintainAspectRatio: false,
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+              },
+            },
+          ],
+        },
+      },
     };
     const lineData = {
       labels: Object.keys(distinctHours).sort((a, b) => {
@@ -116,6 +161,50 @@ class EntryChartData extends Component {
         },
       ],
     };
+    const pieData = {
+      labels: Object.keys(distinctMoods)
+        .reduce((acc, curr) => {
+          acc.push(curr[0].toUpperCase() + curr.slice(1));
+          return acc;
+        }, [])
+        .sort(),
+      datasets: [
+        {
+          backgroundColor: [
+            '#F24545',
+            '#b6fcd5',
+            '#848b9f',
+            '#dfe3ee',
+            '#b3b5b8',
+            '#ffbfa8',
+            '#006414',
+            '#001464',
+            '#dbc3a3',
+            '#646567',
+            '#faebd7',
+          ],
+          hoverBackgroundColor: [
+            '#F24545',
+            '#b6fcd5',
+            '#848b9f',
+            '#dfe3ee',
+            '#b3b5b8',
+            '#ffbfa8',
+            '#006414',
+            '#001464',
+            '#dbc3a3',
+            '#646567',
+            '#faebd7',
+          ],
+          data: Object.keys(distinctMoods)
+            .sort()
+            .reduce((acc, mood) => {
+              acc.push(distinctMoods[mood]);
+              return acc;
+            }, []),
+        },
+      ],
+    };
     const selectChart = type => {
       this.setState({ chartType: type });
     };
@@ -127,7 +216,7 @@ class EntryChartData extends Component {
         />
         {chartType === 'Weather' ? <Bar data={barData} /> : ''}
         {chartType === 'Time' ? <Line data={lineData} /> : ''}
-        {chartType === 'Mood' ? 'Create Pie Chart' : ''}
+        {chartType === 'Mood' ? <Pie data={pieData} /> : ''}
       </div>
     );
   }
