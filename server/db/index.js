@@ -1,7 +1,10 @@
 const conn = require('./db');
 const faker = require('faker');
 const secondSeedFunc = require('./entrySeed');
-const topicSeedFunc = require('./topicSeed');
+const { 
+  topicSeedFunc1,
+  topicSeedFunc2
+} = require('./topicSeed');
 const { Entry, User, Weather, Location, Category } = require('./models/');
 
 const users = [
@@ -131,7 +134,8 @@ const syncAndSeed = () => {
         });
       })
       .then(() => secondSeedFunc())
-      .then(() => topicSeedFunc())
+      .then(() => topicSeedFunc1())
+      .then(() => topicSeedFunc2())
   });
 };
 
