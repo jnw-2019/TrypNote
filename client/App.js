@@ -50,7 +50,7 @@ class App extends Component {
                     component={CreateEntry}
                   />
                   <Route exact path="/dashboard/:entryFilter?" component={Dashboard} />
-                </Switch> : <Redirect to="/" />
+                </Switch> : ''
                 )
             }}
             />
