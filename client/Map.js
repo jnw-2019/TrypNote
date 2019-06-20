@@ -1,6 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import MapGL, { Marker, NavigationControl } from 'react-map-gl';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
+import MapGL, { Marker, NavigationControl, Popup } from 'react-map-gl';
+import config from '../config';
+import MapMarkerButton from './MapMarkerButton';
+
+const FSCLIENTKEY = config.get('FSCLIENTKEY');
+const FSCLIENTSECRET = config.get('FSCLIENTSECRET');
 
 const mapStateToProps = ({ location }) => {
   return { location };
@@ -20,6 +35,8 @@ class Map extends Component {
           width: 500,
           height: 500,
         },
+        popupLocation: [],
+        venues: [],
       };
     } else {
       this.state = {
@@ -32,11 +49,11 @@ class Map extends Component {
           width: 500,
           height: 500,
         },
+        popupLocation: [],
+        venues: [],
       };
     }
   }
-  componentDidMount() {}
-
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
       this.setState({
@@ -53,10 +70,30 @@ class Map extends Component {
           width: 500,
           height: 500,
         },
+        popupLocation: [],
+        venues: [],
       });
     }
   }
-
+  displayLocationOptions = ev => {
+    axios
+      .get(
+        `https://api.foursquare.com/v2/venues/search?client_id=${FSCLIENTKEY}&client_secret=${FSCLIENTSECRET}&v=20190425&ll=${
+          ev.lngLat[1]
+        },${ev.lngLat[0]}&intent=browse&radius=1&limit=3`
+      )
+      .then(response => response.data)
+      .then(venues => {
+        console.log(venues);
+        this.setState({
+          popupLocation: ev.lngLat,
+          venues: venues.response.venues,
+        });
+      })
+      .catch(ex => {
+        console.log(ex);
+      });
+  };
   render() {
     const navStyle = {
       position: 'absolute',
@@ -69,8 +106,10 @@ class Map extends Component {
       height: 'calc(100vh - 3rem)',
       overflow: 'hidden',
     };
-    const { viewport } = this.state;
-    const { entries, location } = this.props;
+
+    const { viewport, popupLocation, venues } = this.state;
+    const { entries } = this.props;
+    const { displayLocationOptions } = this;
     return (
       <MapGL
         {...viewport}
@@ -80,7 +119,10 @@ class Map extends Component {
         }
         style={style}
         //This actually updates the viewpoint value in state which then renders the map again
-        onViewportChange={viewport => this.setState({ viewport })}
+        onViewportChange={viewport => {
+          this.setState({ viewport });
+        }}
+        onClick={displayLocationOptions}
       >
         <div className="nav" style={navStyle}>
           <NavigationControl captureScroll={true} />
@@ -91,9 +133,65 @@ class Map extends Component {
                 key={marker.id}
                 longitude={marker.location.longitude * 1}
                 latitude={marker.location.latitude * 1}
+                captureClick={true}
               >
-                <div className="marker" />
+                <MapMarkerButton marker={marker} />
               </Marker>
+            ))
+          : ''}
+        {popupLocation.length
+          ? popupLocation.map((popUp, idx) => (
+              <Popup
+                key={idx}
+                latitude={popupLocation[1]}
+                longitude={popupLocation[0]}
+                closeButton={true}
+                closeOnClick={false}
+                onClose={() => this.setState({ popupLocation: [], venues: [] })}
+                anchor="top"
+              >
+                <div>
+                  <List dense={true}>
+                    {venues.length
+                      ? venues.map(venue => (
+                          <ListItem key={venue.id}>
+                            <ListItemAvatar>
+                              <Avatar>
+                                <i className="fas fa-map-pin" />
+                              </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText
+                              primary={venue.name}
+                              secondary={
+                                venue.location.formattedAddress.length
+                                  ? `${venue.location.formattedAddress[0]},${
+                                      venue.location.formattedAddress[1]
+                                    }`
+                                  : ''
+                              }
+                            />
+                            <ListItemSecondaryAction>
+                              <Link
+                                to={`/createEntry/${venue.name}/${`${
+                                  venue.location.formattedAddress[0]
+                                },${venue.location.formattedAddress[1]}`}/${
+                                  venue.location.lat
+                                }/${venue.location.lng}`}
+                              >
+                                <IconButton>
+                                  <AddIcon />
+                                </IconButton>
+                              </Link>
+                            </ListItemSecondaryAction>
+                          </ListItem>
+                        ))
+                      : ''}
+                  </List>
+                  <Link to={`/createEntry/`}>
+                    Search For Venue Name While Adding Entry
+                  </Link>
+                </div>
+              </Popup>
             ))
           : ''}
       </MapGL>

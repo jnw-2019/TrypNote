@@ -13,7 +13,11 @@ import {
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import Map from './Map';
-import EntryAvatar from './EntryAvatar';
+import dateFormat from 'dateformat';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+import IconButton from '@material-ui/core/IconButton';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const mapStateToProps = ({ user }) => {
   return { user };
@@ -42,7 +46,6 @@ class Home extends Component {
       .then(response => response.data)
       .then(userData => this.setState({ entries: userData.entries }));
   };
-  componentDidUpdate() {}
   render() {
     const { entries } = this.state;
     return (
@@ -68,21 +71,36 @@ class Home extends Component {
                     <Card style={{ width: 300 }}>
                       <CardHeader
                         avatar={
-                          <EntryAvatar
-                            forecast={entry.weather.forecast}
-                            icon={entry.weather.icon}
-                          />
+                          <div>
+                            <img src={entry.weather.icon} />
+                            <br />
+                            <em>
+                              {entry.weather.forecast
+                                ? `${entry.weather.forecast
+                                    .slice(0, 1)
+                                    .toUpperCase()}${entry.weather.forecast.slice(
+                                    1
+                                  )}`
+                                : ''}{' '}
+                              {`${entry.weather.degrees}°`}
+                            </em>
+                          </div>
                         }
-                        // TODO: Parse Date Field & Add To Title
-                        title={`${
-                          entry.weather.forecast
-                            ? entry.weather.forecast.slice(0, 1).toUpperCase() +
-                              entry.weather.forecast.slice(1)
-                            : ''
-                        } ${entry.weather.degrees}°
-                    `}
-                        // TODO: Parse Corrdinates and Display A Locaiton Name
-                        subheader={entry.location.markerName}
+                        action={
+                          <Link
+                            component={RouterLink}
+                            to={`/entries/${entry.id}`}
+                          >
+                            <IconButton aria-label="Settings">
+                              <MoreVertIcon />
+                            </IconButton>
+                          </Link>
+                        }
+                        title={entry.location.markerName}
+                        subheader={dateFormat(
+                          entry.createdAt,
+                          'dddd, mmmm dS, yyyy'
+                        )}
                       />
                       {entry.headerImage ? (
                         <CardMedia

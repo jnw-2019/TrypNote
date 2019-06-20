@@ -1,6 +1,12 @@
 const conn = require('./db');
 const faker = require('faker');
-const secondSeedFunc = require('./entrySeed')
+const secondSeedFunc = require('./entrySeed');
+const {
+  topicSeedFunc1,
+  topicSeedFunc2,
+  topicSeedFunc3,
+  topicSeedFunc4
+} = require('./topicSeed');
 const { Entry, User, Weather, Location, Category } = require('./models/');
 
 const users = [
@@ -23,35 +29,46 @@ const users = [
 
 const syncAndSeed = () => {
   return conn.sync({ force: true }).then(() => {
-    return Promise.all([User.create(users[0]), User.create(users[1])]).then(
-      uploadusers => {
+    return Promise.all([User.create(users[0]), User.create(users[1])])
+      .then(uploadusers => {
         Promise.all([
           Entry.create({
             title: faker.fake('{{lorem.sentence}}'),
-            text: faker.fake('{{lorem.paragraph}}'),
+            text: `${faker.fake('{{lorem.paragraphs}}')} \n ${faker.fake(
+              '{{lorem.paragraphs}}'
+            )}`,
             userId: uploadusers[0].dataValues.id,
+            createdAt: faker.fake('{{date.past}}'),
           }),
           Entry.create({
             title: faker.fake('{{lorem.sentence}}'),
-            text: faker.fake('{{lorem.paragraph}}'),
-            headerImage: faker.fake('{{image.business}}'),
+            text: `${faker.fake('{{lorem.paragraphs}}')} \n ${faker.fake(
+              '{{lorem.paragraphs}}'
+            )}`,
+            headerImage:
+              'https://d39l2hkdp2esp1.cloudfront.net/img/photo/139307/139307_00_2x.jpg',
             userId: uploadusers[0].dataValues.id,
+            createdAt: faker.fake('{{date.past}}'),
           }),
           Entry.create({
             title: faker.fake('{{lorem.sentence}}'),
-            text: faker.fake('{{lorem.paragraph}}'),
+            text: faker.fake('{{lorem.paragraphs}}'),
             userId: uploadusers[0].dataValues.id,
+            createdAt: faker.fake('{{date.past}}'),
           }),
           Entry.create({
             title: faker.fake('{{lorem.sentence}}'),
-            text: faker.fake('{{lorem.paragraph}}'),
-            headerImage: faker.fake('{{image.technics}}'),
+            text: faker.fake('{{lorem.paragraphs}}'),
+            headerImage:
+              'https://www.brownstoner.com/wp-content/uploads/2019/03/prospect-park-alliance-tours-brooklyn-1-1.jpg',
             userId: uploadusers[0].dataValues.id,
+            createdAt: faker.fake('{{date.past}}'),
           }),
           Entry.create({
             title: faker.fake('{{lorem.sentence}}'),
-            text: faker.fake('{{lorem.paragraph}}'),
+            text: faker.fake('{{lorem.paragraphs}}'),
             userId: uploadusers[0].dataValues.id,
+            createdAt: faker.fake('{{date.past}}'),
           }),
         ]).then(entries => {
           return Promise.all([
@@ -88,38 +105,43 @@ const syncAndSeed = () => {
             Weather.create({
               forecast: 'cloudy',
               degrees: 88,
-              icon: 'cloud',
+              icon: 'http://openweathermap.org/img/w/03d.png',
               entryId: entries[0].dataValues.id,
             }),
             Weather.create({
               forecast: 'sunny',
               degrees: 75,
-              icon: 'sun',
+              icon: 'http://openweathermap.org/img/w/01d.png',
               entryId: entries[1].dataValues.id,
             }),
             Weather.create({
               forecast: 'sunny',
               degrees: 90,
-              icon: 'sun',
+              icon: 'http://openweathermap.org/img/w/01d.png',
               entryId: entries[2].dataValues.id,
             }),
             Weather.create({
               forecast: 'clear',
               degrees: 81,
-              icon: 'sun',
+              icon: 'http://openweathermap.org/img/w/03d.png',
               entryId: entries[3].dataValues.id,
             }),
             Weather.create({
               forecast: 'sunny',
               degrees: 77,
-              icon: 'sun',
+              icon: 'http://openweathermap.org/img/w/03d.png',
               entryId: entries[4].dataValues.id,
             }),
           ]);
         });
-      }
-    )
-      .then(() => secondSeedFunc());
+      })
+      .then(() => {
+        secondSeedFunc()
+          .then(() => topicSeedFunc1())
+          .then(() => topicSeedFunc2())
+          .then(() => topicSeedFunc3())
+          .then(() => topicSeedFunc4())
+      })
   });
 };
 
