@@ -6,15 +6,20 @@ import {
   TextField,
   Button,
   withStyles,
-  Avatar
+  Avatar,
 } from '@material-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import config from '../config';
+import FourSquareChips from './FourSqaureChips';
+
+const FSCLIENTKEY = config.get('FSCLIENTKEY');
+const FSCLIENTSECRET = config.get('FSCLIENTSECRET');
 
 const styles = theme => ({
   metaData: {
     fontSize: '18px',
-    fontFamily: 'Merienda'
+    fontFamily: 'Merienda',
   },
   notebookPaper: {
     background: 'linear-gradient(to bottom, white 29px, #00b0d7 24px)',
@@ -31,18 +36,18 @@ const styles = theme => ({
       left: '20%',
       height: '80vh',
       width: '1px',
-      background: '#db4034'
-    }
+      background: '#db4034',
+    },
   },
   entryTitle: {
     fontFamily: 'Forum',
-    fontSize: '50px'
+    fontSize: '50px',
   },
   Paper: {
     padding: 10,
-    textAlign: 'center'
+    textAlign: 'center',
   },
-  toolbar: theme.mixins.toolbar
+  toolbar: theme.mixins.toolbar,
 });
 
 class CreateEntry extends Component {
@@ -57,7 +62,8 @@ class CreateEntry extends Component {
           ? props.match.params.markerName
           : '',
         lat: props.match.params.lat ? props.match.params.lat * 1 : '',
-        lon: props.match.params.long ? props.match.params.long * 1 : ''
+        lon: props.match.params.long ? props.match.params.long * 1 : '',
+        possibleVenues: [],
         // entryImages: {} to add feature
       };
     } else {
@@ -66,7 +72,8 @@ class CreateEntry extends Component {
         text: '',
         locationName: '',
         lat: '',
-        lon: ''
+        lon: '',
+        possibleVenues: [],
         // entryImages: {} to add feature
       };
     }
@@ -74,6 +81,21 @@ class CreateEntry extends Component {
 
   handleChange = ({ target }) => {
     this.setState({ [target.name]: target.value });
+    //Based on the values that have been placed in the location field we search the FS api to return chips for each value
+    if (target.name === 'locationName') {
+      axios
+        .get(
+          `https://api.foursquare.com/v2/venues/search?client_id=${FSCLIENTKEY}&client_secret=${FSCLIENTSECRET}&v=20190425&ll=${
+            this.props.location.lat && this.props.location.lon
+              ? `${this.props.location.lat * 1},${this.props.location.lon * 1}`
+              : '40.705295,-74.009139'
+          }&intent=checkin&radius=200&query=${this.state.locationName}&limit=10`
+        )
+        .then(response => response.data)
+        .then(possibleVenues =>
+          this.setState({ possibleVenues: possibleVenues.response.venues })
+        );
+    }
   };
 
   handleSubmit = ev => {
@@ -92,14 +114,21 @@ class CreateEntry extends Component {
         console.log('axios data', data);
         return Promise.all([
           axios.post(`/api/weathers/${data.id}`, { forecast, degrees, icon }),
-          axios.post(`/api/locations/${data.id}`, { lat, lon, locationName })
+          axios.post(`/api/locations/${data.id}`, { lat, lon, locationName }),
+          data,
         ]);
       })
-      .then(() => history.push('/home'));
+      .then(([weather, location, data]) => {
+        console.log('after promise all data', data);
+        history.push(`/entries/${data.id}`);
+      });
+  };
+  selectLocation = (locationName, lat, lon) => {
+    this.setState({ locationName, lat, lon });
   };
   render() {
-    const { title, text, locationName } = this.state;
-    const { handleChange, handleSubmit } = this;
+    const { title, text, locationName, possibleVenues } = this.state;
+    const { handleChange, handleSubmit, selectLocation } = this;
     const { classes, location, weather } = this.props;
     const currentDate = new Date().toDateString();
 
@@ -113,8 +142,8 @@ class CreateEntry extends Component {
                 <TextField
                   InputProps={{
                     classes: {
-                      input: classes.entryTitle
-                    }
+                      input: classes.entryTitle,
+                    },
                   }}
                   id="title"
                   label="Title"
@@ -133,8 +162,8 @@ class CreateEntry extends Component {
                   <TextField
                     InputProps={{
                       classes: {
-                        input: classes.metaData
-                      }
+                        input: classes.metaData,
+                      },
                     }}
                     id="locationName"
                     label="Location"
@@ -172,15 +201,18 @@ class CreateEntry extends Component {
                     : 'Loading Weather'}
                 </Grid>
               </Grid>
-
+              <FourSquareChips
+                venues={possibleVenues.length ? possibleVenues : []}
+                selectLocation={selectLocation}
+              />
               <Grid container>
                 <Grid item sm={9}>
                   <TextField
                     rows={6}
                     InputProps={{
                       classes: {
-                        input: classes.notebookPaper
-                      }
+                        input: classes.notebookPaper,
+                      },
                     }}
                     id="text"
                     label="Write your thoughts..."
@@ -216,7 +248,7 @@ class CreateEntry extends Component {
 const mapStateToProps = ({ user, location, weather }) => ({
   user,
   location,
-  weather
+  weather,
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(CreateEntry));

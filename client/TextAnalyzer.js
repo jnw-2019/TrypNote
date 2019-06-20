@@ -19,7 +19,13 @@ import { Input } from '@material-ui/icons';
 import {
     red,
     deepPurple,
-    blueGrey
+    blueGrey,
+    lime,
+    lightGreen,
+    yellow,
+    lightBlue,
+    purple,
+    teal
 } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -52,6 +58,30 @@ const styles = {
     fear: {
         backgroundColor: blueGrey[500],
         color: 'white'
+    },
+    anger: {
+        backgroundColor: red[500],
+        color: 'white'
+    },
+    anticipation: {
+        backgroundColor: lime[500]
+    },
+    disgust: {
+        backgroundColor: lightGreen[500]
+    },
+    joy: {
+        backgroundColor: yellow[500]
+    },
+    sadness: {
+        backgroundColor: lightBlue[500]
+    },
+    surprise: {
+        backgroundColor: purple[300],
+        color: 'white'
+    },
+    trust: {
+        backgroundColor: teal[500],
+        color: 'white'
     }
 };
 
@@ -71,16 +101,16 @@ class TextAnalyzer extends Component {
     runTextAnalyzer = () => {
         this.setState({ engineRunning: true })
         // Need to make dynamic
-        const userId = 3;
+        const userId = this.props.user.id;
         let textId = 0;
         let callString = `/api/entries/limit/9/user/${userId}`;
-        callString = `api/entries/range/from/20180001/to/20180530/user/${userId}`;
+        //callString = `api/entries/range/from/20180001/to/20180530/user/${userId}`;
         axios.get(callString)
             .then(response => response.data)
             .then(data => {
                 const tempObj = data.entries.map(item => item.text);
                 const postObj = tempObj.join(' ')
-                axios.post('http://127.0.0.1:5000/analyze', { postObj })
+                axios.post('http://134.209.163.8:5000/analyze', { postObj })
                     .then(response => response.data)
                     .then(nlpData => {
                         const topicUpload = {
@@ -107,15 +137,15 @@ class TextAnalyzer extends Component {
     runSentiment = () => {
         //this.setState({ engineRunning: true })
         // Need to make dynamic
-        const userId = 3
+        const userId = this.props.user.id;
         let callString = `/api/entries/limit/9/user/${userId}`;
-        callString = `api/entries/range/from/20180001/to/20180530/user/${userId}`;
+        //callString = `api/entries/range/from/20180001/to/20180530/user/${userId}`;
         axios.get(callString)
             .then(response => response.data)
             .then(data => {
                 const tempObj = data.entries.map(item => item.text);
                 const postObj = tempObj.join(' ')
-                axios.post('http://127.0.0.1:5000/sentiment', { postObj })
+                axios.post('http://134.209.163.8:5000/sentiment', { postObj })
                     .then(response => response.data)
                     .then(nlpData => {
                         nlpData.entries = data.entries;

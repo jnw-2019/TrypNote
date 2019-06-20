@@ -113,6 +113,8 @@ const Nav = props => {
       .then(success => {
         if (success === false) {
           console.log('Trouble logging out!');
+        } else {
+          props.history.push('/');
         }
       })
       .catch(error => console.log(error));
@@ -167,7 +169,6 @@ const Nav = props => {
               open={openAccountMenu}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>My account</MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </div>

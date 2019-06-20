@@ -187,6 +187,9 @@ class Map extends Component {
                         ))
                       : ''}
                   </List>
+                  <Link to={`/createEntry/`}>
+                    Search For Venue Name While Adding Entry
+                  </Link>
                 </div>
               </Popup>
             ))

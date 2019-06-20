@@ -1,7 +1,7 @@
 const conn = require('./db');
 const faker = require('faker');
 const secondSeedFunc = require('./entrySeed');
-const { 
+const {
   topicSeedFunc1,
   topicSeedFunc2,
   topicSeedFunc3,
