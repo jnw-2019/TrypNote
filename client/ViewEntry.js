@@ -80,10 +80,8 @@ class ViewEntry extends Component {
                   <p>{entry.text}</p>
                 </div>
               </Grid>
+              <Grid item sm={3} />
 
-              <Grid item sm={3}>
-                <Typography>images</Typography>
-              </Grid>
               <Grid item>
                 <Button
                   type="button"
