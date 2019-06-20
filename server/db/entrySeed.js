@@ -2,8 +2,10 @@ const faker = require('faker');
 const { Entry, User, Weather, Location } = require('./models/');
 
 const randomDate = (start, end) => {
-  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-}
+  return new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+  );
+};
 
 const entrySeed = [
   {
@@ -81,55 +83,55 @@ const entrySeed = [
     title: 'Kafka on the Shore',
     text:
       'Sometimes fate is like a small sandstorm that keeps changing directions. You change direction but the sandstorm chases you. You turn again, but the storm adjusts. Over and over you play this out, like some ominous dance with death just before dawn. Why? Because this storm isn’t something that blew in from far away, something that has nothing to do with you. This storm is you. Something inside of you. So all you can do is give in to it, step right inside the storm, closing your eyes and plugging up your ears so the sand doesn’t get in, and walk through it, step by step. There’s no sun there, no moon, no direction, no sense of time. Just fine white sand swirling up into the sky like pulverized bones. That’s the kind of sandstorm you need to imagine. And you really will have to make it through that violent, metaphysical, symbolic storm. No matter how metaphysical or symbolic it might be, make no mistake about it: it will cut through flesh like a thousand razor blades. People will bleed there, and you will bleed too. Hot, red blood. You’ll catch that blood in your hands, your own blood and the blood of others. And once the storm is over you won’t remember how you made it through, how you managed to survive. You won’t even be sure, in fact, whether the storm is really over. But one thing is certain. When you come out of the storm you won’t be the same person who walked in. That’s what this storm’s all about.',
-    createdAt: faker.fake('{{date.past}}'),
+    createdAt: faker.fake('{{date.past}}')
   },
   {
     title: 'The Wonderful Wizard of Oz',
     text:
       'A heart is not judged by how much you love; but by how much you are loved by others',
-    createdAt: faker.fake('{{date.past}}'),
+    createdAt: faker.fake('{{date.past}}')
   },
   {
     title: 'Extremely Loud and Incredibly Close',
     text:
       'Sometimes I can hear my bones straining under the weight of all the lives I’m not living.',
-    createdAt: faker.fake('{{date.past}}'),
+    createdAt: faker.fake('{{date.past}}')
   },
   {
     title: 'Different Seasons',
     text:
       'The most important things are the hardest to say. They are the things you get ashamed of, because words diminish them — words shrink things that seemed limitless when they were in your head to no more than living size when they’re brought out. But it’s more than that, isn’t it? The most important things lie too close to wherever your secret heart is buried, like landmarks to a treasure your enemies would love to steal away. And you may make revelations that cost you dearly only to have people look at you in a funny way, not understanding what you’ve said at all, or why you thought it was so important that you almost cried while you were saying it. That’s the worst, I think. When the secret stays locked within not for want of a teller but for want of an understanding ear.',
-    createdAt: faker.fake('{{date.past}}'),
+    createdAt: faker.fake('{{date.past}}')
   },
   {
     title: 'The Chronology of Water',
     text:
       'I don’t have any problem understanding why people flunk out of college or quit their jobs or cheat on each other or break the law or spray-paint walls. A little bit outside of things is where some people feel each other. We do it to replace the frame of family. We do it to erase and remake our origins in their own images. To say, I too was here.',
-    createdAt: faker.fake('{{date.past}}'),
+    createdAt: faker.fake('{{date.past}}')
   },
   {
     title: 'The Glass Castle',
     text:
       'I never believed in Santa Claus. None of us kids did. Mom and Dad refused to let us. They couldn’t afford expensive presents and they didn’t want us to think we weren’t as good as other kids who, on Christmas morning, found all sorts of fancy toys under the tree that were supposedly left by Santa Claus. Dad had lost his job at the gypsum, and when Christmas came that year, we had no money at all. On Christmas Eve, Dad took each one of us kids out into the desert night one by one. “Pick out your favorite star”, Dad said. “I like that one!” I said. Dad grinned, “that’s Venus”, he said. He explained to me that planets glowed because reflected light was constant and stars twinkled because their light pulsed. “I like it anyway” I said. “What the hell,” Dad said. “It’s Christmas. You can have a planet if you want.” And he gave me Venus. Venus didn’t have any moons or satellites or even a magnetic field, but it did have an atmosphere sort of similar to Earth’s, except it was super hot-about 500 degrees or more. “So,” Dad said, “when the sun starts to burn out and Earth turns cold, everyone might want to move to Venus to get warm. And they’ll have to get permission from your descendants first. We laughed about all the kids who believed in the Santa myth and got nothing for Christmas but a bunch of cheap plastic toys. “Years from now, when all the junk they got is broken and long forgotten,” Dad said, “you’ll still have your stars.',
-    createdAt: faker.fake('{{date.past}}'),
+    createdAt: faker.fake('{{date.past}}')
   },
   {
     title: 'Song of Solomon',
     text:
       'You think because he doesn’t love you that you are worthless. You think that because he doesn’t want you anymore that he is right — that his judgement and opinion of you are correct. If he throws you out, then you are garbage. You think he belongs to you because you want to belong to him. Don’t. It’s a bad word, ‘belong.’ Especially when you put it with somebody you love. Love shouldn’t be like that. Did you ever see the way the clouds love a mountain? They circle all around it; sometimes you can’t even see the mountain for the clouds. But you know what? You go up top and what do you see? His head. The clouds never cover the head. His head pokes through, beacuse the clouds let him; they don’t wrap him up. They let him keep his head up high, free, with nothing to hide him or bind him. You can’t own a human being. You can’t lose what you don’t own. Suppose you did own him. Could you really love somebody who was absolutely nobody without you? You really want somebody like that? Somebody who falls apart when you walk out the door? You don’t, do you? And neither does he. You’re turning over your whole life to him. Your whole life, girl. And if it means so little to you that you can just give it away, hand it to him, then why should it mean any more to him? He can’t value you more than you value yourself.',
-    createdAt: faker.fake('{{date.past}}'),
+    createdAt: faker.fake('{{date.past}}')
   },
   {
     title: 'Slouching Towards Bethlehem',
     text:
       '…I think we are well-advised to keep on nodding terms with the people we used to be, whether we find them attractive company or not. Otherwise they turn up unannounced and surprise us, come hammering on the mind’s door at 4 a.m. of a bad night and demand to know who deserted them, who betrayed them, who is going to make amends. We forget all too soon the things we thought we could never forget. We forget the loves and the betrayals alike, forget what we whispered and what we screamed, forget who we were.',
-    createdAt: faker.fake('{{date.past}}'),
+    createdAt: faker.fake('{{date.past}}')
   },
   {
     title: 'Factotum',
     text:
       'If you’re going to try, go all the way. Otherwise, don’t even start. This could mean losing girlfriends, wives, relatives and maybe even your mind. It could mean not eating for three or four days. It could mean freezing on a park bench. It could mean jail. It could mean derision. It could mean mockery–isolation. Isolation is the gift. All the others are a test of your endurance, of how much you really want to do it. And, you’ll do it, despite rejection and the worst odds. And it will be better than anything else you can imagine. If you’re going to try, go all the way. There is no other feeling like that. You will be alone with the gods, and the nights will flame with fire. You will ride life straight to perfect laughter. It’s the only good fight there is.',
-    createdAt: faker.fake('{{date.past}}'),
+    createdAt: faker.fake('{{date.past}}')
   },
   {
     title: 'Sombrero Fallout',
@@ -315,302 +317,302 @@ const entrySeed = [
     title: 'East of Eden',
     text:
       'When a child first catches adults out—when it first walks into his grave little head that adults do not always have divine intelligence, that their judgments are not always wise, their thinking true, their sentences just—his world falls into panic desolation. The gods are fallen and all safety gone. And there is one sure thing about the fall of gods: they do not fall a little; they crash and shatter or sink deeply into green muck. It is a tedious job to build them up again; they never quite shine. And the child’s world is never quite whole again. It is an aching kind of growing.',
-    createdAt: randomDate(new Date(2019, 0, 1), new Date())
+    createdAt: randomDate(new Date(2019, 5, 18), new Date())
   },
   {
     title: "Charlotte's Web",
     text:
       '’Why did you do all this for me?’ he asked. ‘I don’t deserve it. I’ve never done anything for you.’ ‘You have been my friend,’ replied Charlotte. ‘That in itself is a tremendous thing.’',
     createdAt: randomDate(new Date(2019, 0, 1), new Date())
-  },
+  }
 ];
 
 const entrySeedLocations = [
   {
     latitude: '40.704872',
     longitude: '-74.008755',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '41.704871',
     longitude: '-75.008754',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '42.704870',
     longitude: '-76.008753',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '43.704869',
     longitude: '-77.008754',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '44.704868',
     longitude: '-78.008753',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '45.704867',
     longitude: '-79.008752',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '46.704866',
     longitude: '-80.008751',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.771939',
     longitude: '-73.974734',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '41.771939',
     longitude: '-74.974734',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.718234',
     longitude: '-74.016265',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.722138',
     longitude: '-74.002588',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '41.722138',
     longitude: '-73.002588',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '42.722138',
     longitude: '-72.002588',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.730089',
     longitude: '-74.005004',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '41.730089',
     longitude: '-76.005004',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.747621',
     longitude: '-74.004916',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '45.747621',
     longitude: '-73.004916',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '48.747621',
     longitude: '-71.004916',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.686702',
     longitude: '-73.984787',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '44.686702',
     longitude: '-71.984787',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '48.686702',
     longitude: '-78.984787',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '43.686702',
     longitude: '-78.984787',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.680087',
     longitude: '-73.967745',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '49.680087',
     longitude: '-71.967745',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '45.680087',
     longitude: '-77.967745',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.710863',
     longitude: '-74.005629',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.710863',
     longitude: '-74.005629',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.710863',
     longitude: '-74.005629',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.710863',
     longitude: '-74.005629',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.710863',
     longitude: '-74.005629',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.710863',
     longitude: '-74.005629',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.710863',
     longitude: '-74.005629',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.710863',
     longitude: '-74.005629',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.710863',
     longitude: '-74.005629',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.710863',
     longitude: '-74.005629',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.710863',
     longitude: '-74.005629',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.728903',
     longitude: '-73.996410',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.728903',
     longitude: '-73.996410',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.728903',
     longitude: '-73.996410',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.728903',
     longitude: '-73.996410',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.728903',
     longitude: '-73.996410',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.728903',
     longitude: '-73.996410',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.728903',
     longitude: '-73.996410',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.728903',
     longitude: '-73.996410',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.728903',
     longitude: '-73.996410',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.728903',
     longitude: '-73.996410',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.781392',
     longitude: '-73.966425',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.781392',
     longitude: '-73.966425',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.781392',
     longitude: '-73.966425',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.781392',
     longitude: '-73.966425',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.781392',
     longitude: '-73.966425',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.781392',
     longitude: '-73.966425',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.781392',
     longitude: '-73.966425',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.781392',
     longitude: '-73.966425',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.781392',
     longitude: '-73.966425',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.781392',
     longitude: '-73.966425',
-    markerName: faker.fake('{{address.streetName}}'),
+    markerName: faker.fake('{{address.streetName}}')
   },
   {
     latitude: '40.781392',
     longitude: '-73.966425',
-    markerName: faker.fake('{{address.streetName}}'),
-  },
+    markerName: faker.fake('{{address.streetName}}')
+  }
 ];
 
 const entryUsers = [
@@ -619,50 +621,50 @@ const entryUsers = [
     lastname: 'Parker',
     phonenumber: '555-222-2910',
     email: 'gparker@email.com',
-    password: 'abcde',
+    password: 'abcde'
   },
   {
     firstname: 'June',
     lastname: 'Lee',
     phonenumber: '555-091-2001',
     email: 'junelee@email.com',
-    password: '11100',
+    password: '11100'
   },
   {
     firstname: 'Mary',
     lastname: 'King',
     email: 'mary@email.com',
     phonenumber: '555-389-5571',
-    password: '991122',
-  },
+    password: '991122'
+  }
 ];
 
 const entryWeather = [
   {
     forecast: 'Sunny',
     degrees: 93,
-    icon: 'http://openweathermap.org/img/w/01d.png',
+    icon: 'http://openweathermap.org/img/w/01d.png'
   },
   {
     forecast: 'Clouds',
     degrees: 88,
-    icon: 'http://openweathermap.org/img/w/03d.png',
+    icon: 'http://openweathermap.org/img/w/03d.png'
   },
   {
     forecast: 'Clear',
     degrees: 75,
-    icon: 'http://openweathermap.org/img/w/10d.png',
+    icon: 'http://openweathermap.org/img/w/10d.png'
   },
   {
     forecast: 'Rain',
     degrees: 50,
-    icon: 'http://openweathermap.org/img/w/10d.png',
+    icon: 'http://openweathermap.org/img/w/10d.png'
   },
   {
     forecast: 'Snow',
     degrees: 28,
-    icon: 'http://openweathermap.org/img/w/13d.png',
-  },
+    icon: 'http://openweathermap.org/img/w/13d.png'
+  }
 ];
 
 const secondSeedFunc = () => {
@@ -722,7 +724,7 @@ const secondSeedFunc = () => {
         Entry.create({ ...entrySeed[50], userId: newUsers[0].dataValues.id }),
         Entry.create({ ...entrySeed[51], userId: newUsers[0].dataValues.id }),
         Entry.create({ ...entrySeed[52], userId: newUsers[0].dataValues.id }),
-        Entry.create({ ...entrySeed[53], userId: newUsers[0].dataValues.id }),
+        Entry.create({ ...entrySeed[53], userId: newUsers[0].dataValues.id })
       ]);
     })
     .then(newEntries => {
@@ -730,11 +732,11 @@ const secondSeedFunc = () => {
         newEntries.map((singleNewEntry, idx) => {
           Location.create({
             ...entrySeedLocations[idx],
-            entryId: singleNewEntry.dataValues.id,
+            entryId: singleNewEntry.dataValues.id
           });
           Weather.create({
             ...entryWeather[Math.floor(Math.random() * 4)], // Randomly selects weather using integers between (0, 1, 2, 3)
-            entryId: singleNewEntry.dataValues.id,
+            entryId: singleNewEntry.dataValues.id
           });
         })
       );

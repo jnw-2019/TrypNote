@@ -92,10 +92,14 @@ class CreateEntry extends Component {
         console.log('axios data', data);
         return Promise.all([
           axios.post(`/api/weathers/${data.id}`, { forecast, degrees, icon }),
-          axios.post(`/api/locations/${data.id}`, { lat, lon, locationName })
+          axios.post(`/api/locations/${data.id}`, { lat, lon, locationName }),
+          data
         ]);
       })
-      .then(() => history.push('/home'));
+      .then(([weather, location, data]) => {
+        console.log('after promise all data', data);
+        history.push(`/entries/${data.id}`);
+      });
   };
   render() {
     const { title, text, locationName } = this.state;
