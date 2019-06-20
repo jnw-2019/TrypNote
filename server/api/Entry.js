@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const dateFormat = require('dateformat');
 
 const {
   Entry,
@@ -7,7 +8,11 @@ const {
   User,
   Topic,
   TopicKeyword,
+<<<<<<< HEAD
   Sentiment,
+=======
+  Sentiment
+>>>>>>> 6bb0687fb6795398f8b558e1db4b117e4c5eee0d
 } = require('../db/models/');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -54,10 +59,82 @@ router.get('/limit/:limitnum/user/:userId', (req, res, next) => {
     include: [{ model: Entry, limit: req.params.limitnum }],
     order: [
       // Will escape title and validate DESC against a list of valid direction parameters
+<<<<<<< HEAD
       ['createdAt', 'DESC'],
     ],
   }).then(userWithEntries => res.send(userWithEntries));
 });
+=======
+      ['createdAt', 'DESC']
+    ]
+  }).then(userWithEntries => res.send(userWithEntries));
+});
+
+router.get(
+  '/range/from/:fromdate/to/:todate/user/:userId',
+  (req, res, next) => {
+    console.log(req.params.fromdate.substring(0, 4));
+    console.log(req.params.fromdate.substring(5, 6));
+    console.log(req.params.fromdate.substring(7, 8));
+    console.log(req.params.todate.substring(0, 4));
+    console.log(req.params.todate.substring(4, 6));
+    console.log(req.params.todate.substring(6, 8));
+    User.findByPk(req.params.userId, {
+      include: [
+        {
+          model: Entry,
+          where: {
+            createdAt: {
+              [Op.lt]: new Date(
+                req.params.todate.substring(0, 4),
+                req.params.todate.substring(4, 6),
+                req.params.todate.substring(6, 8)
+              ),
+              [Op.gt]: new Date(
+                req.params.fromdate.substring(0, 4),
+                req.params.fromdate.substring(4, 6),
+                req.params.fromdate.substring(6, 8)
+              )
+            }
+          }
+          // createdAt < [timestamp] AND createdAt > [timestamp]
+        }
+      ],
+      order: [
+        // Will escape title and validate DESC against a list of valid direction parameters
+        ['createdAt', 'DESC']
+      ]
+    }).then(userWithEntries => res.send(userWithEntries));
+  }
+);
+
+router.get(
+  '/dynamicRange/from/:fromdate/to/:todate/user/:userId',
+  (req, res, next) => {
+    // console.log('backend api', req.params.fromdate);
+    // console.log('backend api', req.params.todate);
+    const fromCoversion = req.params.fromdate * 1;
+    const toConversion = req.params.todate * 1;
+
+    User.findByPk(req.params.userId, {
+      include: [
+        {
+          model: Entry,
+          where: {
+            createdAt: {
+              [Op.between]: [new Date(fromCoversion), new Date(toConversion)]
+            }
+          }
+        }
+      ]
+    })
+      .then(userWithEntries => {
+        res.send(userWithEntries);
+      })
+      .catch(next);
+  }
+);
+>>>>>>> 6bb0687fb6795398f8b558e1db4b117e4c5eee0d
 
 router.get(
   '/range/from/:fromdate/to/:todate/user/:userId',
