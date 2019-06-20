@@ -36,16 +36,24 @@ class App extends Component {
             }}
           />
           <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/entries/:entryId" component={ViewEntry} />
-          <Route exact path="/createEntry" component={CreateEntry} />
-          <Route exact path="/editEntry/:entryId" component={EditEntry} />
-
           <Route
-            exact
-            path="/createEntry/:markerName/:address/:lat/:long"
-            component={CreateEntry}
-          />
-          <Route exact path="/dashboard/:entryFilter?" component={Dashboard} />
+            path="/"
+            render={() => {
+              return (this.props.user.uuid ?
+                <Switch>
+                  <Route exact path="/entries/:entryId" component={ViewEntry} />
+                  <Route exact path="/createEntry" component={CreateEntry} />
+                  <Route exact path="/editEntry/:entryId" component={EditEntry} />
+                  <Route
+                    exact
+                    path="/createEntry/:markerName/:address/:lat/:long"
+                    component={CreateEntry}
+                  />
+                  <Route exact path="/dashboard/:entryFilter?" component={Dashboard} />
+                </Switch> : <Redirect to="/" />
+                )
+            }}
+            />
         </Switch>
       </HashRouter>
     );

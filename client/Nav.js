@@ -113,6 +113,8 @@ const Nav = props => {
       .then(success => {
         if (success === false) {
           console.log('Trouble logging out!');
+        } else {
+          props.history.push('/')
         }
       })
       .catch(error => console.log(error));
